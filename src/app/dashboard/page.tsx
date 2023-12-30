@@ -3,6 +3,7 @@ import { Box, Stack, TextField, filledInputClasses } from "@mui/material";
 import { useEffect, useState } from "react";
 import { GET, MessageInput, POST } from "../api/messages/route";
 import { CenterFocusStrong } from "@mui/icons-material";
+import { getMessageById } from "@/modules/messages/lib/get-messages-by-id/get-messages-by-id";
 
 const emptyMessage: MessageInput = {
   id: "",
@@ -27,7 +28,6 @@ export default function HomePage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "100vh",
-          
         }}
         display={"flex"}
       >
@@ -44,7 +44,14 @@ export default function HomePage() {
           >
             {Messages.map((n) => (
               <div key={n.content}>
-                <p>{n.content}</p>
+                <a
+                  href="#"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    const result = await getMessageById(n.id);
+                    console.log("@@result ", result);
+                  }}
+                ></a>
               </div>
             ))}
             <div style={{ height: 100 }} />

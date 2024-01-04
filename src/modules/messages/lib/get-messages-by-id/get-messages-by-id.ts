@@ -1,8 +1,7 @@
-import { GetNoteByIdResponse } from "@/app/api/Messages/[id]/route";
-import { Message } from "@prisma/client";
+import { GetNoteByIdResponse } from "@/app/api/messages/[id]/route";
 
 export async function getMessageById(id: string) {
-  const response = await fetch(`api/Messages ${id}`);
+  const response = await fetch(`/api/messages/${id}`);
   const json: GetNoteByIdResponse = await response.json();
   return json.message;
 }

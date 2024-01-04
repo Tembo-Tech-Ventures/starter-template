@@ -1,7 +1,6 @@
 import { prisma } from "@/modules/prisma/lib/prisma-client/prisma-client";
-import { UUID } from "crypto";
-import { NextRequest, NextResponse } from "next/server";
 import { Message } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
 export interface MessageInput {
   content: string;
@@ -15,7 +14,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   console.log("00 message: ", created);
   return NextResponse.json(created);
 };
+
+export interface GetAllMessagesResponse {
+  messages: Message[];
+}
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
-  const Messages = await prisma.message.findMany();
-  return NextResponse.json(Messages);
+  const messages = await prisma.message.findMany();
+  return NextResponse.json({
+    messages: messages,
+  });
 };

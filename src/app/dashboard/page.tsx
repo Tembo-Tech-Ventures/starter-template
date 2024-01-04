@@ -1,24 +1,20 @@
 "use client";
-import { Box, Stack, TextField, filledInputClasses } from "@mui/material";
-import { useEffect, useState } from "react";
-import { GET, MessageInput, POST } from "../api/messages/route";
-import { CenterFocusStrong } from "@mui/icons-material";
+import { useAllMessages } from "@/modules/messages/hooks/use-all-messages/use-all-messages";
 import { getMessageById } from "@/modules/messages/lib/get-messages-by-id/get-messages-by-id";
+import { Box, Stack } from "@mui/material";
+import { useState } from "react";
+import { MessageInput } from "../api/messages/route";
 
 const emptyMessage: MessageInput = {
-  id: "",
   content: "",
 };
 export default function HomePage() {
   const [nmessage, setMessage] = useState<MessageInput>(emptyMessage);
-  const [Messages, setMessages] = useState<Message[]>([]);
+  const { data, mutate } = useAllMessages();
+  const messages = data || [];
 
-  useEffect(() => {
-    fetch("/api/messages").then(async (res) => {
-      const MessagesResponse = await res.json();
-      setMessages(MessagesResponse);
-    });
-  }, []);
+  console.log("@@ messages: ", messages);
+
   return (
     <Box>
       <Stack
@@ -39,23 +35,20 @@ export default function HomePage() {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Stack
-            style={{ position: "relative", width: 100, marginBottom: -100 }}
-          >
-            {Messages.map((n) => (
-              <div key={n.content}>
-                <a
-                  href="#"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    const result = await getMessageById(n.id);
-                    console.log("@@result ", result);
-                  }}
-                ></a>
-              </div>
-            ))}
-            <div style={{ height: 100 }} />
-          </Stack>
+          {messages.map((n) => (
+            <Box key={n.id} width="100%" p={2}>
+              <a
+                href="#"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  const result = await getMessageById(n.id);
+                  console.log("@@result ", result);
+                }}
+              >
+                {n.content}
+              </a>
+            </Box>
+          ))}
         </Stack>
         <Stack
           width={500}
@@ -79,18 +72,13 @@ export default function HomePage() {
               display: "flex",
             }}
             onSubmit={async (e) => {
-              {
-                e.preventDefault();
-                const response = await fetch("/api/messages", {
-                  method: "POST",
-                  body: JSON.stringify(nmessage),
-                });
-                console.log("response: ", response);
-                fetch("/api/messages").then(async (res) => {
-                  const MessagesResponse = await res.json();
-                  setMessages(MessagesResponse);
-                });
-              }
+              e.preventDefault();
+              const response = await fetch("/api/messages", {
+                method: "POST",
+                body: JSON.stringify(nmessage),
+              });
+              console.log("response: ", response);
+              await mutate();
             }}
           >
             <input

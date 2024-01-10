@@ -15,7 +15,10 @@ export default function Home() {
           "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/Background.png')",
       }}
     >
+      {" "}
+      <Image alt="logo" src="/Untitled.png" width="100" height="61"></Image>
       <Stack>
+        <Stack>
         <Link
           href="/auth/login"
           style={{ textDecoration: "none", color: "#fff" }}
@@ -28,6 +31,7 @@ export default function Home() {
         >
           Sign up
         </Link>
+        </Stack>
       </Stack>
     </Box>
   );

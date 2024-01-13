@@ -42,14 +42,10 @@ export function LoginForm() {
             value={email}
             onChange={(o) => setEmail(o.target.value)}
             required
-          />
-          <TextField
-            label="Password"
-            style={{ width: 220 }}
-            type="password"
-            required
-          />
+          ></TextField>
+          <TextField label="Password" style={{ width: 220 }} />
           <Button
+            type="submit"
             style={{ backgroundColor: "#000", color: "#fff", borderRadius: 50 }}
           >
             Login

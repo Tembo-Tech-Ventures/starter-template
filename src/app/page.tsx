@@ -1,38 +1,33 @@
-import { Stack, Typography, Box } from "@mui/material";
+import { Stack, Typography, Box, TextField } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
+import "./index.css";
 
 export default function Home() {
   return (
-    <Box
-      width="100%"
-      minHeight="100vh"
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/Background.png')",
-      }}
-    >
-      {" "}
-      <Image alt="logo" src="/Untitled.png" width="100" height="61"></Image>
-      <Stack>
-        <Stack>
-        <Link
-          href="/auth/login"
-          style={{ textDecoration: "none", color: "#fff" }}
-        >
-          Login
-        </Link>
-        <Link
-          href="/auth/register"
-          style={{ textDecoration: "none", color: "#fff" }}
-        >
-          Sign up
-        </Link>
-        </Stack>
-      </Stack>
-    </Box>
+    <body>
+      <div className="Top">
+        <nav>
+          <Image alt="logo" src="/Untitled.png" width="100" height="61"></Image>
+          <Stack className="links">
+            <a style={{ textDecoration: "none" }} href={""}>
+              <p>Download</p>
+            </a>
+            <a style={{ textDecoration: "none" }} href={""}>
+              <p>Support</p>
+            </a>
+            <a style={{ textDecoration: "none" }} href={""}>
+              <p>Safety</p>
+            </a>
+            <a style={{ textDecoration: "none" }} href={""}>
+              <p>About Us</p>
+            </a>
+            <a style={{ textDecoration: "none" }} href={"/auth/login"}>
+              <p>Login</p>
+            </a>
+          </Stack>
+        </nav>
+      </div>
+    </body>
   );
 }

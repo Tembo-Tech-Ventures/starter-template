@@ -1,9 +1,9 @@
 "use client";
+import { MessageInput } from "@/app/api/messages/route";
 import { useAllMessages } from "@/modules/messages/hooks/use-all-messages/use-all-messages";
 import { getMessageById } from "@/modules/messages/lib/get-messages-by-id/get-messages-by-id";
 import { Box, Stack } from "@mui/material";
 import { useState } from "react";
-import { MessageInput } from "../api/messages/route";
 
 const emptyMessage: MessageInput = {
   content: "",

@@ -1,31 +1,69 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 @font-face {
-    font-family: "Light";
-    src: local("FrederickatheGreat"),
-    url("/fonts/FrederickatheGreat-Regular.ttf") format("truetype");
+  font-family: "FrederickatheGreat";
+  src:
+    local("FrederickatheGreat"),
+    url("./fonts/FrederickatheGreat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "HappyMonkey";
+  src:
+    local("HappyMonkey"),
+    url("./fonts/HappyMonkey-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Italianno";
+  src:
+    local("Italianno"),
+    url("./fonts/Italianno-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "JacquesFrancoisShadow";
+  src:
+    local("JacquesFrancoisShadow"),
+    url("./fonts/JacquesFrancoisShadow-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kalam";
+  src:
+    local("Kalam"),
+    url("./fonts/Kalam-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kavoon";
+  src:
+    local("Kavoon"),
+    url("./fonts/Kavoon-Regular.ttf") format("truetype");
 }
 
 body {
-    min-height: 100vh;
-    width: 100%;
-    background-image: linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url(/Background.png);
-    background-position: center;
-    background-size: cover;
-    position: relative;
-} 
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(
+      rgba(140, 45, 230, 0.7),
+      rgba(140, 45, 230, 0.7)
+    ),
+    url(/Background.png);
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
 
 .links {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px 0;
-    position: relative;
-    text-decoration: none;
-    color: white;
-
-} 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-left: 50px;
+  padding-right: 50px;
+  
+}

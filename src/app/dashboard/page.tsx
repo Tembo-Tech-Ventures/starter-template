@@ -2,7 +2,7 @@
 import { MessageInput } from "@/app/api/messages/route";
 import { useAllMessages } from "@/modules/messages/hooks/use-all-messages/use-all-messages";
 import { getMessageById } from "@/modules/messages/lib/get-messages-by-id/get-messages-by-id";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Link } from "@mui/material";
 import { useState } from "react";
 
 const emptyMessage: MessageInput = {
@@ -37,8 +37,8 @@ export default function HomePage() {
         >
           {messages.map((n) => (
             <Box key={n.id} width="100%" p={2}>
-              <a
-                href="#"
+              <Link
+                href={`/dashboard/message/${n.id}`}
                 onClick={async (e) => {
                   e.preventDefault();
                   const result = await getMessageById(n.id);
@@ -46,7 +46,7 @@ export default function HomePage() {
                 }}
               >
                 {n.content}
-              </a>
+              </Link>
             </Box>
           ))}
         </Stack>

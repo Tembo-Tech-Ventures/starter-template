@@ -65,5 +65,32 @@ body {
   justify-content: space-evenly;
   padding-left: 50px;
   padding-right: 50px;
-  
+}
+
+.login {
+  background-color: #fff;
+  padding: 10px 20px 10px;
+  border-radius: 50px;
+}
+
+.main {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.imagineaplace {
+  font-family: "FrederickatheGreat", serif;
+  font-size: 80px;
+  text-align: center;
+  padding-top: 250px;
+}
+
+.description {
+  /*font-family: 'League Gothic', sans-serif;*/
+  font-size: 40px;
+  color: #fff;
+  font-family: "Italianno", serif;
+  padding-top: 20px;
 }

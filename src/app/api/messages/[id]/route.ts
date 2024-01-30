@@ -8,7 +8,7 @@ export interface GetNoteByIdResponse {
 
 export const GET = async (
   req: NextRequest,
-  { params: { id } }: { params: { id: string } }
+  { params: { id } }: { params: { id: string } },
 ) => {
   console.log("@@id", id);
   const message = await prisma.message.findUniqueOrThrow({

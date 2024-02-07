@@ -20,7 +20,7 @@ export function LoginForm() {
       justifyContent="center"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/Background.png')",
+          "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/login.png')",
       }}
     >
       <form

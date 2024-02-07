@@ -28,7 +28,7 @@ export default async function Register() {
       justifyContent="center"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/Background.png')",
+          "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/register.png')",
       }}
     >
       <Stack

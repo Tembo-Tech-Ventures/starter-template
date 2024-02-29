@@ -22,17 +22,7 @@ export default function Home() {
                 color: "#fff",
                 fontFamily: "Kavoon",
               }}
-              href={""}
-            >
-              <p>Download</p>
-            </a>
-            <a
-              style={{
-                textDecoration: "none",
-                color: "#fff",
-                fontFamily: "Kavoon",
-              }}
-              href={""}
+              href={"/auth/support"}
             >
               <p>Support</p>
             </a>

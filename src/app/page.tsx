@@ -22,9 +22,9 @@ export default function Home() {
                 color: "#fff",
                 fontFamily: "Kavoon",
               }}
-              href={"/chat"}
+              href={"/support"}
             >
-              <p>chat</p>
+              <p>Support</p>
             </a>
             <a
               style={{

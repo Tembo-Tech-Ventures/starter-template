@@ -15,17 +15,17 @@ export default function Support() {
               <h1>
                 <b>Support Page</b>
               </h1>
-            </ol>{" "}
+            </ol>
             <b>Welcome to Our Support Page</b>
             <li>
-              Thank you for choosing our app! We're here to help you with any
-              questions or issues you may have. Our support page is designed to
-              provide you with the resources you need to make the most of our
+              Thank you for choosing our app! We&apos;re here to help you with
+              any questions or issues you may have. Our support page is designed
+              to provide you with the resources you need to make the most of our
               app.
             </li>
             <li>
-              If you can't find what you're looking for, feel free to contact
-              our support team.
+              If you can&apos;t find what you&apos;re looking for, feel free to
+              contact our support team.
             </li>
             <ol>
               <h1>
@@ -41,8 +41,9 @@ export default function Support() {
               </h1>
             </ol>
             <li>
-              If you can't find the answer you're looking for, please don't
-              hesitate to contact our support team. We're here to help you 24/7.
+              If you can&apos;t find the answer you&apos;re looking for, please
+              don&apos;t hesitate to contact our support team. We&apos;re here
+              to help you 24/7.
             </li>
             <ol>
               <h1>
@@ -78,8 +79,8 @@ export default function Support() {
               </h1>
             </ol>
             <li>
-              Thank you for choosing our app. We're here to help you every step
-              of the way.
+              Thank you for choosing our app. We&apos;re here to help you every
+              step of the way.
             </li>
           </main>
         </div>

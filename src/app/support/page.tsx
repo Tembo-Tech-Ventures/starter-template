@@ -2,12 +2,73 @@ import { Stack, Typography, Box, TextField } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import "../index.css";
+import github from "../icons/github.svg";
+import discord from "../icons/discord.svg";
+import home from "../icons/house-solid.svg";
+import instagram from "../icons/instagram.svg";
+
 export default function Support() {
   return (
     <body className="support">
       <div>
         <div>
-          <nav className="supportnav"></nav>
+          <nav className="supportnav">
+            <Link href="./">
+              <Image
+                draggable="false"
+                src={home}
+                alt="home-icon"
+                width={50}
+                height={50}
+              />
+            </Link>
+            <div className="support-icons">
+              <div className="github">
+                <Image
+                  draggable="false"
+                  src={github}
+                  alt="github-icon"
+                  width={50}
+                  height={50}
+                />
+                <p>
+                  <ol>Check out our github page!</ol>
+                  <li>Get news about updates</li>
+                  <li>Become a part of the team</li>
+                  <li>Report bugs</li>
+                </p>
+              </div>
+              <div className="discord">
+                <Image
+                  draggable="false"
+                  src={discord}
+                  alt="discord-icon"
+                  width={50}
+                  height={50}
+                />
+                <p>
+                  <ol>Check out our discord page!</ol>
+                  <li>Log your complaints</li> <li>Get 24/7 services</li>
+                  <li>Get news about updates</li>
+                </p>
+              </div>
+              <div className="instagram">
+                <Image
+                  draggable="false"
+                  src={instagram}
+                  alt="instagram-icon"
+                  width={50}
+                  height={50}
+                />
+                <p>
+                  <ol>Check out our instagram page!</ol>
+                  <li>Follow us to get information about updates</li>
+                  <li>Become a part of the team</li>
+                  <li>See our latest posts</li>
+                </p>
+              </div>
+            </div>
+          </nav>
         </div>
         <div className="supportmain">
           <main>

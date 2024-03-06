@@ -10,6 +10,7 @@ import send from "../icons/paper-plane-solid.svg";
 
 interface MessageData {
   message: string;
+  timestamp: Date;
 }
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
@@ -25,7 +26,11 @@ export default function Chat() {
 
     channel.bind("message", (data: MessageData) => {
       console.log("@@ message: ", data);
-      setMessages((prevMessages) => [...prevMessages, data.message]);
+      const messageWithTimestamp = {
+        ...data,
+        timestamp: data.timestamp || new Date(),
+      };
+      setMessages((prevMessages) => [...prevMessages, messageWithTimestamp]);
     });
 
     return () => {
@@ -40,7 +45,12 @@ export default function Chat() {
         <div className="chat-chat">
           <div className="chat-input">
             {messages.map((message, index) => (
-              <p key={index}>{message}</p>
+              <p key={index}>
+                {message.message}{" "}
+                <span style={{ fontSize: "0.8em", color: "gray" }}>
+                  ({message.timestamp.toLocaleString()})
+                </span>
+              </p>
             ))}
             <input
               className="input"

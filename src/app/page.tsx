@@ -32,9 +32,9 @@ export default function Home() {
                 color: "#fff",
                 fontFamily: "Kavoon",
               }}
-              href={""}
+              href={"/contact-us"}
             >
-              <p>Safety</p>
+              <p>Contact Us</p>
             </a>
             <a
               style={{
@@ -42,7 +42,7 @@ export default function Home() {
                 color: "#fff",
                 fontFamily: "Kavoon",
               }}
-              href={""}
+              href={"/about-us"}
             >
               <p>About Us</p>
             </a>

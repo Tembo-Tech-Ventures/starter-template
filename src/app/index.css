@@ -249,3 +249,25 @@ body {
   flex-direction: row;
   float: left;
 }
+
+.about-us {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(
+    rgba(140, 45, 230, 0.7),
+    rgba(140, 45, 230, 0.7)
+  ),
+  url(/about.png);
+}
+
+.about-us-main {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-family: "Anta", serif;
+  font-size: 40px;
+  margin-left: 50px;
+  margin-right: 50px;
+}

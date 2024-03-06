@@ -14,6 +14,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 backgroundColor: "#000",
                 color: "#fff",
                 borderRadius: 50,
+                display: "none",
               }}
             >
               Logout

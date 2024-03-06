@@ -2,6 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Pusher from "pusher-js";
+import { Button, Stack } from "@mui/material";
+import "@/app/index.css";
+import Link from "next/link";
+import Image from "next/image";
+import send from "../icons/paper-plane-solid.svg";
 
 interface MessageData {
   message: string;
@@ -30,28 +35,53 @@ export default function Chat() {
   }, []);
 
   return (
-    <div>
-      {messages.map((message, index) => (
-        <p key={index}>{message}</p>
-      ))}
-      <input
-        placeholder="Message"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button
-        onClick={() => {
-          fetch("/api/chat", {
-            method: "POST",
-            body: JSON.stringify({
-              message: input,
-            }),
-          });
-          setInput("");
-        }}
-      >
-        Send
-      </button>
-    </div>
+    <body className="chatpage">
+      <main>
+        <div className="chat-chat">
+          <div className="chat-input">
+            {messages.map((message, index) => (
+              <p key={index}>{message}</p>
+            ))}
+            <input
+              className="input"
+              placeholder="Message"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              style={{
+                borderRadius: 10,
+                width: "100%",
+                height: 51,
+                border: "none",
+                outline: "none",
+                alignItems: "bottom",
+                justifyContent: "bottom",
+                background: "silver",
+              }}
+            />
+            <Button
+              className="send"
+              onClick={() => {
+                fetch("/api/chat", {
+                  method: "POST",
+                  body: JSON.stringify({
+                    message: input,
+                  }),
+                });
+                setInput("");
+              }}
+            >
+              {" "}
+              <Image
+                draggable="false"
+                alt="send"
+                src={send}
+                width={20}
+                height={20}
+              ></Image>
+            </Button>
+          </div>
+        </div>
+      </main>
+    </body>
   );
 }

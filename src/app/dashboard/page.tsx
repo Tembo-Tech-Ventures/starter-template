@@ -2,7 +2,7 @@
 import { MessageInput } from "@/app/api/messages/route";
 import { useAllMessages } from "@/modules/messages/hooks/use-all-messages/use-all-messages";
 import { getMessageById } from "@/modules/messages/lib/get-messages-by-id/get-messages-by-id";
-import { Box, Stack, Link } from "@mui/material";
+import { Box, Stack, Link, Button } from "@mui/material";
 import { useState } from "react";
 
 const emptyMessage: MessageInput = {
@@ -27,11 +27,40 @@ export default function HomePage() {
         }}
         display={"flex"}
       >
+        <Link href="/auth/logout">
+          <Button
+            style={{
+              backgroundColor: "#000",
+              color: "#fff",
+            }}
+          >
+            Logout
+          </Button>
+        </Link>
+
+        <Link href="/chat">
+          <Button
+            style={{
+              display: "flex",
+              backgroundColor: "#000",
+              color: "#fff",
+              textAlign: "right",
+              alignItems: "flex-end",
+            }}
+          >
+            Chat
+          </Button>
+        </Link>
+
         <Stack
-          style={{ backgroundColor: "white", overflow: "scroll" }}
-          width={600}
-          height={595}
-          marginLeft={52}
+          style={{
+            backgroundColor: "white",
+            borderRadius: 50,
+            justifyContent: "center",
+          }}
+          minWidth={600}
+          height={600}
+          margin={10}
           alignItems={"center"}
           justifyContent={"center"}
         >
@@ -58,6 +87,7 @@ export default function HomePage() {
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 450,
+            borderRadius: 50,
           }}
         >
           <form
@@ -66,7 +96,7 @@ export default function HomePage() {
               width: 500,
               marginTop: 540,
               backgroundColor: "silver",
-              borderRadius: 50,
+              borderRadius: 20,
               alignItems: "center",
               justifyContent: "center",
               display: "flex",
@@ -90,7 +120,7 @@ export default function HomePage() {
               id="search"
               name="search"
               style={{
-                borderRadius: 50,
+                borderRadius: 10,
                 width: "95%",
                 height: 51,
                 border: "none",

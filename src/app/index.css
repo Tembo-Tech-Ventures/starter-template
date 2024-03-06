@@ -179,3 +179,73 @@ body {
 .emailh {
   font-family: "Megrim", serif;
 }
+
+.logout {
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(
+    rgba(140, 45, 230, 0.7),
+    rgba(140, 45, 230, 0.7)
+  ),
+  url(/airplane.png);
+  justify-content: center;
+}
+
+.chatlink {
+  display: flex;
+  text-decoration: none;
+  
+}
+
+.chat-container {
+  background-image: linear-gradient(
+    rgba(140, 45, 230, 0.7),
+    rgba(140, 45, 230, 0.7)
+  ),
+  url(/airplane.png);
+}
+
+.chatpage {
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(
+      rgba(140, 140, 140, 0.7),
+      rgba(35, 35, 35, 0.7)
+    ),
+    url(/3.jpg);
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+  
+}
+
+.chatpage main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.chat-chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: center;
+  background-color: #fff;
+  width: 960px;
+  height: 780px;
+}
+
+.send {
+  display: flex;
+  align-items: end;
+  flex-direction: row;
+  float: right;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  float: left;
+}

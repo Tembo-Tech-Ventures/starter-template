@@ -18,14 +18,13 @@ const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
 });
 
 export default function Chat() {
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<MessageData[]>([]);
   const [input, setInput] = useState<string>("");
 
   useEffect(() => {
     const channel = pusher.subscribe("chat");
 
     channel.bind("message", (data: MessageData) => {
-      console.log("@@ message: ", data);
       const messageWithTimestamp = {
         ...data,
         timestamp: data.timestamp || new Date(),

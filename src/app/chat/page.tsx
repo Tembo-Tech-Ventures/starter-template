@@ -42,15 +42,15 @@ export default function Chat() {
     <body className="chatpage">
       <main>
         <div className="chat-chat">
+          {messages.map((message, index) => (
+            <p key={index}>
+              {message.message}
+              <span style={{ fontSize: "0.8em", color: "gray" }}>
+                ({message.timestamp.toLocaleString()})
+              </span>
+            </p>
+          ))}
           <div className="chat-input">
-            {messages.map((message, index) => (
-              <p key={index}>
-                {message.message}{" "}
-                <span style={{ fontSize: "0.8em", color: "gray" }}>
-                  ({message.timestamp.toLocaleString()})
-                </span>
-              </p>
-            ))}
             <input
               className="input"
               placeholder="Message"
@@ -62,8 +62,6 @@ export default function Chat() {
                 height: 51,
                 border: "none",
                 outline: "none",
-                alignItems: "bottom",
-                justifyContent: "bottom",
                 background: "silver",
               }}
             />
@@ -79,7 +77,6 @@ export default function Chat() {
                 setInput("");
               }}
             >
-              {" "}
               <Image
                 draggable="false"
                 alt="send"

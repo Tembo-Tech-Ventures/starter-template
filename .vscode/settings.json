@@ -19,5 +19,8 @@
             "url": "https://openapi.vercel.sh/vercel.json"
         }
     ],
-    "explorer.compactFolders": false
+    "explorer.compactFolders": false,
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
 }

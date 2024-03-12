@@ -1,3 +1,4 @@
+
 tasks:
   - name: docker-compose 
     init: docker-compose create
@@ -5,3 +6,14 @@ tasks:
   - name: npm install
     init: npm install
     command: export NEXTAUTH_URL="https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}/" && npm run dev
+ports:
+    - name: login
+      port: 1025
+      protocol: https
+
+
+
+vscode:
+  extensions:
+    - mtxr.sqltools
+    - mtxr.sqltools-driver-pg

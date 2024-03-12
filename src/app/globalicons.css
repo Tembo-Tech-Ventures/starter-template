@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ojuju:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Felipa&family=Fredericka+the+Great&family=Hanalei&family=Shadows+Into+Light&family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Tillana:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL'  0, 'wght'  400, 'GRAD'  0, 'opsz'  24;
+  }
+  
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+  }
+
+   #prime {
+    animation: amazon 5s ease-in-out infinite;
+   }
+
+   @keyframes amazon {
+    0% {
+      background-image: linear-gradient(to bottom right, red, aqua, silver, indigo, blue);
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    25% {
+      background-image: linear-gradient(to left, red, blue, green, silver, yellow, brown);
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: 5s ease-in-out;
+    }
+    50% {
+      background-image: linear-gradient(to bottom right, pink, gray, silver, black, gold, blue);
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: 5s ease-in-out;
+    }
+    75% {
+      background-image: linear-gradient(to bottom left, silver, dodgerblue, rgba(0, 255, 213, 0.712) rgba(240, 152, 210, 0.726) rgba(146, 125, 125, 0.479));
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: 5s ease-in-out;
+    }
+    100% {
+      background-image: linear-gradient(to bottom right, red, aqua, silver, indigo, blue);
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      color: transparent; 
+      transition: 5s ease-in-out;
+    }
+   }
+
+   #idea {
+    gap: 50;
+   }
+
+   option {
+    height: 80px;
+   } 

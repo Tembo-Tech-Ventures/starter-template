@@ -4,6 +4,7 @@ import { useAllMessages } from "@/modules/messages/hooks/use-all-messages/use-al
 import { getMessageById } from "@/modules/messages/lib/get-messages-by-id/get-messages-by-id";
 import { Box, Stack, Link, Button } from "@mui/material";
 import { useState } from "react";
+import "../index.css";
 
 const emptyMessage: MessageInput = {
   content: "",
@@ -25,32 +26,17 @@ export default function HomePage() {
           backgroundPosition: "center",
           height: "100vh",
         }}
-        display={"flex"}
       >
-        <Link href="/auth/logout">
-          <Button
-            style={{
-              backgroundColor: "#000",
-              color: "#fff",
-            }}
-          >
-            Logout
-          </Button>
-        </Link>
-
-        <Link href="/chat">
-          <Button
-            style={{
-              display: "flex",
-              backgroundColor: "#000",
-              color: "#fff",
-              textAlign: "right",
-              alignItems: "flex-end",
-            }}
-          >
-            Chat
-          </Button>
-        </Link>
+        <div className="logout-chat">
+          <Link href="/auth/logout">
+            <Button className="logout-button">Logout</Button>
+          </Link>
+        </div>
+        <div className="buttons">
+          <Link href="/chat">
+            <Button className="chat-button">Chat</Button>
+          </Link>
+        </div>
 
         <Stack
           style={{
@@ -59,8 +45,8 @@ export default function HomePage() {
             justifyContent: "center",
           }}
           minWidth={600}
-          height={600}
-          margin={10}
+          height={500}
+          margin={5}
           alignItems={"center"}
           justifyContent={"center"}
         >
@@ -94,7 +80,7 @@ export default function HomePage() {
             style={{
               position: "relative",
               width: 500,
-              marginTop: 540,
+              marginTop: 600,
               backgroundColor: "silver",
               borderRadius: 20,
               alignItems: "center",

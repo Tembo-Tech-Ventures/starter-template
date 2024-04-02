@@ -11,64 +11,16 @@ export default function Support() {
   return (
     <body className="support">
       <div>
-        <div>
-          <nav className="supportnav">
-            <Link href="./">
-              <Image
-                draggable="false"
-                src={home}
-                alt="home-icon"
-                width={50}
-                height={50}
-              />
-            </Link>
-            <div className="support-icons">
-              <div className="github">
-                <Image
-                  draggable="false"
-                  src={github}
-                  alt="github-icon"
-                  width={50}
-                  height={50}
-                />
-                <p>
-                  <ol>Check out our github page!</ol>
-                  <li>Get news about updates</li>
-                  <li>Become a part of the team</li>
-                  <li>Report bugs</li>
-                </p>
-              </div>
-              <div className="discord">
-                <Image
-                  draggable="false"
-                  src={discord}
-                  alt="discord-icon"
-                  width={50}
-                  height={50}
-                />
-                <p>
-                  <ol>Check out our discord page!</ol>
-                  <li>Log your complaints</li> <li>Get 24/7 services</li>
-                  <li>Get news about updates</li>
-                </p>
-              </div>
-              <div className="instagram">
-                <Image
-                  draggable="false"
-                  src={instagram}
-                  alt="instagram-icon"
-                  width={50}
-                  height={50}
-                />
-                <p>
-                  <ol>Check out our instagram page!</ol>
-                  <li>Follow us to get information about updates</li>
-                  <li>Become a part of the team</li>
-                  <li>See our latest posts</li>
-                </p>
-              </div>
-            </div>
-          </nav>
+        <div className="support-home">
+          <Link href="./">
+            <Image
+              draggable="false"
+              src={home}
+              alt="home-icon"
+              width={50}
+              height={50}
+            />
+          </Link>
         </div>
         <div className="supportmain">
           <main>
@@ -144,6 +96,50 @@ export default function Support() {
               step of the way.
             </li>
           </main>
+        </div>
+        <div>
+          <nav className="supportnav">
+            <div className="support-icons">
+              <div className="github">
+                <Image
+                  draggable="false"
+                  src={github}
+                  alt="github-icon"
+                  width={50}
+                  height={50}
+                />
+                <ol>Check out our github page!</ol>
+                <li>Get news about updates</li>
+                <li>Become a part of the team</li>
+                <li>Report bugs</li>
+              </div>
+              <div className="discord">
+                <Image
+                  draggable="false"
+                  src={discord}
+                  alt="discord-icon"
+                  width={50}
+                  height={50}
+                />
+                <ol>Check out our discord page!</ol>
+                <li>Log your complaints</li> <li>Get 24/7 services</li>
+                <li>Get news about updates</li>
+              </div>
+              <div className="instagram">
+                <Image
+                  draggable="false"
+                  src={instagram}
+                  alt="instagram-icon"
+                  width={50}
+                  height={50}
+                />
+                <ol>Check out our instagram page!</ol>
+                <li>Follow us to get information about updates</li>
+                <li>Become a part of the team</li>
+                <li>See our latest posts</li>
+              </div>
+            </div>
+          </nav>
         </div>
       </div>
     </body>

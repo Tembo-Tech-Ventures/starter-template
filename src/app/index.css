@@ -127,13 +127,21 @@ body {
   background-position: center;
   background-size: cover;
   position: relative;
+  margin-top: 30px;
 }
 
 .supportnav {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding-bottom: 50px;
-  padding: 0px 20px 0px;
+  background-color: rgba(255, 255, 255, 1);
+  padding-bottom: 20px;
+  padding: 0px 10px 0px;
 }
+
+.support-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .supportmain {
   display: flex;
@@ -144,6 +152,7 @@ body {
   font-size: 40px;
   margin-left: 30px;
   margin-right: 30px;
+  margin-bottom: 100px;
 }
 
 .support-icons {
@@ -151,6 +160,7 @@ body {
   align-items: center;
   position: relative;
   justify-content: space-evenly;
+  padding: 20px 0 5px;
 }
 
 .emailincoming {
@@ -317,3 +327,27 @@ body {
 .logout-button:hover {
   color: #000;
 }
+
+.contact-us {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(
+    rgba(230, 45, 230, 0.7),
+    rgba(140, 45, 230, 0.7)
+  ),
+  url(/Contact-us.jpg);
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+}
+
+.contact-form {
+  max-width: sm;
+  border-radius: 50px;
+}
+

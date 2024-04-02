@@ -43,6 +43,7 @@ export default function HomePage() {
             backgroundColor: "white",
             borderRadius: 50,
             justifyContent: "center",
+            overflowY: "scroll",
           }}
           minWidth={600}
           height={500}

@@ -3,12 +3,14 @@ import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export async function POST(req: Request) {
-  const { email, message } = await req.json();
+  const { email, message, name } = await req.json();
 
   const emailServerUrl = process.env.EMAIL_SERVER;
+
   if (!emailServerUrl) {
     throw new Error("EMAIL_SERVER env var not set");
   }
+
   const emailServerUrlObject = new URL(emailServerUrl);
 
   const smtpHost = emailServerUrlObject.hostname;
@@ -17,11 +19,11 @@ export async function POST(req: Request) {
   const smtpPass = emailServerUrlObject.password;
 
   const transporter = nodemailer.createTransport({
-    host: process.env.HOST,
-    port: process.env.PORT,
+    host: process.env.BREVO_HOST,
+    port: 587,
     auth: {
-      user: process.env.USER,
-      pass: process.env.PASS,
+      user: process.env.BREVO_USER,
+      pass: process.env.BREVO_PASSWORD,
     },
   } as SMTPTransport.Options);
 
@@ -31,28 +33,26 @@ export async function POST(req: Request) {
     replyTo: email,
     subject: "Contact Form Message",
     text: `
-    Message from: ${email}
-    Message: ${message}
-    `,
+ Message from: ${email}
+ Name: ${name}
+ Message: 
+ ${message}    
+ 
+     `,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      return NextResponse.json(
-        {
-          status: "error",
-          message: "Failed to send mail",
-        },
-        { status: 500 },
-      );
-    }
-
-    console.log("Email sent: " + info.response);
-    return NextResponse.json({
-      status: "success",
-      message: "Email sent successfully",
-    });
-  });
-  return NextResponse.json(message);
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully");
+    return new Response(
+      JSON.stringify({ status: "success", message: "Email sent successfully" }),
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error("Failed to send email:", error);
+    return new Response(
+      JSON.stringify({ status: "error", message: "Failed to send email" }),
+      { status: 500 },
+    );
+  }
 }

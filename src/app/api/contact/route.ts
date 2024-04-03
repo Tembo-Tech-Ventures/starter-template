@@ -17,11 +17,11 @@ export async function POST(req: Request) {
   const smtpPass = emailServerUrlObject.password;
 
   const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
+    host: "smtp-relay.brevo.com",
+    port: 587,
     auth: {
-      user: smtpUser,
-      pass: smtpPass,
+      user: "cjxfs2007@gmail.com",
+      pass: "O3rXIKW8zLMx5J0a",
     },
   } as SMTPTransport.Options);
 

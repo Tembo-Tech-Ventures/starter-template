@@ -219,8 +219,8 @@ body {
   min-height: 100vh;
   width: 100%;
   background-image: linear-gradient(
-      rgba(140, 140, 140, 0.7),
-      rgba(35, 35, 35, 0.7)
+      rgba(190, 70, 251, 0.7),
+      rgba(0, 0, 0, 0.7)
     ),
     url(/3.jpg);
   background-position: center;
@@ -242,9 +242,23 @@ body {
   flex-direction: column;
   justify-content: flex-end; 
   align-items: center;
-  background-color: #fff;
-  width: 960px;
-  height: 780px;
+  background-color: #82828276;
+  min-width: 600px;
+  height: 700px;
+  border-radius: 50px;
+}
+
+.chat-display {
+  background-color: #ffffff;
+  min-width: 500px;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  flex-direction: column-reverse;
+  overflow-y: auto; /* Enable scrolling if the content exceeds the container's height */
+  padding: 5px;
 }
 
 .send {
@@ -351,3 +365,39 @@ body {
   border-radius: 50px;
 }
 
+.chat-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-button {
+  font-family: "HappyMonkey", serif;
+  border-radius: 50px; 
+  border: 2px solid rgb(0, 0, 0);
+  box-shadow: inset 0 0 1px #fff, 1px 1px 2px #000;
+  padding: 5px 30px 5px;
+  color: #fff;
+  background-color: #000;
+  transition: background-color 0.2s;
+}
+
+.ai-button:hover {
+  background-color: #ffffff;
+  color: #000;
+ }
+
+ .chat-logout-button {
+  background-color: #000;
+  color: #fff;
+}
+
+.chat-logout-button:hover {
+  color: #000;
+}
+
+.chat-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

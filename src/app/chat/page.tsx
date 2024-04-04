@@ -7,6 +7,7 @@ import "@/app/index.css";
 import Link from "next/link";
 import Image from "next/image";
 import send from "../icons/paper-plane-solid.svg";
+import home from "../icons/house-solid.svg";
 
 interface MessageData {
   message: string;
@@ -40,29 +41,61 @@ export default function Chat() {
 
   return (
     <body className="chatpage">
+      <div className="chat-home">
+        <Link href="./">
+          <Image
+            draggable="false"
+            src={home}
+            alt="home-icon"
+            width={30}
+            height={30}
+          />
+        </Link>
+      </div>
       <main>
         <div className="chat-chat">
-          {messages.map((message, index) => (
-            <p key={index}>
-              {message.message}
-              <span style={{ fontSize: "0.8em", color: "gray" }}>
-                ({message.timestamp.toLocaleString()})
-              </span>
-            </p>
-          ))}
+          <div className="chat-display">
+            {messages.map((message, index) => (
+              <p key={index}>
+                {message.message}
+                {message.message && (
+                  <span style={{ fontSize: "0.8em", color: "gray" }}>
+                    ({message.timestamp.toLocaleString()})
+                  </span>
+                )}
+              </p>
+            ))}
+          </div>
+
           <div className="chat-input">
             <input
               className="input"
               placeholder="Message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+
+                  fetch("/api/chat", {
+                    method: "POST",
+                    body: JSON.stringify({
+                      message: input,
+                    }),
+                  });
+                  setInput("");
+                }
+              }}
               style={{
                 borderRadius: 10,
                 width: "100%",
-                height: 51,
+                height: 40,
                 border: "none",
                 outline: "none",
                 background: "silver",
+                marginBottom: 10,
+                alignItems: "center",
+                justifyContent: "center",
               }}
             />
             <Button

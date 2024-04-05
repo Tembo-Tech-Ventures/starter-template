@@ -244,19 +244,19 @@ body {
   align-items: center;
   background-color: #82828276;
   min-width: 600px;
-  height: 700px;
+  height: 650px;
   border-radius: 50px;
 }
 
 .chat-display {
   background-color: #ffffff;
+  display: flex;
   min-width: 500px;
   height: 500px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 50px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
   border-radius: 10px;
-  flex-direction: column-reverse;
+  flex-direction: column;
   overflow-y: auto; /* Enable scrolling if the content exceeds the container's height */
   padding: 5px;
 }
@@ -369,6 +369,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
 }
 
 .ai-button {

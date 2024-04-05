@@ -93,7 +93,7 @@ export default function Chat() {
                 border: "none",
                 outline: "none",
                 background: "silver",
-                marginBottom: 10,
+                marginBottom: 20,
                 alignItems: "center",
                 justifyContent: "center",
               }}

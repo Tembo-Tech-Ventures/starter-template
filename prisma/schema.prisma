@@ -62,3 +62,12 @@ model Message {
     ownerId   String?
     owner     User?     @relation(fields: [ownerId], references: [id])
 }
+
+model ChatMessage {
+    id Int @id @default(autoincrement())
+    message String
+    username String
+    email String
+    createdAt DateTime @default(now())
+
+}

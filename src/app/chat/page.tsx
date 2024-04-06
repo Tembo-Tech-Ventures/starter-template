@@ -16,7 +16,7 @@ import { getServerSession } from "@/modules/auth/lib/get-server-session/get-serv
 
 interface MessageData {
   message: string;
-  timestamp: Date;
+  createdAt: Date;
   username?: string;
   email: string;
 }
@@ -48,7 +48,7 @@ export default function Chat() {
     channel.bind("message", (data: MessageData) => {
       const messageWithTimestamp = {
         ...data,
-        timestamp: data.timestamp || new Date(),
+        timestamp: data.createdAt || new Date(),
       };
       setMessages((prevMessages) => [...prevMessages, messageWithTimestamp]);
     });
@@ -78,7 +78,13 @@ export default function Chat() {
             {[...(databaseChatMessages || []), ...messages].map(
               (message, index) => (
                 <p key={index}>
-                  <b>{message.email}</b>:{message.message}
+                  <b>{message.email}</b>
+                  {message.message && message.email && (
+                    <span style={{ fontSize: "10px", color: "gray" }}>
+                      ({new Date(message.createdAt).toLocaleString()})
+                    </span>
+                  )}
+                  :{message.message}
                 </p>
               ),
             )}
@@ -112,8 +118,8 @@ export default function Chat() {
                   },
                   body: JSON.stringify({
                     message: input,
-                    username: "TJ", // Replace with actual username
-                    email: session.data?.user?.email || "harrisjohnu@gmail.com", // Replace with actual email
+                    username: "user",
+                    email: session.data?.user?.email || "cjxfs2007@gmail.com", // Replace with actual email
                   }),
                 });
                 setInput("");

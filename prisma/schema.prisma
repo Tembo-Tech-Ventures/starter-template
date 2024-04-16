@@ -35,14 +35,16 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String        @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?       @unique
     emailVerified DateTime?
     image         String?
+    username      String?       @unique
     accounts      Account[]
     sessions      Session[]
     Message       Message[]
+    ChatMessage   ChatMessage[]
 }
 
 model VerificationToken {
@@ -60,14 +62,14 @@ model Message {
     content   String
     createdAt DateTime @default(now())
     ownerId   String?
-    owner     User?     @relation(fields: [ownerId], references: [id])
+    owner     User?    @relation(fields: [ownerId], references: [id])
 }
 
 model ChatMessage {
-    id Int @id @default(autoincrement())
-    message String
-    username String
-    email String
+    id        Int      @id @default(autoincrement())
+    message   String
+    email     String
     createdAt DateTime @default(now())
-
+    ownerId   String?
+    owner     User?   @relation(fields: [ownerId], references: [id])
 }

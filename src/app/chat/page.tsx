@@ -13,6 +13,8 @@ import { useSession } from "next-auth/react";
 import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
 import { getAllChatMessages } from "@/modules/chat/lib/get-all-chat-messages/get-all-chat-messages";
 import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface MessageData {
   message: string;
@@ -31,6 +33,11 @@ export default function Chat() {
   const [input, setInput] = useState<string>("");
   const [email, setEmail] = useState<MessageData[]>([]);
   const router = useRouter();
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
 
   const { data: databaseChatMessages } = useAllChatMessages();
 
@@ -73,7 +80,27 @@ export default function Chat() {
         </Link>
       </div>
       <main>
+        <div className="user-settings">
+          <div className="user-icon">
+            <FontAwesomeIcon
+              className="user-itself"
+              icon={faUser}
+              onClick={toggleMenu}
+            />
+          </div>
+        </div>
         <div className="chat-chat">
+          {menuVisible && (
+            <div className="user-menu">
+              <div className="user-options">
+                <div className="user-profile">
+                  <Link href="">
+                    <b>User Profile</b>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="chat-display">
             {[...(databaseChatMessages || []), ...messages].map(
               (message, index) => (

@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+export const prismaz = new PrismaClient();
+
 declare const global: {
   prisma?: import("@prisma/client").PrismaClient;
   [key: string]: unknown;

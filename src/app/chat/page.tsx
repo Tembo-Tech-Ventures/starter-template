@@ -19,8 +19,9 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 interface MessageData {
   message: string;
   createdAt: Date;
-  username?: string;
+  username: string;
   email: string;
+  name: string;
 }
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
@@ -34,9 +35,34 @@ export default function Chat() {
   const [email, setEmail] = useState<MessageData[]>([]);
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [profiledata, setProfileData] = useState(false);
+  const [userName, setUserName] = useState(session.data?.user?.name || "");
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserName(event.target.value);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      await fetch("/api/pfps", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: userName }),
+      });
+    } catch (error) {
+      console.error("Failed to update name:", error);
+    }
+  };
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
+  };
+
+  const toggleProfile = () => {
+    setProfileData(!profiledata);
   };
 
   const { data: databaseChatMessages } = useAllChatMessages();
@@ -93,19 +119,53 @@ export default function Chat() {
           {menuVisible && (
             <div className="user-menu">
               <div className="user-options">
-                <div className="user-profile">
-                  <Link href="">
-                    <b>User Profile</b>
-                  </Link>
+                <div>
+                  <Button className="user-profile" onClick={toggleProfile}>
+                    Account
+                  </Button>
+                </div>
+                <div>
+                  <Button className="user-display" onClick={toggleProfile}>
+                    Display
+                  </Button>
                 </div>
               </div>
+              {profiledata && (
+                <div className="user-pages">
+                  <div className="user-profile-page">
+                    <div className="user-profile-page-picture"></div>
+                    {[...(databaseChatMessages || []), ...messages].map(
+                      (message, index) => (
+                        <p key={index}>
+                          Name: <b>{userName}</b>
+                          <br></br>
+                          E-mail: <b>{message.email}</b>
+                        </p>
+                      ),
+                    )}
+                  </div>
+                  <div className="user-page-profile-picture-upload"></div>
+                  <div className="user-page-profile-name-change">
+                    <form onSubmit={handleSubmit}>
+                      <label htmlFor="userName">Name:</label>
+                      <input
+                        type="text"
+                        id="userName"
+                        value={userName}
+                        onChange={handleNameChange}
+                      />
+                      <button type="submit">Update Name</button>
+                    </form>
+                  </div>
+                </div>
+              )}
             </div>
           )}
           <div className="chat-display">
             {[...(databaseChatMessages || []), ...messages].map(
               (message, index) => (
                 <p key={index}>
-                  <b>{message.email}</b>
+                  <b>{userName ? userName : message.email}</b>
                   {message.message && message.email && (
                     <span style={{ fontSize: "10px", color: "gray" }}>
                       ({new Date(message.createdAt).toLocaleString()})
@@ -145,8 +205,8 @@ export default function Chat() {
                   },
                   body: JSON.stringify({
                     message: input,
-                    username: "user",
-                    email: session.data?.user?.email || "cjxfs2007@gmail.com", // Replace with actual email
+                    name: session.data?.user?.name,
+                    email: session.data?.user?.email || "cjxfs2007@gmail.com",
                   }),
                 });
                 setInput("");

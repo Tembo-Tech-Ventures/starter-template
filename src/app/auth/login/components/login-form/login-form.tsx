@@ -10,7 +10,20 @@ import { useState } from "react";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const generateUsername = () => {
+    return email.split("@")[0];
+  };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!username) {
+      setUsername(generateUsername());
+      console.log(username);
+    }
+    signIn("email", { email: email, username: username });
+    setSubmitted(true);
+  };
   return (
     <Box
       width="100%"
@@ -23,13 +36,7 @@ export function LoginForm() {
           "linear-gradient(rgba(140,45,230,0.7),rgba(140,45,230,0.7)),url('/login.png')",
       }}
     >
-      <form
-        onSubmit={(p) => {
-          p.preventDefault();
-          signIn("email", { email: (p.target as any).email.value });
-          setSubmitted(true);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <Stack
           spacing={5}
           style={{ backgroundColor: "#fff", padding: 50, borderRadius: 20 }}

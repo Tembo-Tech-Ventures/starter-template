@@ -23,7 +23,7 @@
 		"version": "2.0.0",
 		"tasks": [
 			{
-                "label": "docker-compose",
+                "label": "docker-compose (database, mailer)",
                 "type": "shell",
                 "command": "docker-compose create && docker-compose up -d",
 				"runOptions": {
@@ -38,7 +38,7 @@
                 }
             },
             {
-                "label": "npm install",
+                "label": "run frontend",
                 "type": "shell",
                 "command": "export NEXTAUTH_URL=\"https://${CODESPACE_NAME}-3000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/\" && npm install && npm run dev",
 				"runOptions": {

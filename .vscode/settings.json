@@ -1,16 +1,4 @@
 {
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "local",
-            "database": "database",
-            "username": "user",
-            "password": "password"
-        }
-    ],
     "json.schemas": [
         {
             "fileMatch": [

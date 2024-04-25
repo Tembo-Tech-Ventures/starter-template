@@ -1,0 +1,57 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"explorer.compactFolders": false,
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 5432,
+				"driver": "PostgreSQL",
+				"name": "local",
+				"database": "database",
+				"username": "user",
+				"password": "password"
+			}
+		],
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+                "label": "docker-compose",
+                "type": "shell",
+                "command": "docker-compose create && docker-compose up -d",
+				"runOptions": {
+					"runOn": "folderOpen"
+				},
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "presentation": {
+                    "reveal": "always"
+                }
+            },
+            {
+                "label": "npm install",
+                "type": "shell",
+                "command": "export NEXTAUTH_URL=\"https://${CODESPACE_NAME}-3000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/\" && npm install && npm run dev",
+				"runOptions": {
+					"runOn": "folderOpen"
+				},
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "presentation": {
+                    "reveal": "always"
+                }
+            }
+		]
+	}
+}

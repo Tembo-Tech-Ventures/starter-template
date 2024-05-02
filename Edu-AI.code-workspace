@@ -40,7 +40,7 @@
             {
                 "label": "run frontend",
                 "type": "shell",
-                "command": "export NEXTAUTH_URL=\"https://${CODESPACE_NAME}-3000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/\" && npm run dev",
+                "command": "sleep 20 && export NEXTAUTH_URL=\"https://${CODESPACE_NAME}-3000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/\" && npm run dev",
 				"runOptions": {
 					"runOn": "folderOpen"
 				},

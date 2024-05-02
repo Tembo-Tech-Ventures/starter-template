@@ -1,30 +1,33 @@
-const prisma = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
+import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
+import { NextRequest, NextResponse } from "next/server";
+import { User } from "@prisma/client";
 
-async function generateUsernameIfNeeded(email: string) {
-  // Check if a user with the given email exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email: email },
+const prisma = new PrismaClient();
+type UpdateRequest = Pick<User, "username">;
+
+export async function POST(req: Request) {
+  const userName = (await req.json()) as UpdateRequest;
+
+  const session = await getServerSession();
+
+  await prisma.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      username: userName.username,
+    },
   });
-
-  if (!existingUser) {
-    // If the user doesn't exist, generate a username
-    const username = generateUsername(email);
-    // Create a new user with the generated username
-    await prisma.user.create({
-      data: {
-        email: email,
-        username: username,
-      },
-    });
-    return username;
-  } else {
-    // If the user exists, return their existing username
-    return existingUser.username;
-  }
+  return NextResponse.json(userName);
 }
 
-function generateUsername(email: string) {
-  // Implement your logic to generate a username from the email
-  // This is a simple example that extracts the part before '@'
-  return email.split("@")[0];
-}
+export const GET = async (req: Request) => {
+  const session = await getServerSession();
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+  });
+  return NextResponse.json(user);
+};

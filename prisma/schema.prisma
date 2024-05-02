@@ -40,12 +40,14 @@ model User {
     email          String?       @unique
     profilePicture String?
     emailVerified  DateTime?
+    pfpurl         String?
     image          String?
     username       String?       @unique
     accounts       Account[]
     sessions       Session[]
     Message        Message[]
     ChatMessage    ChatMessage[]
+    Image          Image[]
 }
 
 model VerificationToken {
@@ -70,8 +72,16 @@ model ChatMessage {
     id        Int      @id @default(autoincrement())
     message   String
     email     String
-    name      String?
+    name      String? 
     createdAt DateTime @default(now())
     ownerId   String?
+    owner     User?    @relation(fields: [ownerId], references: [id])
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String
+  createdAt DateTime @default(now())
+      ownerId   String?
     owner     User?    @relation(fields: [ownerId], references: [id])
 }

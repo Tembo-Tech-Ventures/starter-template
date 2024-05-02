@@ -21,7 +21,6 @@ interface MessageData {
   createdAt: Date;
   username: string;
   email: string;
-  name: string;
 }
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
@@ -36,22 +35,44 @@ export default function Chat() {
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
   const [profiledata, setProfileData] = useState(false);
-  const [userName, setUserName] = useState(session.data?.user?.name || "");
+  const [userName, setUserName] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+  const changePic = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    await fetch("/api/pfps", {
+      method: "POST",
+      body: formData,
+    });
+
+    // Handle success or error
+  };
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
+    setUserName(userName);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await fetch("/api/pfps", {
+      await fetch("/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: userName }),
+        body: JSON.stringify({ username: userName }),
       });
+      setUserName("");
     } catch (error) {
       console.error("Failed to update name:", error);
     }
@@ -134,27 +155,29 @@ export default function Chat() {
                 <div className="user-pages">
                   <div className="user-profile-page">
                     <div className="user-profile-page-picture"></div>
-                    {[...(databaseChatMessages || []), ...messages].map(
-                      (message, index) => (
-                        <p key={index}>
-                          Name: <b>{userName}</b>
-                          <br></br>
-                          E-mail: <b>{message.email}</b>
-                        </p>
-                      ),
-                    )}
+                    <p>
+                      Name: <b>{userName}</b>
+                      <br></br>
+                      E-mail: <b>{session.data?.user?.email}</b>
+                    </p>
                   </div>
-                  <div className="user-page-profile-picture-upload"></div>
+                  <div className="user-page-profile-picture-upload">
+                    <form onSubmit={changePic}>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                      />
+                      <button type="submit">Upload</button>
+                    </form>
+                  </div>
                   <div className="user-page-profile-name-change">
                     <form onSubmit={handleSubmit}>
-                      <label htmlFor="userName">Name:</label>
                       <input
-                        type="text"
-                        id="userName"
                         value={userName}
-                        onChange={handleNameChange}
+                        onChange={(e) => setUserName(e.target.value)}
                       />
-                      <button type="submit">Update Name</button>
+                      <Button type="submit">Change</Button>
                     </form>
                   </div>
                 </div>
@@ -205,7 +228,7 @@ export default function Chat() {
                   },
                   body: JSON.stringify({
                     message: input,
-                    name: session.data?.user?.name,
+                    username: userName,
                     email: session.data?.user?.email || "cjxfs2007@gmail.com",
                   }),
                 });

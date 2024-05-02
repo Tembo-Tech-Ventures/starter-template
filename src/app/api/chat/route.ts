@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
     data: {
       message: messageInput.message,
       email: session.user.email,
-      name: session.user.name,
+      ownerId: session.user.id,
     },
   });
 

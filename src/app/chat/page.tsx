@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Pusher from "pusher-js";
 import { Button, Stack } from "@mui/material";
 import "@/app/index.css";
@@ -62,21 +62,22 @@ export default function Chat() {
     setUserName(userName);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      await fetch("/api/user", {
+  const change = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      fetch("/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: userName }),
+        body: JSON.stringify({
+          userName: userName || `user`,
+        }),
       });
       setUserName("");
-    } catch (error) {
-      console.error("Failed to update name:", error);
-    }
-  };
+    },
+    [userName],
+  );
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -112,6 +113,18 @@ export default function Chat() {
       channel.unsubscribe();
     };
   }, []);
+  useEffect(() => {
+    async function Update() {
+      if (!session.data?.user) {
+        return;
+      }
+      const response = await fetch("/api/user");
+      const user = await response.json();
+      console.log("@@ user: ", user);
+      setUserName(user.user.username || "user");
+    }
+    Update();
+  }, [session.data?.user]);
 
   return (
     <body className="chatpage">
@@ -172,10 +185,10 @@ export default function Chat() {
                     </form>
                   </div>
                   <div className="user-page-profile-name-change">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={change}>
                       <input
                         value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
+                        onChange={(r) => setUserName(r.target.value)}
                       />
                       <Button type="submit">Change</Button>
                     </form>
@@ -228,7 +241,6 @@ export default function Chat() {
                   },
                   body: JSON.stringify({
                     message: input,
-                    username: userName,
                     email: session.data?.user?.email || "cjxfs2007@gmail.com",
                   }),
                 });

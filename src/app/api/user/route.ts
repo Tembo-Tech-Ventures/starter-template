@@ -1,27 +1,21 @@
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/modules/prisma/lib/prisma-client/prisma-client";
 import { User } from "@prisma/client";
+import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 type UpdateRequest = Pick<User, "username">;
 
-export async function POST(req: Request) {
-  const userName = (await req.json()) as UpdateRequest;
-
+export const POST = async (req: Request) => {
+  const reqData = (await req.json()) as UpdateRequest;
   const session = await getServerSession();
-
   await prisma.user.update({
     where: {
       id: session.user.id,
     },
-    data: {
-      username: userName.username,
-    },
+    data: reqData,
   });
-  return NextResponse.json(userName);
-}
-
+  return NextResponse.json(reqData);
+};
 export const GET = async (req: Request) => {
   const session = await getServerSession();
   const user = await prisma.user.findUnique({

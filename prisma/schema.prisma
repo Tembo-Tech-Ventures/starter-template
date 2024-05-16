@@ -71,7 +71,6 @@ model Message {
 model ChatMessage {
     id        Int      @id @default(autoincrement())
     message   String
-    email     String
     name      String? 
     createdAt DateTime @default(now())
     ownerId   String?

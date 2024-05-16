@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Pusher from "pusher-js";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import "@/app/index.css";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,6 +13,8 @@ import { useSession } from "next-auth/react";
 import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
 import { getAllChatMessages } from "@/modules/chat/lib/get-all-chat-messages/get-all-chat-messages";
 import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
+import { GetAllMessagesResponse } from "../api/messages/route";
+import { GetAllChatMessagesResponse } from "../api/chat/route";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,14 +31,16 @@ const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
 
 export default function Chat() {
   const session = useSession();
-  const [messages, setMessages] = useState<MessageData[]>([]);
+  const [messages, setMessages] = useState<
+    GetAllChatMessagesResponse["messages"]
+  >([]);
   const [input, setInput] = useState<string>("");
-  const [email, setEmail] = useState<MessageData[]>([]);
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
   const [profiledata, setProfileData] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const generator = `${Math.floor(Math.random() * 10000)}`;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -58,10 +62,6 @@ export default function Chat() {
     // Handle success or error
   };
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(userName);
-  };
-
   const change = useCallback(
     (e: any) => {
       e.preventDefault();
@@ -71,12 +71,12 @@ export default function Chat() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName: userName || `user`,
+          username: username || `user${Math.floor(Math.random() * 2)}`,
         }),
       });
-      setUserName("");
+      setUsername("");
     },
-    [userName],
+    [username],
   );
 
   const toggleMenu = () => {
@@ -100,13 +100,13 @@ export default function Chat() {
   useEffect(() => {
     const channel = pusher.subscribe("chat");
 
-    channel.bind("message", (data: MessageData) => {
-      const messageWithTimestamp = {
-        ...data,
-        timestamp: data.createdAt || new Date(),
-      };
-      setMessages((prevMessages) => [...prevMessages, messageWithTimestamp]);
-    });
+    channel.bind(
+      "message",
+      (data: GetAllChatMessagesResponse["messages"][number]) => {
+        console.log("@@ message: ", data);
+        setMessages((prevMessages) => [...prevMessages, data]);
+      },
+    );
 
     return () => {
       channel.unbind_all();
@@ -121,7 +121,7 @@ export default function Chat() {
       const response = await fetch("/api/user");
       const user = await response.json();
       console.log("@@ user: ", user);
-      setUserName(user.user.username || "user");
+      setUsername(user.user.username || "user");
     }
     Update();
   }, [session.data?.user]);
@@ -169,7 +169,7 @@ export default function Chat() {
                   <div className="user-profile-page">
                     <div className="user-profile-page-picture"></div>
                     <p>
-                      Name: <b>{userName}</b>
+                      Name: <b>{owner?.username}</b>
                       <br></br>
                       E-mail: <b>{session.data?.user?.email}</b>
                     </p>
@@ -185,12 +185,17 @@ export default function Chat() {
                     </form>
                   </div>
                   <div className="user-page-profile-name-change">
-                    <form onSubmit={change}>
-                      <input
-                        value={userName}
-                        onChange={(r) => setUserName(r.target.value)}
-                      />
-                      <Button type="submit">Change</Button>
+                    <h2>Change Username</h2>
+                    <form action="" onSubmit={change}>
+                      <TextField
+                        label="Change Username"
+                        id="change"
+                        value={username}
+                        onChange={(r) => setUsername(r.target.value)}
+                      ></TextField>
+                      <Button type="submit" variant="contained" id="clicker">
+                        Change
+                      </Button>
                     </form>
                   </div>
                 </div>
@@ -201,8 +206,12 @@ export default function Chat() {
             {[...(databaseChatMessages || []), ...messages].map(
               (message, index) => (
                 <p key={index}>
-                  <b>{userName ? userName : message.email}</b>
-                  {message.message && message.email && (
+                  <b>
+                    {message.owner?.username
+                      ? message.owner?.username
+                      : session.data?.user?.email}
+                  </b>
+                  {message.message && session.data?.user?.email && (
                     <span style={{ fontSize: "10px", color: "gray" }}>
                       ({new Date(message.createdAt).toLocaleString()})
                     </span>
@@ -242,6 +251,8 @@ export default function Chat() {
                   body: JSON.stringify({
                     message: input,
                     email: session.data?.user?.email || "cjxfs2007@gmail.com",
+                    username:
+                      username || `user${Math.floor(Math.random() * 2)}`,
                   }),
                 });
                 setInput("");

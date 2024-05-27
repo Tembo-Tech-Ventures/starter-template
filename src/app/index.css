@@ -517,3 +517,34 @@ body {
   color: #0000;
   background-color: #fff;
 }
+
+.holder {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background-color: rgba(65, 65, 65, 0.589);
+}
+.circular {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadText {
+  display: block;
+  background: linear-gradient(-229deg, red 0%, gold 15%, blue 15%, white 30%, plum 47%, rebeccapurple 63%, silver 100%);
+  background-clip: text;
+  background-size: 200% auto;
+  color: transparent;
+  animation: wax 1s infinite linear;
+}
+@keyframes wax {
+  to {background-position: 200% center;}
+}

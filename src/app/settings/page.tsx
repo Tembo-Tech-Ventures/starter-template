@@ -10,10 +10,24 @@ import { faUserAlt, faX } from "@fortawesome/free-solid-svg-icons";
 import { PointBack, PointOut } from "@/components/mousecontrols/mousecontrol";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
+import { GetAllChatMessagesResponse } from "../api/chat/route";
+import { useState } from "react";
 
 export default function Settings() {
   const router = useRouter();
   const session = useSession();
+  const [messages, setMessages] = useState<
+    GetAllChatMessagesResponse["messages"]
+  >([]);
+  const { data: databaseChatMessages } = useAllChatMessages();
+  const uniqueUsernames = Array.from(
+    new Set(
+      [...(databaseChatMessages || []), ...messages].map(
+        (message) => message.owner?.username,
+      ),
+    ),
+  ).join("");
   const doneCustomizing = () => {
     router.back();
   };
@@ -71,6 +85,14 @@ export default function Settings() {
                 className="userComponents"
               >
                 Email {session.data?.user?.email}
+              </Typography>
+              <br />
+              <Typography
+                variant="h4"
+                id="usernameA"
+                className="userComponents"
+              >
+                Username: {uniqueUsernames}
               </Typography>
               <br />
               <Button

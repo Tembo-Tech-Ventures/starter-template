@@ -26,6 +26,20 @@
     "opsz" 24;
 }
 
+#bars {
+  font-size: 20;
+  z-index: 765;
+  display: flex;
+  position: absolute;
+  top: 1%;
+  left: 1%;
+  color: #000;
+}
+#bars:hover {
+  color: white;
+  background-color: black;
+  border-radius: 50px;
+}
 #prime {
   animation: amazon 5s ease-in-out infinite;
 }
@@ -346,6 +360,12 @@ option {
   position: relative;
   float: right;
   color: black;
+}
+.menuHolder {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .discordSection {

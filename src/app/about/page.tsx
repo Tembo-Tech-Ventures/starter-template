@@ -11,6 +11,7 @@ import { PointBack, PointOut } from "@/components/mousecontrols/mousecontrol";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDiscord,
+  faFacebook,
   faLinkedin,
   faLinkedinIn,
   faXTwitter,
@@ -277,414 +278,247 @@ export default function About() {
               progress in the fields of tomorrow.
             </p>
           </Typography>
-          <Typography
-            variant="h2"
-            style={{
-              backgroundImage:
-                "linear-gradient(to bottom right, gold, silver, brown, red, green, aqua)",
-              WebkitBackgroundClip: "text",
-              MozBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-            onMouseOver={(e) => {
-              var cursor = document.getElementById("mouse") as HTMLImageElement;
-              cursor.srcset = "/text-cursor.png";
-            }}
-            onMouseOut={(d) => {
-              var cursor = document.getElementById("mouse") as HTMLImageElement;
-              cursor.srcset = "/cursor.png";
-            }}
-          >
-            Contributors
-          </Typography>
           <Stack
-            id="idea"
             style={{
               display: "flex",
-              flexDirection: "row",
-              paddingLeft: 40,
-              rowGap: 5,
+              position: "relative",
+              gap: 12,
+              left: "6%",
             }}
           >
-            <div
+            <Typography
+              variant="h1"
               style={{
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-                width: 400,
-                height: 2000,
-                border: "1px solid rgb(128, 128, 128)",
-                padding: "10px",
-                boxSizing: "border-box",
-                boxShadow: "0 0 50px rgb(128, 128, 128)",
-                cursor: "none",
-                overflowY: "scroll",
+                display: "flex",
+                position: "relative",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "palevioletred",
               }}
             >
-              <Image
-                alt="HJ"
-                src={"/bw.jpg"}
-                width={200}
-                height={200}
-                style={{ borderRadius: "900px" }}
-                draggable={"false"}
-              ></Image>
-              <Typography
-                variant="h3"
-                style={{ fontFamily: "'Indie Flower', cursive" }}
-                onMouseOver={(e) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/text-cursor.png";
-                }}
-                onMouseOut={(d) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/cursor.png";
-                }}
-              >
-                Harrison JA
-              </Typography>
-              <Typography
-                variant="h5"
-                style={{
-                  fontFamily: "'Tillana', system-ui",
-                  color: "black",
-                }}
-                onMouseOver={(e) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/text-cursor.png";
-                }}
-                onMouseOut={(d) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/cursor.png";
-                }}
-              >
-                Meet Harrison, a guy with a passion for technology and
-                agriculture. With a keen interest in problem-solving and a
-                desire to make a difference, Harrison embarked on an exciting
-                journey to develop an agricultural chatbot project. The project
-                aimed to create a chatbot that would provide agricultural
-                information, answer frequently asked questions, guide users
-                through procedures and processes, and offer evaluation
-                instruments for students and farmers. By combining their love
-                for technology and agriculture, Harrison sought to develop a
-                tool that would help farmers, students, and anyone interested in
-                rgb(78, 78, 156). Throughout the project, He learned about
-                chatbot development, artificial intelligence, and agricultural
-                practices. They researched existing chatbots and their features,
-                identified gaps, and designed a chatbot that would cater to the
-                unique needs of the agricultural community. Along the way, He
-                gained valuable skills in programming, problem-solving, and
-                project management. The agricultural chatbot project has the
-                potential to make a significant impact on the agricultural
-                community. By providing easy access to information, answering
-                frequently asked questions, and offering evaluation instruments,
-                the chatbot can help farmers and students improve their
-                agricultural practices and make more informed decisions. The
-                project also highlights the potential of young people to make a
-                difference in their communities through innovation and
-                technology. He plans to continue developing the agricultural
-                chatbot project, adding more features and expanding its reach.
-                They also hope to inspire other young people to explore the
-                intersection of technology and agriculture and to use their
-                skills to make a positive impact on their communities. In
-                conclusion, Harrison&apos;s agricultural chatbot project is a
-                testament to the power of innovation, technology, and a passion
-                for making a difference. By combining their interests and
-                skills, He has created a project that has the potential to
-                transform the agricultural community and inspire other young
-                people to do the same.
-              </Typography>
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "black", width: 220, cursor: "none" }}
-                onMouseEnter={buttonChangeUp}
-                onMouseOver={PointOut}
-                onMouseLeave={PointBack}
-                onMouseOut={buttonChangeDown}
-                id="contact"
-                onClick={AlmightyContactForm}
-              >
-                Contact
-              </Button>
-            </div>
-            <div
-              style={{
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-                width: 400,
-                border: "1px solid rgb(128, 128, 128)",
-                padding: "10px",
-                boxSizing: "border-box",
-                boxShadow: "0 0 50px rgb(128, 128, 128)",
-                gap: 50,
-                marginLeft: 70,
-                overflowY: "scroll",
-              }}
-            >
-              <Image
-                alt="RTM"
-                src={"/rtm.jpg"}
-                width={200}
-                height={200}
-                style={{ borderRadius: "100px" }}
-                draggable={"false"}
-              ></Image>
-              <Typography
-                variant="h3"
-                style={{ fontFamily: "'Indie Flower', cursive" }}
-                onMouseOver={(e) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/text-cursor.png";
-                }}
-                onMouseOut={(d) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/cursor.png";
-                }}
-              >
-                Raphaël TM
-              </Typography>
-              <Typography
-                variant="h5"
-                style={{ fontFamily: "'Tillana', system-ui", color: "black" }}
-                onMouseOver={(e) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/text-cursor.png";
-                }}
-                onMouseOut={(d) => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/cursor.png";
-                }}
-              >
-                As a mentee, I had the privilege of working with a dedicated and
-                experienced mentor through{" "}
-                <a
-                  href="https://tembotechventures.com/"
-                  style={{ cursor: "none" }}
-                  onMouseOver={(e) => {
-                    var cursor = document.getElementById(
-                      "mouse",
-                    ) as HTMLImageElement;
-                    var pointer = document.getElementById(
-                      "pointer",
-                    ) as HTMLImageElement;
-                    cursor.style.display = "none";
-                    pointer.style.display = "block";
-                  }}
-                  onMouseOut={(r) => {
-                    var cursor = document.getElementById(
-                      "mouse",
-                    ) as HTMLImageElement;
-                    var pointer = document.getElementById(
-                      "pointer",
-                    ) as HTMLImageElement;
-                    cursor.style.display = "block";
-                    pointer.style.display = "none";
-                  }}
-                >
-                  TTV(Tembo Tech Ventures)
-                </a>{" "}
-                on a programming project. Our mentor, with a rich background in
-                the tech industry and expertise in various programming languages
-                such as JavaScript, TypeScript, C#, and SQL, provided invaluable
-                guidance and support throughout the project. Our mentor&apos;s
-                approach was structured and well-designed, with a focus on
-                creating a productive learning environment. We established a
-                regular meeting schedule, planned topics in advance, and kept
-                track of our discussions. This framework allowed us to make the
-                most of our mentoring sessions, addressing specific questions,
-                overcoming blockers, and engaging in pair programming sessions.
-                The mentor&apos;s guidance was instrumental in helping me
-                understand complex concepts and improve my problem-solving
-                skills. They introduced me to valuable resources and tools, such
-                as VS code extensions for pair programming, which significantly
-                enhanced my learning experience. Moreover, our mentor fostered a
-                sense of community and support, encouraging open discussions and
-                the exchange of ideas. This collaborative approach not only
-                helped me grow as a programmer but also instilled in me a deeper
-                appreciation for the power of mentorship in personal and
-                professional development. In conclusion, our mentor&apos;s
-                expertise, dedication, and thoughtful mentoring approach played
-                a crucial role in the success of our programming project. Their
-                guidance has left a lasting impact on my learning journey, and I
-                am grateful for the opportunity to have worked with such an
-                inspiring mentor through{" "}
-                <a
-                  href="https://tembotechventures.com/"
-                  style={{ cursor: "none" }}
-                  onMouseOver={(e) => {
-                    var cursor = document.getElementById(
-                      "mouse",
-                    ) as HTMLImageElement;
-                    var pointer = document.getElementById(
-                      "pointer",
-                    ) as HTMLImageElement;
-                    cursor.style.display = "none";
-                    pointer.style.display = "block";
-                  }}
-                  onMouseOut={(r) => {
-                    var cursor = document.getElementById(
-                      "mouse",
-                    ) as HTMLImageElement;
-                    var pointer = document.getElementById(
-                      "pointer",
-                    ) as HTMLImageElement;
-                    cursor.style.display = "block";
-                    pointer.style.display = "none";
-                  }}
-                >
-                  TTV
-                </a>
-                .
-              </Typography>
-              <Button
-                variant="contained"
-                style={{
-                  position: "relative",
-                  backgroundColor: "black",
-                  width: 220,
-                  top: 50,
-                  cursor: "none",
-                }}
-                onMouseEnter={(o) => {
-                  o.preventDefault();
-                  var contact = document.getElementById(
-                    "rtc",
-                  ) as HTMLButtonElement;
-                  contact.style.backgroundColor = "red";
-                  contact.style.color = "black";
-                  contact.style.transition = "1s ease-in-out";
-                }}
-                onMouseOver={PointOut}
-                onMouseLeave={PointBack}
-                onMouseOut={(y) => {
-                  y.preventDefault();
-                  var contact = document.getElementById(
-                    "rtc",
-                  ) as HTMLButtonElement;
-                  contact.style.backgroundColor = "black";
-                  contact.style.color = "white";
-                  contact.style.transition = "1s ease-in-out";
-                }}
-                id="rtc"
-                onClick={(u) => {
-                  u.preventDefault();
-                  router.push("/contact");
-                }}
-              >
-                Contact
-              </Button>
-            </div>
+              Contributors
+            </Typography>
+            <Stack className="demo">
+              <Stack className="container">
+                <Stack className="row">
+                  <Stack className="col-md-4 col-sm-6">
+                    <Stack className="our-team">
+                      <Stack className="team_img">
+                        <Image
+                          alt="hja"
+                          height={250}
+                          width={250}
+                          src={"/profile.png"}
+                        ></Image>
+                        <ul className="social">
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faFacebook}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faXTwitter}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faLinkedin}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faDiscord}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                        </ul>
+                      </Stack>
+                      <Stack className="team-content">
+                        <Typography variant="h4" className="title">
+                          Harrison John-Anozie
+                        </Typography>
+                        <Typography variant="h6" className="post">
+                          web developer
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+
+                  <Stack className="col-md-4 col-sm-6">
+                    <Stack className="our-team">
+                      <Stack className="team_img">
+                        <Image
+                          alt="rtm"
+                          height={250}
+                          width={250}
+                          src={"/rtm.jpg"}
+                        ></Image>
+                        <ul className="social">
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faFacebook}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faXTwitter}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faLinkedin}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FontAwesomeIcon
+                                icon={faDiscord}
+                                onMouseOver={PointOut}
+                                onMouseOut={PointBack}
+                              />
+                            </a>
+                          </li>
+                        </ul>
+                      </Stack>
+                      <Stack className="team-content">
+                        <Typography variant="h4" className="title">
+                          Raphaël TM
+                        </Typography>
+                        <Typography variant="h6" className="post">
+                          Tembo Tech Ventures Mentor
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
-        <Stack className="contactOptionsBack" id="contactOptionsBack">
-          <Stack id="contactOptions" className="contactOptions">
-            <FontAwesomeIcon
-              icon={faX}
-              id="exitContactMenu"
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={GoBack}
-            />
-            <Typography variant="h2">Contact Options</Typography>
-            <Stack id="socialMedia" className="socialMedia">
-              <Stack
-                id="discordSection"
-                className="discordSection"
-                onMouseOver={discreteChanger}
-                onMouseOut={indescreteExit}
-                onMouseEnter={PointOut}
-                onMouseLeave={PointBack}
-                onClick={() => {
-                  window.location.href = "https://discord.gg/YAuDJX84";
-                }}
+      </Stack>
+      <Stack className="contactOptionsBack" id="contactOptionsBack">
+        <Stack id="contactOptions" className="contactOptions">
+          <FontAwesomeIcon
+            icon={faX}
+            id="exitContactMenu"
+            onMouseOver={PointOut}
+            onMouseOut={PointBack}
+            onClick={GoBack}
+          />
+          <Typography variant="h2">Contact Options</Typography>
+          <Stack id="socialMedia" className="socialMedia">
+            <Stack
+              id="discordSection"
+              className="discordSection"
+              onMouseOver={discreteChanger}
+              onMouseOut={indescreteExit}
+              onMouseEnter={PointOut}
+              onMouseLeave={PointBack}
+              onClick={() => {
+                window.location.href = "https://discord.gg/YAuDJX84";
+              }}
+            >
+              <FontAwesomeIcon icon={faDiscord} id="discordContact" />
+              <Typography
+                variant="h5"
+                id="discordDescription"
+                className="discordDescription"
               >
-                <FontAwesomeIcon icon={faDiscord} id="discordContact" />
-                <Typography
-                  variant="h5"
-                  id="discordDescription"
-                  className="discordDescription"
-                >
-                  Join our server and explore the community
-                </Typography>
-              </Stack>
-              <Stack
-                id="twitterSection"
-                className="twitterSection"
-                onMouseOver={TwitterChanger}
-                onMouseOut={TwitterExit}
-                onMouseEnter={PointOut}
-                onMouseLeave={PointBack}
+                Join our server and explore the community
+              </Typography>
+            </Stack>
+            <Stack
+              id="twitterSection"
+              className="twitterSection"
+              onMouseOver={TwitterChanger}
+              onMouseOut={TwitterExit}
+              onMouseEnter={PointOut}
+              onMouseLeave={PointBack}
+            >
+              <FontAwesomeIcon icon={faXTwitter} id="twitterContact" />
+              <Typography
+                variant="h5"
+                id="twitterDescription"
+                className="twitterDescription"
               >
-                <FontAwesomeIcon icon={faXTwitter} id="twitterContact" />
-                <Typography
-                  variant="h5"
-                  id="twitterDescription"
-                  className="twitterDescription"
-                >
-                  Follow us on X
-                </Typography>
-              </Stack>
-              <Stack
-                id="linkedinSection"
-                className="linkedinSection"
-                onMouseOver={LinkedInCome}
-                onMouseOut={LinkedInExit}
-                onMouseEnter={PointOut}
-                onMouseLeave={PointBack}
-                onClick={() => {
-                  window.location.href =
-                    "https://www.linkedin.com/in/harrison-john-anozie-6766a7298?jobid=1234&lipi=urn%3Ali%3Apage%3Ad_jobs_easyapply_pdfgenresume%3BH88xVqqmR52WtSe7%2FkA6sA%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_jobs_easyapply_pdfgenresume-v02_profile";
-                }}
+                Follow us on X
+              </Typography>
+            </Stack>
+            <Stack
+              id="linkedinSection"
+              className="linkedinSection"
+              onMouseOver={LinkedInCome}
+              onMouseOut={LinkedInExit}
+              onMouseEnter={PointOut}
+              onMouseLeave={PointBack}
+              onClick={() => {
+                window.location.href =
+                  "https://www.linkedin.com/in/harrison-john-anozie-6766a7298?jobid=1234&lipi=urn%3Ali%3Apage%3Ad_jobs_easyapply_pdfgenresume%3BH88xVqqmR52WtSe7%2FkA6sA%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_jobs_easyapply_pdfgenresume-v02_profile";
+              }}
+            >
+              <FontAwesomeIcon icon={faLinkedin} id="linkedinContact" />
+              <Typography
+                variant="h5"
+                id="linkedinDescription"
+                className="linkedinDescription"
               >
-                <FontAwesomeIcon icon={faLinkedin} id="linkedinContact" />
-                <Typography
-                  variant="h5"
-                  id="linkedinDescription"
-                  className="linkedinDescription"
-                >
-                  Connect with us on LinkedIn
-                </Typography>
-              </Stack>
-              <Stack
-                id="ppfpSection"
-                className="ppfpSection"
-                onMouseOver={ProfileSee}
-                onMouseOut={AlreadySeen}
-                onMouseEnter={PointOut}
-                onMouseLeave={PointBack}
-                onClick={() => {
-                  window.location.href = "https://harrisonja.vercel.app";
-                }}
+                Connect with us on LinkedIn
+              </Typography>
+            </Stack>
+            <Stack
+              id="ppfpSection"
+              className="ppfpSection"
+              onMouseOver={ProfileSee}
+              onMouseOut={AlreadySeen}
+              onMouseEnter={PointOut}
+              onMouseLeave={PointBack}
+              onClick={() => {
+                window.location.href = "https://harrisonja.vercel.app";
+              }}
+            >
+              <Image
+                alt="Myself"
+                src={"/ppfp.png"}
+                id="ppfpContact"
+                height={100}
+                width={100}
+              ></Image>
+              <Typography
+                variant="h5"
+                id="ppfpDescription"
+                className="ppfpDescription"
               >
-                <Image
-                  alt="Myself"
-                  src={"/ppfp.png"}
-                  id="ppfpContact"
-                  height={100}
-                  width={100}
-                ></Image>
-                <Typography
-                  variant="h5"
-                  id="ppfpDescription"
-                  className="ppfpDescription"
-                >
-                  Check out my personal website.
-                </Typography>
-              </Stack>
+                Check out my personal website.
+              </Typography>
             </Stack>
           </Stack>
         </Stack>

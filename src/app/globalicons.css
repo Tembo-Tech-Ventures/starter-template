@@ -517,7 +517,7 @@ option {
 }
 .demo{
   background: #252c44;
-  width: 450px;
+  width: 350px;
 }
 .our-team{
   text-align: center;
@@ -525,8 +525,8 @@ option {
 .our-team .team_img{
   position: relative;
   overflow: hidden;
-  width: 450px;
-  height: 450px;
+  width: 350px;
+  height: 350px;
   border: 50%;
 }
 .our-team .team_img:after{

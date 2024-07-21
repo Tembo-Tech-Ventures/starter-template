@@ -17,6 +17,7 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function About() {
   const router = useRouter();
@@ -114,6 +115,133 @@ export default function About() {
       contact.style.display = "none";
     }, 280);
   };
+  function ContributorList() {
+    return (
+      <Stack className="demo">
+        <Stack className="container">
+          <Stack className="row">
+            <Stack className="col-md-4 col-sm-6">
+              <Stack className="our-team">
+                <Stack className="team_img">
+                  <Image
+                    alt="hja"
+                    height={250}
+                    width={250}
+                    src={"/profile.png"}
+                  ></Image>
+                  <ul className="social">
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faFacebook}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faXTwitter}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faLinkedin}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faDiscord}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                  </ul>
+                </Stack>
+                <Stack className="team-content">
+                  <Typography variant="h4" className="title">
+                    Harrison John-Anozie
+                  </Typography>
+                  <Typography variant="h6" className="post">
+                    web designer & developer(frontend & backend)
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Stack>
+
+            <Stack className="col-md-4 col-sm-6">
+              <Stack className="our-team">
+                <Stack className="team_img">
+                  <Image
+                    alt="rtm"
+                    height={250}
+                    width={250}
+                    src={"/rtm.jpg"}
+                  ></Image>
+                  <ul className="social">
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faFacebook}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faXTwitter}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faLinkedin}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <FontAwesomeIcon
+                          icon={faDiscord}
+                          onMouseOver={PointOut}
+                          onMouseOut={PointBack}
+                        />
+                      </a>
+                    </li>
+                  </ul>
+                </Stack>
+                <Stack className="team-content">
+                  <Typography variant="h4" className="title">
+                    Raphaël TM
+                  </Typography>
+                  <Typography variant="h6" className="post">
+                    Web developer(backend)
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Stack>
+    );
+  }
   return (
     <Box>
       <Stack
@@ -283,7 +411,7 @@ export default function About() {
               display: "flex",
               position: "relative",
               gap: 12,
-              left: "6%",
+              left: "20%",
             }}
           >
             <Typography
@@ -291,7 +419,7 @@ export default function About() {
               style={{
                 display: "flex",
                 position: "relative",
-                width: "100%",
+                width: "65%",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "palevioletred",
@@ -299,227 +427,7 @@ export default function About() {
             >
               Contributors
             </Typography>
-            <Stack className="demo">
-              <Stack className="container">
-                <Stack className="row">
-                  <Stack className="col-md-4 col-sm-6">
-                    <Stack className="our-team">
-                      <Stack className="team_img">
-                        <Image
-                          alt="hja"
-                          height={250}
-                          width={250}
-                          src={"/profile.png"}
-                        ></Image>
-                        <ul className="social">
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faFacebook}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faXTwitter}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faLinkedin}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faDiscord}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                        </ul>
-                      </Stack>
-                      <Stack className="team-content">
-                        <Typography variant="h4" className="title">
-                          Harrison John-Anozie
-                        </Typography>
-                        <Typography variant="h6" className="post">
-                          web developer
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-
-                  <Stack className="col-md-4 col-sm-6">
-                    <Stack className="our-team">
-                      <Stack className="team_img">
-                        <Image
-                          alt="rtm"
-                          height={250}
-                          width={250}
-                          src={"/rtm.jpg"}
-                        ></Image>
-                        <ul className="social">
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faFacebook}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faXTwitter}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faLinkedin}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FontAwesomeIcon
-                                icon={faDiscord}
-                                onMouseOver={PointOut}
-                                onMouseOut={PointBack}
-                              />
-                            </a>
-                          </li>
-                        </ul>
-                      </Stack>
-                      <Stack className="team-content">
-                        <Typography variant="h4" className="title">
-                          Raphaël TM
-                        </Typography>
-                        <Typography variant="h6" className="post">
-                          Tembo Tech Ventures Mentor
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Stack>
-        </Stack>
-      </Stack>
-      <Stack className="contactOptionsBack" id="contactOptionsBack">
-        <Stack id="contactOptions" className="contactOptions">
-          <FontAwesomeIcon
-            icon={faX}
-            id="exitContactMenu"
-            onMouseOver={PointOut}
-            onMouseOut={PointBack}
-            onClick={GoBack}
-          />
-          <Typography variant="h2">Contact Options</Typography>
-          <Stack id="socialMedia" className="socialMedia">
-            <Stack
-              id="discordSection"
-              className="discordSection"
-              onMouseOver={discreteChanger}
-              onMouseOut={indescreteExit}
-              onMouseEnter={PointOut}
-              onMouseLeave={PointBack}
-              onClick={() => {
-                window.location.href = "https://discord.gg/YAuDJX84";
-              }}
-            >
-              <FontAwesomeIcon icon={faDiscord} id="discordContact" />
-              <Typography
-                variant="h5"
-                id="discordDescription"
-                className="discordDescription"
-              >
-                Join our server and explore the community
-              </Typography>
-            </Stack>
-            <Stack
-              id="twitterSection"
-              className="twitterSection"
-              onMouseOver={TwitterChanger}
-              onMouseOut={TwitterExit}
-              onMouseEnter={PointOut}
-              onMouseLeave={PointBack}
-            >
-              <FontAwesomeIcon icon={faXTwitter} id="twitterContact" />
-              <Typography
-                variant="h5"
-                id="twitterDescription"
-                className="twitterDescription"
-              >
-                Follow us on X
-              </Typography>
-            </Stack>
-            <Stack
-              id="linkedinSection"
-              className="linkedinSection"
-              onMouseOver={LinkedInCome}
-              onMouseOut={LinkedInExit}
-              onMouseEnter={PointOut}
-              onMouseLeave={PointBack}
-              onClick={() => {
-                window.location.href =
-                  "https://www.linkedin.com/in/harrison-john-anozie-6766a7298?jobid=1234&lipi=urn%3Ali%3Apage%3Ad_jobs_easyapply_pdfgenresume%3BH88xVqqmR52WtSe7%2FkA6sA%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_jobs_easyapply_pdfgenresume-v02_profile";
-              }}
-            >
-              <FontAwesomeIcon icon={faLinkedin} id="linkedinContact" />
-              <Typography
-                variant="h5"
-                id="linkedinDescription"
-                className="linkedinDescription"
-              >
-                Connect with us on LinkedIn
-              </Typography>
-            </Stack>
-            <Stack
-              id="ppfpSection"
-              className="ppfpSection"
-              onMouseOver={ProfileSee}
-              onMouseOut={AlreadySeen}
-              onMouseEnter={PointOut}
-              onMouseLeave={PointBack}
-              onClick={() => {
-                window.location.href = "https://harrisonja.vercel.app";
-              }}
-            >
-              <Image
-                alt="Myself"
-                src={"/ppfp.png"}
-                id="ppfpContact"
-                height={100}
-                width={100}
-              ></Image>
-              <Typography
-                variant="h5"
-                id="ppfpDescription"
-                className="ppfpDescription"
-              >
-                Check out my personal website.
-              </Typography>
-            </Stack>
+            <ContributorList />
           </Stack>
         </Stack>
       </Stack>

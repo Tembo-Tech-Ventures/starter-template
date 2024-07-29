@@ -1,28 +1,26 @@
 {
   "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 5432,
-      "driver": "PostgreSQL",
-      "name": "local",
-      "database": "database",
-      "username": "user",
-      "password": "password"
-    }
+      {
+          "previewLimit": 50,
+          "server": "localhost",
+          "port": 5432,
+          "driver": "PostgreSQL",
+          "name": "local",
+          "database": "database",
+          "username": "user",
+          "password": "password"
+      }
   ],
   "json.schemas": [
-    {
-      "fileMatch": [
-        "vercel.json"
-      ],
-      "url": "https://openapi.vercel.sh/vercel.json"
-    }
+      {
+          "fileMatch": [
+              "vercel.json"
+          ],
+          "url": "https://openapi.vercel.sh/vercel.json"
+      }
   ],
   "explorer.compactFolders": false,
   "githubPullRequests.ignoredPullRequestBranches": [
-    "main"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+      "main"
+  ]
 }

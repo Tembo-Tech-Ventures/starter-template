@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, TooltipProps, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLngTuple } from "leaflet";
 import "../../../globalicons.css";
 import { useRouter } from "next/navigation";
+import Marquee from "react-fast-marquee";
+import { Tooltip, Typography, styled, tooltipClasses } from "@mui/material";
 
 interface MapComponentProps {
   center: LatLngTuple;
@@ -56,6 +58,21 @@ const WeatherSidebar: React.FC<WeatherSidebarProps> = ({ weatherData }) => {
       }}
     >
       <br />
+      <Marquee direction="left" pauseOnHover>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "'Edu AU VIC WA NT Hand', cursive",
+            fontOpticalSizing: "auto",
+            fontWeight: 300,
+            fontStyle: "normal",
+            height: 50,
+          }}
+        >
+          AICulture Weather Forecast System
+        </Typography>
+      </Marquee>
+      <br />
       <p className="advents">Temperature: {weatherData.main.temp}K</p>
       <br />
       <p className="advents">Weather: {weatherData.weather[0].description}</p>
@@ -79,6 +96,7 @@ export default function MappingBoard() {
   const [weatherData, setWeatherData] = useState(null);
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const navigateBackwards = () => {
     router.back();
@@ -90,6 +108,7 @@ export default function MappingBoard() {
         const userLatLng: LatLngTuple = [latitude, longitude];
         setView(userLatLng);
         setZoom(13);
+        setOpen(false);
 
         const weather = await fetchWeather(latitude, longitude);
         setWeatherData(weather);
@@ -108,7 +127,11 @@ export default function MappingBoard() {
   }
 
   return (
-    <div>
+    <div
+      onContextMenu={(e) => {
+        e.preventDefault();
+      }}
+    >
       <MapContainer
         center={view}
         zoom={zoom}
@@ -125,20 +148,28 @@ export default function MappingBoard() {
         />
         <MapComponent center={view} zoom={zoom} />
       </MapContainer>
-      <span
-        className="material-symbols-outlined"
-        onClick={zoomToUserLocation}
-        style={{
-          display: "flex",
-          position: "absolute",
-          top: 0,
-          right: 0,
-          zIndex: 1900,
-          cursor: "pointer",
-        }}
+      <Tooltip
+        title="Click the radar to view the weather forecast of your current location"
+        open={open}
+        arrow
+        slotProps={{ tooltip: { sx: { fontSize: 15 } } }}
       >
-        my_location
-      </span>
+        <span
+          className="material-symbols-outlined"
+          title="Get the forecast of your location"
+          onClick={zoomToUserLocation}
+          style={{
+            display: open ? "flex" : "none",
+            position: "absolute",
+            top: 0,
+            right: "5%",
+            zIndex: 1900,
+            cursor: "pointer",
+          }}
+        >
+          my_location
+        </span>
+      </Tooltip>
       <span
         className="material-symbols-outlined"
         id="arrow"

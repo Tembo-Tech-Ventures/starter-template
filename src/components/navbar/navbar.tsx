@@ -4,8 +4,12 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { rotarySwitch, rotaryUnit } from "../rotary-unit/rotary-unit";
 import { PointBack, PointOut } from "../mousecontrols/mousecontrol";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCloudShowersWater } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 export function NavBar() {
+  const router = useRouter();
   const Home = () => {
     window.location.href = "/";
   };
@@ -21,6 +25,14 @@ export function NavBar() {
   const Bot = () => {
     window.location.href = "/dashboard";
   };
+  const weather = () => {
+    router.push("/weather");
+  };
+  const pStyling: React.CSSProperties = {
+    color: "gray",
+    fontFamily: "'Indie Flower', cursive",
+    cursor: "none",
+  };
   return (
     <Stack>
       <nav
@@ -35,11 +47,7 @@ export function NavBar() {
       >
         <span className="material-symbols-outlined">home</span>
         <p
-          style={{
-            color: "gray",
-            fontFamily: "'Indie Flower', cursive",
-            cursor: "none",
-          }}
+          style={pStyling}
           id="home"
           onClick={Home}
           onMouseOver={PointOut}
@@ -55,11 +63,7 @@ export function NavBar() {
           contacts_product
         </span>
         <p
-          style={{
-            color: "gray",
-            fontFamily: "'Indie Flower', cursive",
-            cursor: "none",
-          }}
+          style={pStyling}
           onClick={Contact}
           onMouseOver={PointOut}
           onMouseOut={PointBack}
@@ -70,11 +74,7 @@ export function NavBar() {
           local_library
         </span>
         <p
-          style={{
-            color: "gray",
-            fontFamily: "'Indie Flower', cursive",
-            cursor: "none",
-          }}
+          style={pStyling}
           onClick={About}
           onMouseOver={PointOut}
           onMouseOut={PointBack}
@@ -86,11 +86,7 @@ export function NavBar() {
         </span>
         <p
           id="chats"
-          style={{
-            color: "gray",
-            fontFamily: "'Indie Flower', cursive",
-            cursor: "none",
-          }}
+          style={pStyling}
           onClick={Chat}
           onMouseOver={PointOut}
           onMouseOut={PointBack}
@@ -102,16 +98,26 @@ export function NavBar() {
         </span>
         <p
           id="p2b"
-          style={{
-            color: "gray",
-            fontFamily: "'Indie Flower', cursive",
-            cursor: "none",
-          }}
+          style={pStyling}
           onClick={Bot}
           onMouseOver={PointOut}
           onMouseOut={PointBack}
         >
           Chats & Privacy
+        </p>
+        <span>
+          <FontAwesomeIcon
+            icon={faCloudShowersWater}
+            style={{ marginLeft: 40 }}
+          />
+        </span>
+        <p
+          style={pStyling}
+          onClick={weather}
+          onMouseOver={PointOut}
+          onMouseOut={PointBack}
+        >
+          Weather Forecast
         </p>
         <Stack
           direction="row"

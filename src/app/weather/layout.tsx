@@ -4,7 +4,7 @@ import { type Metadata } from "next";
 export const metadata: Metadata = {
   title: {
     template: "%s | AICulture",
-    default: "AICulture",
+    default: "Weather",
   },
   description:
     "An AI agriculture website intended to help people with agricultural questions and help users chat with other users for better understanding.",

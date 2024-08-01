@@ -253,11 +253,11 @@ option {
 }
 
 #userProfile:active {
-  background-color: rgb(87, 87, 245);
+  background-color: rgba(192, 192, 192, 0.466);
 }
 
 #userProfile:focus {
-  background-color: rgb(87, 87, 245);
+  background-color: rgba(192, 192, 192, 0.466);
 }
 
 #userAlt {

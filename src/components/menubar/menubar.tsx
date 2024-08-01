@@ -9,51 +9,5 @@ import { useState } from "react";
 
 export function MenuBar() {
   const [open, setOpen] = useState(false);
-  const decide = () => {
-    setOpen(!open);
-  };
-  return (
-    <Stack>
-      <FontAwesomeIcon
-        icon={faBars}
-        style={{
-          fontSize: 20,
-          zIndex: 765,
-          display: "flex",
-          position: "absolute",
-          top: "1%",
-          left: "1%",
-        }}
-        id="bars"
-        onMouseOver={PointOut}
-        onMouseOut={PointBack}
-        onClick={decide}
-      />
-      <Drawer
-        open={open}
-        onClose={decide}
-        PaperProps={{ sx: { width: "200px" } }}
-      >
-        <span>
-          <FontAwesomeIcon
-            icon={faX}
-            style={{
-              fontSize: 15,
-              display: "flex",
-              position: "relative",
-              float: "right",
-              cursor: "pointer",
-            }}
-            onClick={decide}
-          />
-        </span>
-        <List>
-          <ListItem className="menuHolder">
-            <FontAwesomeIcon icon={faCross} />
-            <Typography variant="h5">Safety</Typography>
-          </ListItem>
-        </List>
-      </Drawer>
-    </Stack>
-  );
+  return null;
 }

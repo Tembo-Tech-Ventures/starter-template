@@ -5,7 +5,7 @@ import Head from "next/head";
 export const metadata: Metadata = {
   title: {
     template: "%s - AICulture",
-    default: "Contact",
+    default: "Settings",
   },
   description: "Configure the looks of your page in any way you see fit.",
 };
@@ -17,9 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <title>Settings</title>
-      </head>
+      <head></head>
       <body>
         <RootProvider>{children}</RootProvider>
       </body>

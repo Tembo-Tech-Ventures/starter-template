@@ -100,6 +100,9 @@ export default function Settings() {
                 id="editProfile"
                 onMouseOver={PointOut}
                 onMouseOut={PointBack}
+                onClick={() => {
+                  router.push("/settings/edit-user-profile");
+                }}
               >
                 Edit User Profile
               </Button>

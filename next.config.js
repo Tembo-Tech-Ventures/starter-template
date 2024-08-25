@@ -1,10 +1,15 @@
+/** @type {import('next').NextConfig} */
+
 const nextConfig = {
   images: {
     domains: ["www.gravatar.com"],
   },
   webpack: (config, { dev, isServer }) => {
     if (!isServer) {
-      config.resolve.alias["ollama"] = path.join(__dirname, "path/to/ollama");
+      config.resolve.alias["ollama"] = path.join(
+        __dirname,
+        "node_modules/ollama",
+      );
     }
     return config;
   },

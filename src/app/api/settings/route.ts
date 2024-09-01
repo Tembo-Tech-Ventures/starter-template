@@ -2,11 +2,11 @@ import { getServerSession } from "@/modules/auth/lib/get-server-session/get-serv
 import { prisma } from "@/modules/prisma/lib/prisma-client/prisma-client";
 
 export async function POST(req: Request) {
-  const { name, username } = await req.json();
+  const { name } = await req.json();
   const session = await getServerSession();
   await prisma.user.update({
     where: {
-      email: session.user.email,
+      id: session.user.id,
     },
     data: {
       name: name,

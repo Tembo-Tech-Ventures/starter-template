@@ -215,7 +215,7 @@ export default function EditUserProfile() {
                   onMouseOver={PointOut}
                   onMouseOut={PointBack}
                 >
-                  Submit
+                  Update Profile
                 </Button>
               </form>
             </Stack>

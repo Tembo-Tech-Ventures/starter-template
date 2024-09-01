@@ -43,7 +43,6 @@ export const POST = async (req: Request) => {
 
   await pusher.trigger("chat", "message", {
     ...messageInput,
-    username: user?.username,
     createdAt: savedMessage.createdAt,
     owner: user,
   });
@@ -76,7 +75,6 @@ export const GET = async (req: Request) => {
     },
   });
   const session = await getServerSession();
-  // Example of retrieving a user's username
   const user = session.user.name
     ? await prisma.user.findUnique({
         where: {
@@ -84,9 +82,6 @@ export const GET = async (req: Request) => {
         },
       })
     : undefined;
-
-  const username = session.user.name !== null ? session.user.name : undefined;
-  // Use the retrieved username or a default value
 
   return NextResponse.json({
     messages,

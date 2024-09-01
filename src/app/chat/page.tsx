@@ -35,22 +35,6 @@ export default function Chat() {
   const [username, setUsername] = useState("");
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const generator = `${Math.floor(Math.random() * 10000)}`;
-  const send = useCallback(
-    (e: any) => {
-      e.preventDefault();
-      fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username || `user${Math.floor(Math.random() * 2)}`,
-        }),
-      });
-      setUsername("");
-    },
-    [username],
-  );
 
   const [input, setInput] = useState<string>("");
   const router = useRouter();
@@ -95,7 +79,6 @@ export default function Chat() {
       const response = await fetch("/api/user");
       const user = await response.json();
       console.log("@@ user: ", user);
-      setUsername(user.user.username || "user");
     }
     Update();
   }, [session.data?.user]);
@@ -124,174 +107,8 @@ export default function Chat() {
       >
         <Mice />
         <Stack>
-          <nav
-            style={{
-              display: "flex",
-              position: "relative",
-              alignItems: "center",
-              justifyContent: "center",
-              wordSpacing: 2,
-              gap: 5,
-            }}
-          >
-            <span className="material-symbols-outlined">home</span>
-            <p
-              style={{
-                color: "gray",
-                fontFamily: "'Indie Flower', cursive",
-                cursor: "none",
-              }}
-              id="home"
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={() => {
-                router.push("/");
-              }}
-            >
-              Home
-            </p>
-            <span
-              className="material-symbols-outlined"
-              id="contacts"
-              style={{ marginLeft: 40 }}
-            >
-              contacts_product
-            </span>
-            <p
-              style={{
-                color: "gray",
-                fontFamily: "'Indie Flower', cursive",
-                cursor: "none",
-              }}
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={() => {
-                router.push("/contact");
-              }}
-            >
-              Contact us
-            </p>
-            <span
-              className="material-symbols-outlined"
-              style={{ marginLeft: 30 }}
-            >
-              local_library
-            </span>
-            <p
-              style={{
-                color: "gray",
-                fontFamily: "'Indie Flower', cursive",
-                cursor: "none",
-              }}
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={() => {
-                router.push("/about");
-              }}
-            >
-              About us
-            </p>
-            <span
-              className="material-symbols-outlined"
-              style={{ marginLeft: 50 }}
-            >
-              chat
-            </span>
-            <p
-              id="chats"
-              style={{
-                color: "gray",
-                fontFamily: "'Indie Flower', cursive",
-                cursor: "none",
-              }}
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={() => {
-                router.push("/chat");
-              }}
-            >
-              P2P Chat
-            </p>
-            <span
-              className="material-symbols-outlined"
-              style={{ marginLeft: 50 }}
-            >
-              forum
-            </span>
-            <p
-              id="p2b"
-              style={{
-                color: "gray",
-                fontFamily: "'Indie Flower', cursive",
-                cursor: "none",
-              }}
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={() => {
-                router.push("/dashboard");
-              }}
-            >
-              Chats & Privacy
-            </p>
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              style={{ cursor: "none" }}
-            >
-              <Button
-                variant="contained"
-                id="button"
-                style={{ backgroundColor: "black", left: 130, cursor: "none" }}
-                onClick={() => {
-                  window.location.href = "/auth/logout";
-                }}
-                onMouseOver={() => {
-                  var mouse = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  var button = document.getElementById(
-                    "button",
-                  ) as HTMLButtonElement;
-                  button.style.backgroundColor = "red";
-                  button.style.color = "black";
-                  button.style.transition = "1s ease-in-out";
-                  mouse.srcset = "/pointer.png";
-                  (mouse.height = 30), (mouse.width = 20);
-                }}
-                onMouseOut={(u) => {
-                  var mouse = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  var button = document.getElementById(
-                    "button",
-                  ) as HTMLButtonElement;
-                  button.style.backgroundColor = "black";
-                  button.style.color = "white";
-                  button.style.transition = "1s ease-in-out";
-                  mouse.srcset = "/cursor.png";
-                  (mouse.height = 30), (mouse.width = 30);
-                }}
-              >
-                Logout
-              </Button>
-            </Stack>
-          </nav>
+          <NavBar />
           <MenuBar />
-          <span
-            className="material-symbols-outlined"
-            id="settings"
-            style={{ color: "white", position: "absolute", right: 7, top: 10 }}
-            onClick={() => {
-              var div = document.getElementById("popup-1") as HTMLDivElement;
-              div.classList.toggle("active");
-            }}
-            onMouseOver={PointOut}
-            onMouseEnter={rotaryUnit}
-            onMouseOut={PointBack}
-            onMouseLeave={rotarySwitch}
-          >
-            settings
-          </span>
         </Stack>
         <Stack>
           <div
@@ -330,7 +147,7 @@ export default function Chat() {
                         backgroundColor: "transparent",
                       }}
                     >
-                      {message.owner?.username}
+                      {session.data?.user?.name || "New User"}
                     </h6>
                     <h6
                       style={{
@@ -383,8 +200,6 @@ export default function Chat() {
                   body: JSON.stringify({
                     message: input,
                     email: session.data?.user?.email || "harrisjohnu@gmail.com",
-                    username:
-                      username || `user${Math.floor(Math.random() * 2)}`,
                   }),
                 });
                 setInput("");
@@ -489,94 +304,6 @@ export default function Chat() {
             </form>
           </div>
         </Stack>
-        <div id="popup-1" className="popup">
-          <div className="popup-content">
-            <span
-              style={{ cursor: "none" }}
-              onClick={() => {
-                var div = document.getElementById("popup-1") as HTMLDivElement;
-                div.classList.toggle("active");
-              }}
-              onMouseOver={() => {
-                var cursor = document.getElementById(
-                  "mouse",
-                ) as HTMLImageElement;
-                cursor.srcset = "/pointer.png";
-                cursor.height = 30;
-                cursor.width = 20;
-              }}
-              onMouseOut={() => {
-                var cursor = document.getElementById(
-                  "mouse",
-                ) as HTMLImageElement;
-                cursor.srcset = "/cursor.png";
-                cursor.height = 30;
-                cursor.width = 30;
-              }}
-              className="close"
-            >
-              &times;
-            </span>
-            <h2>Change Username</h2>
-            <form action="" onSubmit={send}>
-              <TextField
-                label="Change Username"
-                id="change"
-                value={username}
-                onChange={(r) => setUsername(r.target.value)}
-                onMouseOver={() => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  var change = document.getElementById(
-                    "change",
-                  ) as HTMLInputElement;
-                  cursor.srcset = "/text-cursor.png";
-                  change.style.cursor = "none";
-                }}
-                onMouseOut={() => {
-                  var cursor = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  cursor.srcset = "/cursor.png";
-                }}
-              ></TextField>
-              <Button
-                type="submit"
-                variant="contained"
-                id="clicker"
-                style={{ cursor: "none" }}
-                onMouseOver={() => {
-                  var mouse = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  mouse.srcset = "/pointer.png";
-                  mouse.height = 30;
-                  mouse.width = 20;
-                }}
-                onMouseOut={() => {
-                  var mouse = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  mouse.srcset = "/cursor.png";
-                  mouse.height = 30;
-                  mouse.width = 30;
-                }}
-                onClick={() => {
-                  var button = document.getElementById(
-                    "clicker",
-                  ) as HTMLButtonElement;
-                  button.innerHTML = "Changed";
-                  setTimeout(() => {
-                    button.innerHTML = "Change";
-                  }, 2000);
-                }}
-              >
-                Change
-              </Button>
-            </form>
-          </div>
-        </div>
       </Stack>
     </Box>
   );

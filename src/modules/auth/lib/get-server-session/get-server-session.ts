@@ -8,6 +8,7 @@ interface CustomSession extends Session {
   user: Session["user"] & {
     id: string;
     emailVerified: string;
+    username: string;
   };
 }
 

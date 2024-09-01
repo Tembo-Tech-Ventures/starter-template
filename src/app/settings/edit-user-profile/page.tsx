@@ -40,19 +40,11 @@ export default function EditUserProfile() {
   const [values, setValues] = useState({
     name: "",
     email: "",
-    username: "",
   });
   const [messages, setMessages] = useState<
     GetAllChatMessagesResponse["messages"]
   >([]);
   const { data: databaseChatMessages } = useAllChatMessages();
-  const uniqueUsernames = Array.from(
-    new Set(
-      [...(databaseChatMessages || []), ...messages].map(
-        (message) => message.owner?.username,
-      ),
-    ),
-  ).join("");
   const uniqueEmails = session.data?.user?.email;
   const doneCustomizing = () => {
     router.back();
@@ -87,10 +79,6 @@ export default function EditUserProfile() {
       </Backdrop>
     );
   }
-  console.log(
-    "@@values",
-    `name ${session.data?.user?.name}, username: ${uniqueUsernames}, email: ${uniqueEmails}`,
-  );
   return (
     <Box>
       <Stack
@@ -216,27 +204,6 @@ export default function EditUserProfile() {
                   }}
                   onMouseOut={TextBack}
                   value={uniqueEmails}
-                />
-                <br />
-                <TextField
-                  label="Username"
-                  id="username"
-                  value={values.username}
-                  onMouseOver={(l) => {
-                    var fname = document.getElementById(
-                      "username",
-                    ) as HTMLInputElement;
-                    var cursor = document.getElementById(
-                      "mouse",
-                    ) as HTMLImageElement;
-                    cursor.srcset = "/text-cursor.png";
-                    fname.style.cursor = "none";
-                  }}
-                  onMouseOut={TextBack}
-                  fullWidth
-                  onChange={(l) => {
-                    setValues({ ...values, username: l.target.value });
-                  }}
                 />
                 <br />
                 <Button

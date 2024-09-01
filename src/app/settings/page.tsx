@@ -29,6 +29,7 @@ import { useSession } from "next-auth/react";
 import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
 import { GetAllChatMessagesResponse } from "../api/chat/route";
 import { useState } from "react";
+import { DefaultUser } from "next-auth";
 
 export default function Settings() {
   const router = useRouter();
@@ -50,6 +51,7 @@ export default function Settings() {
   const doneCustomizing = () => {
     window.location.href = "/dashboard";
   };
+
   return (
     <Box>
       <Stack
@@ -123,7 +125,7 @@ export default function Settings() {
               >
                 <Avatar style={{ height: 150, width: 150 }}>
                   <Typography variant="h3">
-                    {uniqueUsernames.substring(0, 1).toUpperCase()}
+                    {session.data?.user?.name?.substring(0, 1).toUpperCase()}
                   </Typography>
                 </Avatar>
               </Stack>
@@ -146,16 +148,6 @@ export default function Settings() {
                 onMouseOut={TextBack}
               >
                 Email: {session.data?.user?.email}
-              </Typography>
-              <br />
-              <Typography
-                variant="h4"
-                id="usernameA"
-                className="userComponents"
-                onMouseOver={TextOut}
-                onMouseOut={TextBack}
-              >
-                Username: {session.data?.user?.username}
               </Typography>
               <br />
               <Button

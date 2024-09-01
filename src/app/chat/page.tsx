@@ -22,6 +22,8 @@ import { Mice } from "@/components/mice/mouse";
 import { MenuBar } from "@/components/menubar/menubar";
 import { PointBack, PointOut } from "@/components/mousecontrols/mousecontrol";
 import { rotarySwitch, rotaryUnit } from "@/components/rotary-unit/rotary-unit";
+import { faCloudShowersWater } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
   cluster: "mt1",

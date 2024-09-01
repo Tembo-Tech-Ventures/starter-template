@@ -10,6 +10,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Poetsen+One&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
 
 .material-symbols-outlined {
   font-variation-settings:
@@ -265,6 +267,24 @@ option {
   position: relative;
   width: 40px;
   height: 40px;
+}
+
+.search-bar {
+  display: flex;
+  position: fixed;
+  left: 26%;
+  bottom: 0;
+  width: 670px;
+  height: 50px;
+  border: 1px solid purple;
+  outline: 1px solid gold;
+}
+.search-bar[type=search] {
+  font-size: 17px;
+  font-family: "Edu VIC WA NT Beginner", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 #exit {
@@ -634,6 +654,48 @@ option {
   flex-direction: row;
   gap: 25px;
 }
+
+.message {
+  background-color: #ffffff; /* Light gray background for regular messages */
+}
+
+.user-message {
+  background-color: #ffffff; /* Light blue background for user messages */
+}
+
+.ai-message {
+  background-color: #ffffff; /* Light green background for AI messages */
+}
+
+.code-block {
+  background-color: #696969; /* Yellow background for code blocks */
+  color: #ffffff; /* Black text color for code blocks */
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #cccccc; /* Light gray border */
+}
+pre {
+  background-color: #252525;
+  color: #ffffff;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: italic;
+}
+pre::selection {
+  color: #000;
+  background-color: #888;
+}
+.code-block.h1-code {
+  color: pink;
+}
+
+
+.code-block.title-code {
+  color: yellow;
+}
+
+
 
 @keyframes setin {
   from {

@@ -1,6 +1,7 @@
+import { createOllama } from "ollama-ai-provider";
+import { StreamingTextResponse, streamText, StreamData } from "ai";
 import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
 import { prisma } from "@/modules/prisma/lib/prisma-client/prisma-client";
-import { ChatMessage } from "@prisma/client";
 import { NextResponse } from "next/server";
 import Pusher from "pusher";
 

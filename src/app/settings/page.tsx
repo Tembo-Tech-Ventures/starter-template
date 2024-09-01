@@ -1,13 +1,29 @@
 "use client";
 import { Mice } from "@/components/mice/mouse";
 import { NavBar } from "@/components/navbar/navbar";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import "../../app/globalicons.css";
 import { faUserAlt, faX } from "@fortawesome/free-solid-svg-icons";
-import { PointBack, PointOut } from "@/components/mousecontrols/mousecontrol";
+import {
+  PointBack,
+  PointOut,
+  TextBack,
+  TextOut,
+} from "@/components/mousecontrols/mousecontrol";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
@@ -17,6 +33,9 @@ import { useState } from "react";
 export default function Settings() {
   const router = useRouter();
   const session = useSession();
+  const [nameLoaded, setNameLoaded] = useState(false);
+  const [emailLoaded, setEmailLoaded] = useState(false);
+  const [usernameLoaded, setUsernameLoaded] = useState(false);
   const [messages, setMessages] = useState<
     GetAllChatMessagesResponse["messages"]
   >([]);
@@ -29,7 +48,7 @@ export default function Settings() {
     ),
   ).join("");
   const doneCustomizing = () => {
-    router.back();
+    window.location.href = "/dashboard";
   };
   return (
     <Box>
@@ -55,12 +74,30 @@ export default function Settings() {
         <Mice />
         <Stack id="entpage">
           <Stack id="leftPage">
-            <Typography variant="h2">Settings</Typography>
+            <Typography variant="h3" sx={{ fontStyle: "italic" }}>
+              Settings
+            </Typography>
             <br />
-            <Stack id="userProfile">
-              <FontAwesomeIcon icon={faUserAlt} id="userAlt" />
-              <Typography variant="h5">User profile</Typography>
-            </Stack>
+            <ListItem>
+              <ListItemButton
+                sx={{
+                  color: "black",
+                  cursor: "none",
+                  ":hover": {
+                    transform: "translateY(-2px) scale(1.1)",
+                  },
+                }}
+                onMouseOver={PointOut}
+                onMouseOut={PointBack}
+              >
+                <ListItemIcon>
+                  <FontAwesomeIcon icon={faUserAlt} />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography variant="h6">User Profile</Typography>
+                </ListItemText>
+              </ListItemButton>
+            </ListItem>
           </Stack>
           <Stack id="rightPage">
             <FontAwesomeIcon
@@ -75,24 +112,50 @@ export default function Settings() {
                 User profile
               </Typography>
               <br />
-              <Typography variant="h4" id="userName" className="userComponents">
-                Name: Unknown 4 now
+              <Stack
+                sx={{
+                  display: "flex",
+                  position: "relative",
+                  width: "100%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Avatar style={{ height: 150, width: 150 }}>
+                  <Typography variant="h3">
+                    {uniqueUsernames.substring(0, 1).toUpperCase()}
+                  </Typography>
+                </Avatar>
+              </Stack>
+              <br />
+              <Typography
+                variant="h4"
+                id="userName"
+                className="userComponents"
+                onMouseOver={TextOut}
+                onMouseOut={TextBack}
+              >
+                Name: {session.data?.user?.name}
               </Typography>
               <br />
               <Typography
                 variant="h4"
                 id="userEmail"
                 className="userComponents"
+                onMouseOver={TextOut}
+                onMouseOut={TextBack}
               >
-                Email {session.data?.user?.email}
+                Email: {session.data?.user?.email}
               </Typography>
               <br />
               <Typography
                 variant="h4"
                 id="usernameA"
                 className="userComponents"
+                onMouseOver={TextOut}
+                onMouseOut={TextBack}
               >
-                Username: {uniqueUsernames}
+                Username: {session.data?.user?.username}
               </Typography>
               <br />
               <Button

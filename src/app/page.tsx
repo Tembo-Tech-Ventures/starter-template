@@ -277,10 +277,7 @@ export default function Home() {
                 top: 4,
                 cursor: "none",
               }}
-              onClick={(a) => {
-                a.preventDefault();
-                router.push("/auth/login");
-              }}
+              href="/auth/login"
               onMouseOver={(r) => {
                 var cursor = document.getElementById("mouse") as HTMLElement;
                 var pointer = document.getElementById("pointer") as HTMLElement;

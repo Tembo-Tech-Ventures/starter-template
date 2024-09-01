@@ -270,10 +270,11 @@ option {
 #exit {
   display: flex;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 2%;
+  right: 3%;
   width: 20px;
   height: 20px;
+  z-index: 5;
 }
 
 #exit:hover {
@@ -501,8 +502,6 @@ option {
 }
 
 .userComponents {
-  display: flex;
-  position: relative;
   border: 1px solid;
   width: 100%;
   color: rgb(21, 21, 78);

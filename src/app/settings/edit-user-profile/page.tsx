@@ -1,12 +1,25 @@
 "use client";
 import { Mice } from "@/components/mice/mouse";
 import { NavBar } from "@/components/navbar/navbar";
-import { Box, Button, Stack, Typography, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Stack,
+  Typography,
+  TextField,
+  Backdrop,
+  CircularProgress,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Avatar,
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import "../../../app/globalicons.css";
-import { faUserAlt, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faUserAlt, faX } from "@fortawesome/free-solid-svg-icons";
 import {
   PointBack,
   PointOut,
@@ -22,6 +35,8 @@ import { useState } from "react";
 export default function EditUserProfile() {
   const router = useRouter();
   const session = useSession();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -38,10 +53,44 @@ export default function EditUserProfile() {
       ),
     ),
   ).join("");
+  const uniqueEmails = session.data?.user?.email;
   const doneCustomizing = () => {
     router.back();
   };
-  console.log("@@values", values);
+  function LoadingIndicator({ timer }: { timer: number }) {
+    return (
+      <Backdrop
+        sx={(theme) => ({ color: "warning", zIndex: theme.zIndex.drawer + 1 })}
+        open={submitting}
+      >
+        <CircularProgress color="warning" />
+      </Backdrop>
+    );
+  }
+  function Submitted() {
+    return (
+      <Backdrop
+        sx={(theme) => ({ color: "success", zIndex: theme.zIndex.drawer + 1 })}
+        open={submitted}
+      >
+        <FontAwesomeIcon
+          icon={faCheck}
+          color="green"
+          style={{ fontSize: 100 }}
+        />
+        <Typography
+          variant="h3"
+          sx={{ fontFamily: "'Oswald', sans-serif", fontStyle: "italic" }}
+        >
+          User Profile Updated!
+        </Typography>
+      </Backdrop>
+    );
+  }
+  console.log(
+    "@@values",
+    `name ${session.data?.user?.name}, username: ${uniqueUsernames}, email: ${uniqueEmails}`,
+  );
   return (
     <Box>
       <Stack
@@ -65,29 +114,60 @@ export default function EditUserProfile() {
       >
         <Mice />
         <Stack id="entpage">
+          <LoadingIndicator timer={5} />
+          <Submitted />
           <Stack id="leftPage">
-            <Typography variant="h2">Settings</Typography>
+            <Typography variant="h3" sx={{ fontStyle: "italic" }}>
+              Settings
+            </Typography>
             <br />
-            <Stack id="userProfile">
-              <FontAwesomeIcon icon={faUserAlt} id="userAlt" />
-              <Typography variant="h5">User profile</Typography>
-            </Stack>
+            <ListItem>
+              <ListItemButton
+                sx={{
+                  color: "black",
+                  cursor: "none",
+                  ":hover": {
+                    transform: "translateY(-2px) scale(1.1)",
+                  },
+                }}
+                onMouseOver={PointOut}
+                onMouseOut={PointBack}
+              >
+                <ListItemIcon>
+                  <FontAwesomeIcon icon={faUserAlt} />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography variant="h6">User Profile</Typography>
+                </ListItemText>
+              </ListItemButton>
+            </ListItem>
           </Stack>
           <Stack id="rightPage">
-            <FontAwesomeIcon
-              icon={faX}
-              id="exit"
-              onMouseOver={PointOut}
-              onMouseOut={PointBack}
-              onClick={doneCustomizing}
-            />
             <Stack id="profileDisplay">
               <Typography variant="h2" id="userDisplay">
                 User profile
               </Typography>
               <br />
               <form
-                action=""
+                onSubmit={async (l) => {
+                  l.preventDefault();
+                  const response = await fetch("/api/settings", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(values),
+                  });
+                  setSubmitting(true);
+                  setTimeout(() => {
+                    setSubmitting(false);
+                    setSubmitted(true);
+                  }, 6400);
+                  setTimeout(() => {
+                    setSubmitted(false);
+                    window.location.href = "/settings";
+                  }, 8000);
+                }}
                 style={{
                   display: "flex",
                   position: "relative",
@@ -114,16 +194,16 @@ export default function EditUserProfile() {
                     fname.style.cursor = "none";
                   }}
                   onMouseOut={TextBack}
-                  value={session.data?.user?.name}
+                  value={values.name}
                   onChange={(e) => {
                     setValues({ ...values, name: e.target.value });
                   }}
                 />
                 <br />
                 <TextField
-                  label="Email"
                   id="email"
                   fullWidth
+                  aria-readonly
                   onMouseOver={(l) => {
                     var fname = document.getElementById(
                       "email",
@@ -135,15 +215,24 @@ export default function EditUserProfile() {
                     fname.style.cursor = "none";
                   }}
                   onMouseOut={TextBack}
-                  value={session.data?.user?.email}
-                  onChange={(o) => {
-                    setValues({ ...values, email: o.target.value });
-                  }}
+                  value={uniqueEmails}
                 />
                 <br />
                 <TextField
                   label="Username"
-                  value={uniqueUsernames}
+                  id="username"
+                  value={values.username}
+                  onMouseOver={(l) => {
+                    var fname = document.getElementById(
+                      "username",
+                    ) as HTMLInputElement;
+                    var cursor = document.getElementById(
+                      "mouse",
+                    ) as HTMLImageElement;
+                    cursor.srcset = "/text-cursor.png";
+                    fname.style.cursor = "none";
+                  }}
+                  onMouseOut={TextBack}
                   fullWidth
                   onChange={(l) => {
                     setValues({ ...values, username: l.target.value });

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     template: "%s - AICulture",
     default: "Chat",
   },
-  description: "A page for chatting with users all over thee world",
+  description: "A page for chatting with users all over the world",
 };
 
 export default function RootLayout({

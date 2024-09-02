@@ -2,14 +2,20 @@ import { getServerSession } from "@/modules/auth/lib/get-server-session/get-serv
 import { prisma } from "@/modules/prisma/lib/prisma-client/prisma-client";
 
 export async function POST(req: Request) {
-  const { name } = await req.json();
+  const { name, username } = await req.json();
   const session = await getServerSession();
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+  });
   await prisma.user.update({
     where: {
       id: session.user.id,
     },
     data: {
       name: name,
+      username: user?.username,
     },
   });
 

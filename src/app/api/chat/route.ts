@@ -44,6 +44,7 @@ export const POST = async (req: Request) => {
 
   await pusher.trigger("chat", "message", {
     ...messageInput,
+    username: user?.username,
     createdAt: savedMessage.createdAt,
     owner: user,
   });

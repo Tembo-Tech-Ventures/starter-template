@@ -149,7 +149,8 @@ export default function Chat() {
                         backgroundColor: "transparent",
                       }}
                     >
-                      {session.data?.user?.name || "New User"}
+                      {message.owner?.name ||
+                        `New User(${message.owner?.id.substring(0, 5)})`}
                     </h6>
                     <h6
                       style={{

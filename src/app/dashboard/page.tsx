@@ -1,59 +1,89 @@
 "use client";
-import { useAllMessages } from "@/modules/messages/hooks/use-all-messages/use-all-messages";
 import {
+  Backdrop,
   Box,
   Button,
-  CircularProgress,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Dialog,
+  Skeleton,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Logo from "public/Samp.png";
-import { useState, useEffect, useRef } from "react";
-import { MessageInput } from "../api/messages/route";
-import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
-import Link from "next/link";
-import { Train_One } from "next/font/google";
-import "../globalicons.css";
+import { GlobalCard } from "./components/cards/cards";
 import { useRouter } from "next/navigation";
-import { NavBar } from "@/components/navbar/navbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useChat } from "ai/react";
-import Markdown from "react-markdown";
-import { PointOut, PointBack } from "@/components/mousecontrols/mousecontrol";
-import { rotaryUnit, rotarySwitch } from "@/components/rotary-unit/rotary-unit";
-import { faCloudShowersWater } from "@fortawesome/free-solid-svg-icons";
-const emptyMessage: MessageInput = {
-  content: "",
-};
-export default function Chat() {
+
+export default function Dashboard() {
+  const [loaded, setLoaded] = useState(false);
+  const [warningMessage, setWarningMessage] = useState(false);
+  const [weatherData, setWeatherData] = useState(null);
+  const session = useSession();
   const router = useRouter();
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
-  const pStyling: React.CSSProperties = {
-    color: "gray",
-    fontFamily: "'Indie Flower', cursive",
-    cursor: "pointer",
+  let weatherMap;
+  useEffect(() => {
+    if (session.status === "authenticated" && session.data?.user?.name === "") {
+      setWarningMessage(true);
+    }
+  }, [session.data?.user?.name, session.status]);
+  interface WeatherData {
+    main: {
+      temp: number;
+    };
+    weather: Array<{
+      description: string;
+    }>;
+  }
+
+  interface WeatherSidebarProps {
+    weatherData: WeatherData | null;
+  }
+
+  const fetchWeather = async (latitude: number, longitude: number) => {
+    const apiKey = "681a847ebddfec8c90bc96ae7e0af34e";
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      return null;
+    }
   };
 
-  const Home = () => {
-    window.location.href = "/";
+  const WeatherSidebar: React.FC<WeatherSidebarProps> = ({ weatherData }) => {
+    if (!weatherData) return null;
+    const currentWeather = weatherData.main.temp - 273.15;
+    return (
+      <Typography
+        variant="h6"
+        sx={{
+          color: "#fff",
+          display: "flex",
+          position: "absolute",
+          top: "39%",
+          left: "4%",
+          fontFamily: "cursive",
+        }}
+      >
+        It&apos;s currently {currentWeather.toFixed(1)}
+        <sup>o</sup>C across your region
+      </Typography>
+    );
   };
-  const Contact = () => {
-    window.location.href = "/contact";
-  };
-  const About = () => {
-    window.location.href = "/about";
-  };
-  const Chat = () => {
-    window.location.href = "/chat";
-  };
-  const Bot = () => {
-    window.location.href = "/dashboard";
-  };
-  const weather = () => {
-    router.push("/weather");
-  };
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      const weather = await fetchWeather(latitude, longitude);
+      setWeatherData(weather);
+    });
+  }, []);
 
   return (
     <Box>
@@ -62,151 +92,195 @@ export default function Chat() {
           display: "flex",
           position: "relative",
           width: "100%",
-          height: "100vh",
+          backgroundColor: "black",
+          color: "#fff",
         }}
       >
-        <nav
-          style={{
-            display: "flex",
-            position: "relative",
-            alignItems: "center",
-            justifyContent: "center",
-            wordSpacing: 2,
-            gap: 5,
-          }}
-        >
-          <span className="material-symbols-outlined">home</span>
-          <p style={pStyling} id="home" onClick={Home}>
-            Home
-          </p>
-          <span
-            className="material-symbols-outlined"
-            id="contacts"
-            style={{ marginLeft: 40 }}
+        <Dialog open={warningMessage}>
+          <Card
+            sx={{
+              display: "flex",
+              position: "relative",
+              flexDirection: "column",
+              maxWidth: 375,
+              height: 375,
+              overflowY: "auto",
+            }}
           >
-            contacts_product
-          </span>
-          <p style={pStyling} onClick={Contact}>
-            Contact us
-          </p>
-          <span
-            className="material-symbols-outlined"
-            style={{ marginLeft: 30 }}
-          >
-            local_library
-          </span>
-          <p style={pStyling} onClick={About}>
-            About us
-          </p>
-          <span
-            className="material-symbols-outlined"
-            style={{ marginLeft: 50 }}
-          >
-            chat
-          </span>
-          <p id="chats" style={pStyling} onClick={Chat}>
-            P2P Chat
-          </p>
-          <span
-            className="material-symbols-outlined"
-            style={{ marginLeft: 50 }}
-          >
-            forum
-          </span>
-          <p id="p2b" style={pStyling} onClick={Bot}>
-            Chats & Privacy
-          </p>
-          <span>
-            <FontAwesomeIcon
-              icon={faCloudShowersWater}
-              style={{ marginLeft: 40 }}
+            <CardHeader title="New User Detected" />
+            <CardMedia
+              component="img"
+              height={190}
+              image="/new-user-model.png"
+              alt="New User Detcted"
             />
-          </span>
-          <p style={pStyling} onClick={weather}>
-            Weather Forecast
-          </p>
-          <Stack
-            direction="row"
-            justifyContent="flex-end"
-            style={{ cursor: "none" }}
-          >
-            <Button
-              variant="contained"
-              id="button"
-              style={{ backgroundColor: "black", left: 130, cursor: "pointer" }}
-              onClick={(r) => {
-                window.location.href = "/auth/logout";
+            <CardContent>
+              <Typography
+                variant="body2"
+                fontFamily={"monospace"}
+                className="weatherHolder"
+              >
+                It appears you don&apos;t have a name yet. Try adding a name to
+                your account to help other users recognize who you are
+              </Typography>
+            </CardContent>
+            <Stack
+              sx={{
+                display: "flex",
+                position: "relative",
+                width: "100%",
+                flexDirection: "row",
               }}
             >
-              Logout
-            </Button>
-          </Stack>
-        </nav>
-        <span
-          id="settings"
-          className="material-symbols-outlined"
-          style={{ color: "white", position: "absolute", right: 7, top: 10 }}
-          onClick={(j) => {
-            window.location.href = "/settings";
-          }}
-          onMouseOver={PointOut}
-          onMouseEnter={rotaryUnit}
-          onMouseLeave={rotarySwitch}
-          onMouseOut={PointBack}
-        >
-          settings
-        </span>
-        <Typography
-          variant="h2"
-          sx={{
-            display: "flex",
-            position: "relative",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "'Baskervville SC', serif",
-            fontWeight: 400,
-            fontStyle: "normal",
-          }}
-        >
-          Search Anything...
-        </Typography>
+              <Stack
+                sx={{ display: "flex", position: "relative", width: "50%" }}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid brown",
+                    width: "67%",
+                    display: "flex",
+                    position: "relative",
+                    float: "right",
+                    alignContent: "end",
+                  }}
+                  onClick={() => setWarningMessage(!warningMessage)}
+                >
+                  Cancel
+                </Button>
+              </Stack>
+              <Stack
+                sx={{
+                  display: "flex",
+                  position: "relative",
+                  width: "50%",
+                  alignItems: "end",
+                }}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid brown",
+                    width: "67%",
+                    display: "flex",
+                    position: "relative",
+                    float: "right",
+                    alignContent: "end",
+                  }}
+                  onClick={() => router.push("/settings")}
+                >
+                  Add name
+                </Button>
+              </Stack>
+            </Stack>
+          </Card>
+        </Dialog>
+        <Stack>
+          <Image
+            src={"/ai.jpg"}
+            alt="ai"
+            height={100}
+            width={100}
+            style={{ display: "block", visibility: "hidden" }}
+            onLoad={() => setLoaded(true)}
+          ></Image>
+          <Skeleton
+            variant="text"
+            sx={{
+              display: loaded ? "none" : "block",
+              position: "absolute",
+              top: "4%",
+              left: "4%",
+              bgcolor: "grey.900",
+              fontsize: "5rem",
+            }}
+            height={50}
+            width={150}
+          ></Skeleton>
+          <Typography
+            variant="h6"
+            sx={{
+              display: "block",
+              visibility: loaded ? "visible" : "hidden",
+              position: "absolute",
+              top: "4%",
+              left: "4%",
+            }}
+          >
+            Hi{" "}
+            {session.data?.user?.name ||
+              `New User${session.data?.user?.email?.substring(0, 4)}`}
+          </Typography>
+        </Stack>
+        {loaded ? (
+          <WeatherSidebar weatherData={weatherData} />
+        ) : (
+          <Skeleton
+            variant="text"
+            width={250}
+            height={50}
+            sx={{
+              bgcolor: "grey.900",
+              display: "block",
+              position: "absolute",
+              top: "43%",
+              left: "4%",
+            }}
+          ></Skeleton>
+        )}
+      </Stack>
+      <Stack
+        sx={{
+          display: "Flex",
+          position: "relative",
+          flexDirection: "column",
+          gap: 9,
+        }}
+      >
         <Stack
           sx={{
             display: "flex",
             position: "relative",
-            overflowY: "scroll",
-            overflowX: "hidden",
             width: "100%",
-            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            gap: 2,
           }}
         >
-          {messages.map((message) => (
-            <div key={message.id}>
-              <p
-                style={{
-                  fontWeight: "bold",
-                  fontFamily: "'Oswald', sans-serif",
-                  fontOpticalSizing: "auto",
-                  fontStyle: "normal",
-                }}
-              >
-                {message.role === "user" ? "User: " : "AI: "}
-              </p>
-              <Markdown>{message.content}</Markdown>
-              <br /> <br />
-            </div>
-          ))}
-          <form onSubmit={handleSubmit}>
-            <input
-              type="search"
-              id="search-bar"
-              placeholder="Search for anything..."
-              className="search-bar"
-              value={input}
-              onChange={handleInputChange}
-            ></input>
-          </form>
+          <GlobalCard
+            icon={"grid_view"}
+            subject="5+"
+            content="Users have connected"
+          ></GlobalCard>
+          <GlobalCard
+            icon={"commit"}
+            subject="5.7%"
+            content="Active users on the site"
+          ></GlobalCard>
+          <GlobalCard
+            icon={"sentiment_satisfied"}
+            subject="2.5/5"
+            content="User satisfaction rating"
+          ></GlobalCard>
+        </Stack>
+        <Stack
+          sx={{
+            display: "flex",
+            position: "relative",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            gap: 2,
+          }}
+        >
+          <GlobalCard
+            icon="agriculture"
+            subject="7%"
+            content="decrease in farms in the United States"
+          />
         </Stack>
       </Stack>
     </Box>

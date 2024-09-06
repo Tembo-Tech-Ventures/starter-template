@@ -16,18 +16,68 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { GlobalCard } from "./components/cards/cards";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { data } from "./components/countries/countries";
 
 export default function Dashboard() {
   const [loaded, setLoaded] = useState(false);
+  const [icon, setIcon] = useState("");
   const [warningMessage, setWarningMessage] = useState(false);
   const [weatherData, setWeatherData] = useState(null);
+  const [miniWeater, setMiniWeather] = useState(Number);
+  const [weatherIcon, setWeatherIcon] = useState("");
+  const [weatherMessage, setWeatherMessage] = useState("");
+  const [subject, setSubject] = useState("");
+  const [content, setContent] = useState("");
+  const [countryLoaded, setCountryLoaded] = useState(false);
+  const [weatherLoaded, setWeatherLoaded] = useState(false);
+  const [userCountry, setUserCountry] = useState();
   const session = useSession();
   const router = useRouter();
-  let weatherMap;
+  console.log(`Username: ${session.status}`);
   useEffect(() => {
-    if (session.status === "authenticated" && session.data?.user?.name === "") {
+    data.forEach((item) => {
+      if (item.country === userCountry) {
+        console.log(`Your country is ${item.percentage}`);
+        setIcon("agriculture");
+        setSubject(`${item.percentage}%`);
+        setContent(`${item.content}`);
+      } else {
+        setIcon("error");
+        setSubject(`Error`);
+        setContent("We don't support that country");
+      }
+    });
+  }, [userCountry]);
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      redirect("/auth/login");
+    }
+  }, [session.status]);
+  useEffect(() => {
+    if (miniWeater <= 27 && miniWeater >= 0) {
+      setWeatherIcon("rainy");
+      setWeatherMessage("Expect frequent rain showers ");
+    } else if (miniWeater <= 30 && miniWeater >= 25) {
+      setWeatherIcon("partly_cloudy_day");
+      setWeatherMessage("Expect partly cloudy skies with scattered showers");
+    } else if (miniWeater <= 20 && miniWeater >= 10) {
+      setWeatherIcon("filter_drama");
+      setWeatherMessage("Expect mostly cloudy skies");
+    } else if (miniWeater >= 28) {
+      setWeatherIcon("sunny");
+      setWeatherMessage("Expect clear skies and sunshine");
+    } else if (miniWeater >= 41) {
+      setWeatherIcon("sunny");
+      setWeatherMessage("Expect intense, blazing sunshine");
+    } else {
+      setWeatherIcon("cloud");
+    }
+  }, [miniWeater]);
+  useEffect(() => {
+    if (session.status === "authenticated" && !session.data?.user?.name) {
       setWarningMessage(true);
+      console.log("New User Detected");
     }
   }, [session.data?.user?.name, session.status]);
   interface WeatherData {
@@ -60,6 +110,7 @@ export default function Dashboard() {
   const WeatherSidebar: React.FC<WeatherSidebarProps> = ({ weatherData }) => {
     if (!weatherData) return null;
     const currentWeather = weatherData.main.temp - 273.15;
+    setMiniWeather(currentWeather);
     return (
       <Typography
         variant="h6"
@@ -73,7 +124,7 @@ export default function Dashboard() {
         }}
       >
         It&apos;s currently {currentWeather.toFixed(1)}
-        <sup>o</sup>C across your region
+        <sup>o</sup>C in {userCountry}
       </Typography>
     );
   };
@@ -84,6 +135,45 @@ export default function Dashboard() {
       setWeatherData(weather);
     });
   }, []);
+  useEffect(() => {
+    if (weatherData) {
+      setWeatherLoaded(true);
+    }
+  }, [weatherData]);
+
+  useEffect(() => {
+    if (userCountry) {
+      setCountryLoaded(true);
+    }
+  }, [userCountry]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      const { latitude, longitude } = coords;
+
+      fetchUserCountry(latitude, longitude);
+    });
+  }, []);
+
+  const fetchUserCountry = async (latitude: number, longitude: number) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const apiKey = "570ee4b49ecf4bf786052677c5f4a082";
+        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&pretty=1`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          if (data.results.length > 0) {
+            setUserCountry(data.results[0].components.country);
+          }
+        } catch (error) {
+          console.error("Error fetching user country:", error);
+        }
+      });
+    }
+  };
 
   return (
     <Box>
@@ -113,6 +203,7 @@ export default function Dashboard() {
               height={190}
               image="/new-user-model.png"
               alt="New User Detcted"
+              draggable="false"
             />
             <CardContent>
               <Typography
@@ -276,11 +367,25 @@ export default function Dashboard() {
             gap: 2,
           }}
         >
+          {countryLoaded ? (
+            <GlobalCard icon={icon} subject={subject} content={content} />
+          ) : (
+            <Skeleton variant="text" width={"25%"} height={300}></Skeleton>
+          )}
           <GlobalCard
-            icon="agriculture"
-            subject="7%"
-            content="decrease in farms in the United States"
+            icon="wifi"
+            subject="4%"
+            content="Increase in farms with internet access"
           />
+          {weatherLoaded ? (
+            <GlobalCard
+              icon={weatherIcon}
+              subject={`${miniWeater.toFixed(1)}°C`}
+              content={weatherMessage}
+            />
+          ) : (
+            <Skeleton variant="rectangular" height={200} width={300}></Skeleton>
+          )}
         </Stack>
       </Stack>
     </Box>

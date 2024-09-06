@@ -45,7 +45,7 @@ export default function Dashboard() {
       } else {
         setIcon("error");
         setSubject(`Error`);
-        setContent("We don't support that country");
+        setContent("We don't support your country");
       }
     });
   }, [userCountry]);

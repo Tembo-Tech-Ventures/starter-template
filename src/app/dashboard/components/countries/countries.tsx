@@ -5,11 +5,6 @@ export const data = [
     content: "Increase in the production of wheat",
   },
   {
-    country: "Albania",
-    percentage: 0.5,
-    content: "Decrease in food index",
-  },
-  {
     country: "Algeria",
     percentage: 2,
     content: "Increase in agricultural production",
@@ -128,5 +123,115 @@ export const data = [
     country: "Japan",
     percentage: 30,
     content: "Decrease in the number of farms",
+  },
+  {
+    country: "Kenya",
+    percentage: 15,
+    content: "Increase in sugarcane production",
+  },
+  {
+    country: "Madagascar",
+    percentage: 77,
+    content: "Increase in rural poverty",
+  },
+  {
+    country: "Malaysia",
+    percentage: 0.1,
+    content: "Increase in agricultural sector",
+  },
+  {
+    country: "Mexico",
+    percentage: 24,
+    content: "Decrease in agricultural productivity",
+  },
+  {
+    country: "Netherlands",
+    percentage: 5,
+    content: "Increase in agricultural exports",
+  },
+  {
+    country: "New Zealand",
+    percentage: 91,
+    content: "Increase in irrigated land",
+  },
+  {
+    country: "Niger",
+    percentage: 15,
+    content: "Increase in agricultural sector",
+  },
+  {
+    country: "Nigeria",
+    percentage: 0.2,
+    content: "Increase in agricultural sector",
+  },
+  {
+    country: "Portugal",
+    percentage: 4,
+    content: "Increase in crop production",
+  },
+  {
+    country: "Qatar",
+    percentage: 15,
+    content: "Decrease in food production",
+  },
+  {
+    country: "Russia",
+    percentage: 15,
+    content: "Increase in agricultural productivity",
+  },
+  {
+    country: "Saudi Arabia",
+    percentage: 7.8,
+    content: "Increase in agricultural sector",
+  },
+  {
+    country: "Singapore",
+    percentage: 10,
+    content: "Increase in food production",
+  },
+  {
+    country: "South Africa",
+    percentage: 2,
+    content: "Decrease in agricultural productivity",
+  },
+  {
+    country: "Spain",
+    percentage: 8.1,
+    content: "Increase in average production",
+  },
+  {
+    country: "Thailand",
+    percentage: 0.5,
+    content: "Increase in middle-aged labor",
+  },
+  {
+    country: "Togo",
+    percentage: 40,
+    content: "Increase in post-harvest loss",
+  },
+  {
+    country: "Turkey",
+    percentage: 2.7,
+    content: "Increase in gross value",
+  },
+  {
+    country: "Ukraine",
+    percentage: 10,
+    content: "Increase in crop production",
+  },
+  {
+    country: "United Arab Emirates",
+    percentage: 2.4,
+    content: "Increase in crop production",
+  },
+  {
+    country: "United Kingdom",
+    percentage: 18.4,
+    content: "Decrease in agricultural productivity",
+  },
+  {
+    country: "United States",
+    percentage: 1.5,
+    content: "Increase in farm output",
   },
 ];

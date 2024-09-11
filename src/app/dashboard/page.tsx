@@ -25,6 +25,7 @@ import { data } from "./components/countries/countries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MenuBar } from "@/components/menubar/menubar";
+import MobileDisplay from "./components/mobile-display/mobile-display";
 
 export default function Dashboard() {
   const [loaded, setLoaded] = useState(false);
@@ -138,6 +139,7 @@ export default function Dashboard() {
           top: "39%",
           left: "4%",
           fontFamily: "cursive",
+          fontSize: { xs: 12, sm: 14, md: 16, lg: 20, xl: 21 },
         }}
       >
         It&apos;s currently {currentWeather.toFixed(1)}
@@ -391,6 +393,7 @@ export default function Dashboard() {
             gap: 2,
           }}
         >
+          <MobileDisplay />
           <GlobalCard
             icon={"grid_view"}
             subject="5+"
@@ -421,7 +424,20 @@ export default function Dashboard() {
           {countryLoaded ? (
             <GlobalCard icon={icon} subject={subject} content={content} />
           ) : (
-            <Skeleton variant="text" width={"25%"} height={300}></Skeleton>
+            <Skeleton
+              variant="text"
+              width={"25%"}
+              height={300}
+              sx={{
+                display: {
+                  xs: "none",
+                  sm: "none",
+                  md: "flex",
+                  lg: "flex",
+                  xl: "flex",
+                },
+              }}
+            ></Skeleton>
           )}
           <GlobalCard
             icon="grass"
@@ -435,7 +451,20 @@ export default function Dashboard() {
               content={weatherMessage}
             />
           ) : (
-            <Skeleton variant="rectangular" height={200} width={300}></Skeleton>
+            <Skeleton
+              variant="rectangular"
+              height={200}
+              width={300}
+              sx={{
+                display: {
+                  xs: "none",
+                  sm: "none",
+                  md: "flex",
+                  lg: "flex",
+                  xl: "flex",
+                },
+              }}
+            ></Skeleton>
           )}
         </Stack>
       </Stack>

@@ -13,6 +13,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
 
 .material-symbols-outlined {
   font-variation-settings:
@@ -759,4 +760,29 @@ pre::selection {
 @keyframes done {
   from {text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px aqua, 0 0 50px aqua, 0 0 75px aqua, 0 0 90px aqua;}
   to {background-image: linear-gradient(to bottom right, red, aqua, silver, indigo, blue); background-clip: text; color: transparent; }
+}
+@media (max-width: 320px) {
+  #dbIcons {
+    font-size: 7px;
+  }
+}
+@media (max-width: 375px) {
+  #dbIcons {
+    font-size: 10px;
+  }
+}
+@media (max-width: 425px) {
+  #dbIcons {
+    font-size: 13px;
+  }
+}
+@media (max-width: 1024px) {
+  #dbIcons {
+    font-size: 2px;
+  }
+}
+@media (max-width: 1440px) {
+  #dbIcons {
+    font-size: 35px;
+  }
 }

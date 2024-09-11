@@ -6,6 +6,7 @@ import {
   Skeleton,
   Typography,
   Card,
+  Stack,
 } from "@mui/material";
 import "../../../globalicons.css";
 import { useState } from "react";
@@ -34,7 +35,13 @@ export function GlobalCard({
       <Paper
         elevation={5}
         sx={{
-          display: "flex",
+          display: {
+            xs: "none",
+            sm: "none",
+            md: "flex",
+            lg: "flex",
+            xl: "flex",
+          },
           position: "relative",
           alignItems: "center",
           justifyContent: "center",
@@ -48,13 +55,26 @@ export function GlobalCard({
         }}
       >
         {loaded ? (
-          <Avatar sx={{ height: 60, width: 60, bgcolor: "grey.900" }}>
-            <span
+          <Avatar
+            sx={{
+              display: "flex",
+              position: "relative",
+              alignItems: "center",
+              justifyContent: "center",
+              height: { xs: 27, sm: 36, md: 49, lg: 60, xl: 90, xxl: 150 },
+              width: { xs: 27, sm: 36, md: 49, lg: 60, xl: 90, xxl: 150 },
+              bgcolor: "grey.900",
+            }}
+          >
+            <Stack
+              component={"span"}
               className="material-symbols-outlined"
-              style={{ fontSize: 35 }}
+              sx={{
+                fontSize: { xs: 7, sm: 14, md: 21, lg: 35, xl: 41, xxl: 48 },
+              }}
             >
               {icon}
-            </span>
+            </Stack>
           </Avatar>
         ) : (
           <Skeleton variant="circular" height={60} width={60}></Skeleton>

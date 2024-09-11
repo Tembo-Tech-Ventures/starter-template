@@ -1,5 +1,6 @@
 "use client";
 import {
+  Avatar,
   Backdrop,
   Box,
   Button,
@@ -8,6 +9,9 @@ import {
   CardHeader,
   CardMedia,
   Dialog,
+  Drawer,
+  ListItem,
+  ListItemButton,
   Skeleton,
   Stack,
   Typography,
@@ -18,11 +22,15 @@ import Image from "next/image";
 import { GlobalCard } from "./components/cards/cards";
 import { redirect, useRouter } from "next/navigation";
 import { data } from "./components/countries/countries";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { MenuBar } from "@/components/menubar/menubar";
 
 export default function Dashboard() {
   const [loaded, setLoaded] = useState(false);
   const [icon, setIcon] = useState("");
   const [warningMessage, setWarningMessage] = useState(false);
+  const [open, setOpen] = useState(false);
   const [weatherData, setWeatherData] = useState(null);
   const [miniWeater, setMiniWeather] = useState(Number);
   const [weatherIcon, setWeatherIcon] = useState("");
@@ -35,20 +43,29 @@ export default function Dashboard() {
   const session = useSession();
   const router = useRouter();
   console.log(`Username: ${session.status}`);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
-    data.forEach((item) => {
-      if (item.country === userCountry) {
-        console.log(`Your country is ${item.percentage}`);
-        setIcon("agriculture");
-        setSubject(`${item.percentage}%`);
-        setContent(`${item.content}`);
-      } else {
-        setIcon("error");
-        setSubject(`Error`);
-        setContent("We don't support your country");
-      }
-    });
+    const findUserCountryData = data.find(
+      (item) => item.country === userCountry,
+    );
+
+    if (findUserCountryData) {
+      console.log(`Your country is ${findUserCountryData.percentage}`);
+      setIcon("agriculture");
+      setSubject(`${findUserCountryData.percentage}%`);
+      setContent(`${findUserCountryData.content}`);
+    } else {
+      setIcon("error");
+      setSubject(`Error`);
+      setContent("We don't support your country");
+    }
   }, [userCountry]);
+
   useEffect(() => {
     if (session.status === "unauthenticated") {
       redirect("/auth/login");
@@ -60,7 +77,7 @@ export default function Dashboard() {
       setWeatherMessage("Expect frequent rain showers ");
     } else if (miniWeater <= 30 && miniWeater >= 25) {
       setWeatherIcon("partly_cloudy_day");
-      setWeatherMessage("Expect partly cloudy skies with scattered showers");
+      setWeatherMessage("Expect partly cloudy skies");
     } else if (miniWeater <= 20 && miniWeater >= 10) {
       setWeatherIcon("filter_drama");
       setWeatherMessage("Expect mostly cloudy skies");
@@ -186,6 +203,16 @@ export default function Dashboard() {
           color: "#fff",
         }}
       >
+        <Drawer
+          open={open}
+          onClose={handleClose}
+          anchor="right"
+          PaperProps={{
+            sx: { width: { xs: 75, sm: 100, md: 150, lg: 250, xl: 350 } },
+          }}
+        >
+          <MenuBar />
+        </Drawer>
         <Dialog open={warningMessage}>
           <Card
             sx={{
@@ -267,7 +294,9 @@ export default function Dashboard() {
             </Stack>
           </Card>
         </Dialog>
-        <Stack>
+        <Stack
+          sx={{ display: "flex", position: "relative", flexDirection: "row" }}
+        >
           <Image
             src={"/ai.jpg"}
             alt="ai"
@@ -301,8 +330,30 @@ export default function Dashboard() {
           >
             Hi{" "}
             {session.data?.user?.name ||
-              `New User${session.data?.user?.email?.substring(0, 4)}`}
+              `${session.data?.user?.email?.substring(0, 4)}`}
           </Typography>
+          <Stack
+            sx={{
+              display: "flex",
+              position: "absolute",
+              right: "4%",
+              top: "25%",
+            }}
+          >
+            <Avatar
+              sx={{
+                height: { xs: 20, md: 24, lg: 32, xl: 150 },
+                width: { xs: 20, md: 24, lg: 32, xl: 150 },
+                cursor: "pointer",
+              }}
+              onClick={handleOpen}
+            >
+              <Typography variant="h6">
+                {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
+                  session.data?.user?.email?.toUpperCase().substring(0, 1)}
+              </Typography>
+            </Avatar>
+          </Stack>
         </Stack>
         {loaded ? (
           <WeatherSidebar weatherData={weatherData} />
@@ -373,9 +424,9 @@ export default function Dashboard() {
             <Skeleton variant="text" width={"25%"} height={300}></Skeleton>
           )}
           <GlobalCard
-            icon="wifi"
-            subject="4%"
-            content="Increase in farms with internet access"
+            icon="grass"
+            subject="56%"
+            content="Increase in global crop production"
           />
           {weatherLoaded ? (
             <GlobalCard

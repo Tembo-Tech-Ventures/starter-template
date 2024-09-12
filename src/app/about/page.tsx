@@ -312,7 +312,6 @@ export default function About() {
         >
           <NavBar />
         </nav>
-        <MenuBar />
         <Stack
           style={{
             display: "flex",

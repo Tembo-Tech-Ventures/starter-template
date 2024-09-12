@@ -110,7 +110,6 @@ export default function Chat() {
         <Mice />
         <Stack>
           <NavBar />
-          <MenuBar />
         </Stack>
         <Stack>
           <div

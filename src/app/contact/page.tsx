@@ -65,7 +65,6 @@ export default function Contact() {
         >
           <NavBar />
         </nav>
-        <MenuBar />
         <Stack
           style={{
             alignItems: "center",

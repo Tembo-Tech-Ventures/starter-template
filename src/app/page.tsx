@@ -295,7 +295,6 @@ export default function Home() {
             </Button>
           </Stack>
         </Stack>
-        <MenuBar />
         <Typography
           variant="h1"
           id="aiculture"

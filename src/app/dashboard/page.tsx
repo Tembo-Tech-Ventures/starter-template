@@ -26,6 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MenuBar } from "@/components/menubar/menubar";
 import MobileDisplay from "./components/mobile-display/mobile-display";
+import TabletDisplay from "./components/tablet-display/tablet-display";
 
 export default function Dashboard() {
   const [loaded, setLoaded] = useState(false);
@@ -33,7 +34,7 @@ export default function Dashboard() {
   const [warningMessage, setWarningMessage] = useState(false);
   const [open, setOpen] = useState(false);
   const [weatherData, setWeatherData] = useState(null);
-  const [miniWeater, setMiniWeather] = useState(Number);
+  const [miniWeather, setMiniWeather] = useState(Number);
   const [weatherIcon, setWeatherIcon] = useState("");
   const [weatherMessage, setWeatherMessage] = useState("");
   const [subject, setSubject] = useState("");
@@ -41,6 +42,7 @@ export default function Dashboard() {
   const [countryLoaded, setCountryLoaded] = useState(false);
   const [weatherLoaded, setWeatherLoaded] = useState(false);
   const [userCountry, setUserCountry] = useState();
+  const [userState, setUserState] = useState();
   const session = useSession();
   const router = useRouter();
   console.log(`Username: ${session.status}`);
@@ -73,25 +75,25 @@ export default function Dashboard() {
     }
   }, [session.status]);
   useEffect(() => {
-    if (miniWeater <= 27 && miniWeater >= 0) {
+    if (miniWeather <= 27 && miniWeather >= 0) {
       setWeatherIcon("rainy");
       setWeatherMessage("Expect frequent rain showers ");
-    } else if (miniWeater <= 30 && miniWeater >= 25) {
+    } else if (miniWeather <= 30 && miniWeather >= 25) {
       setWeatherIcon("partly_cloudy_day");
       setWeatherMessage("Expect partly cloudy skies");
-    } else if (miniWeater <= 20 && miniWeater >= 10) {
+    } else if (miniWeather <= 20 && miniWeather >= 10) {
       setWeatherIcon("filter_drama");
       setWeatherMessage("Expect mostly cloudy skies");
-    } else if (miniWeater >= 28) {
+    } else if (miniWeather >= 28) {
       setWeatherIcon("sunny");
       setWeatherMessage("Expect clear skies and sunshine");
-    } else if (miniWeater >= 41) {
+    } else if (miniWeather >= 41) {
       setWeatherIcon("sunny");
       setWeatherMessage("Expect intense, blazing sunshine");
     } else {
       setWeatherIcon("cloud");
     }
-  }, [miniWeater]);
+  }, [miniWeather]);
   useEffect(() => {
     if (session.status === "authenticated" && !session.data?.user?.name) {
       setWarningMessage(true);
@@ -134,7 +136,14 @@ export default function Dashboard() {
         variant="h6"
         sx={{
           color: "#fff",
-          display: "flex",
+          display: {
+            xs: "block",
+            sm: "block",
+            md: "none",
+            lg: "none",
+            xl: "none",
+          },
+          width: "fit-content",
           position: "absolute",
           top: "39%",
           left: "4%",
@@ -143,7 +152,7 @@ export default function Dashboard() {
         }}
       >
         It&apos;s currently {currentWeather.toFixed(1)}
-        <sup>o</sup>C in {userCountry}
+        <sup>o</sup>C in {userState}
       </Typography>
     );
   };
@@ -173,7 +182,32 @@ export default function Dashboard() {
       fetchUserCountry(latitude, longitude);
     });
   }, []);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      const { latitude, longitude } = coords;
 
+      fetchUserState(latitude, longitude);
+    });
+  }, []);
+  const fetchUserState = async (latitude: number, longitude: number) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const apiKey = "570ee4b49ecf4bf786052677c5f4a082";
+        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&pretty=1`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          if (data.results.length > 0) {
+            setUserState(data.results[0].components.state);
+          }
+        } catch (error) {
+          console.error("Error fetching user country:", error);
+        }
+      });
+    }
+  };
   const fetchUserCountry = async (latitude: number, longitude: number) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -196,9 +230,17 @@ export default function Dashboard() {
 
   return (
     <Box>
+      <MobileDisplay />
+      <TabletDisplay />
       <Stack
         sx={{
-          display: "flex",
+          display: {
+            xs: "none",
+            sm: "none",
+            md: "flex",
+            lg: "flex",
+            xl: "none",
+          },
           position: "relative",
           width: "100%",
           backgroundColor: "black",
@@ -344,8 +386,8 @@ export default function Dashboard() {
           >
             <Avatar
               sx={{
-                height: { xs: 20, md: 24, lg: 32, xl: 150 },
-                width: { xs: 20, md: 24, lg: 32, xl: 150 },
+                height: { xs: 25, md: 29, lg: 32, xl: 150 },
+                width: { xs: 25, md: 29, lg: 32, xl: 150 },
                 cursor: "pointer",
               }}
               onClick={handleOpen}
@@ -365,8 +407,14 @@ export default function Dashboard() {
             width={250}
             height={50}
             sx={{
+              display: {
+                xs: "block",
+                sm: "block",
+                md: "none",
+                lg: "none",
+                xl: "none",
+              },
               bgcolor: "grey.900",
-              display: "block",
               position: "absolute",
               top: "43%",
               left: "4%",
@@ -393,7 +441,6 @@ export default function Dashboard() {
             gap: 2,
           }}
         >
-          <MobileDisplay />
           <GlobalCard
             icon={"grid_view"}
             subject="5+"
@@ -447,7 +494,7 @@ export default function Dashboard() {
           {weatherLoaded ? (
             <GlobalCard
               icon={weatherIcon}
-              subject={`${miniWeater.toFixed(1)}°C`}
+              subject={`${miniWeather.toFixed(1)}°C`}
               content={weatherMessage}
             />
           ) : (

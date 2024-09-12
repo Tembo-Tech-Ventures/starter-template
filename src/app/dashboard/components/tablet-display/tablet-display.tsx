@@ -1,4 +1,3 @@
-"use client";
 import {
   Avatar,
   Drawer,
@@ -7,14 +6,13 @@ import {
   SwipeableDrawer,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { data } from "../countries/countries";
-import Marquee from "react-fast-marquee";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { data } from "../countries/countries";
 import { MenuBar } from "@/components/menubar/menubar";
 
-export default function MobileDisplay() {
+export default function TabletDisplay() {
   const [loaded, setLoaded] = useState(false);
   const [userCountry, setUserCountry] = useState();
   const [userState, setUserState] = useState();
@@ -63,13 +61,6 @@ export default function MobileDisplay() {
       fetchUserCountry(latitude, longitude);
     });
   }, []);
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      const { latitude, longitude } = coords;
-
-      fetchUserState(latitude, longitude);
-    });
-  }, []);
 
   const fetchUserCountry = async (latitude: number, longitude: number) => {
     if (navigator.geolocation) {
@@ -83,25 +74,6 @@ export default function MobileDisplay() {
           const data = await response.json();
           if (data.results.length > 0) {
             setUserCountry(data.results[0].components.country);
-          }
-        } catch (error) {
-          console.error("Error fetching user country:", error);
-        }
-      });
-    }
-  };
-  const fetchUserState = async (latitude: number, longitude: number) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const { latitude, longitude } = position.coords;
-        const apiKey = "570ee4b49ecf4bf786052677c5f4a082";
-        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&pretty=1`;
-
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          if (data.results.length > 0) {
-            setUserState(data.results[0].components.state);
           }
         } catch (error) {
           console.error("Error fetching user country:", error);
@@ -175,14 +147,14 @@ export default function MobileDisplay() {
         }}
       >
         It&apos;s currently {currentWeather.toFixed(1)}
-        <sup>o</sup>C in {userState}
+        <sup>o</sup>C in {userCountry}
       </Typography>
     );
   };
   return (
     <Stack
       sx={{
-        display: { xs: "flex", sm: "none", md: "none", lg: "none", xl: "none" },
+        display: { xs: "none", sm: "flex", md: "none", lg: "none", xl: "none" },
         position: "absolute",
         width: "100%",
       }}
@@ -195,7 +167,7 @@ export default function MobileDisplay() {
       >
         <MenuBar />
       </SwipeableDrawer>
-      <Drawer anchor="right" open={altOpen} onClose={() => setAltOpen(false)}>
+      <Drawer open={altOpen} anchor="right" onClose={() => setAltOpen(false)}>
         <MenuBar />
       </Drawer>
       <Stack
@@ -211,7 +183,6 @@ export default function MobileDisplay() {
           width: { xs: "100%", sm: "100%", md: "100%" },
           backgroundColor: "black",
           color: "#fff",
-          zIndex: 10,
         }}
       >
         <Stack
@@ -259,12 +230,13 @@ export default function MobileDisplay() {
               right: "4%",
               top: "25%",
             }}
-            onClick={() => setAltOpen(true)}
           >
             <Avatar
               sx={{
                 height: { xs: 25, md: 29, lg: 32, xl: 150 },
                 width: { xs: 25, md: 29, lg: 32, xl: 150 },
+                cursor: "pointer",
+                zIndex: 10,
               }}
               onClick={() => setAltOpen(true)}
             >
@@ -434,8 +406,8 @@ export default function MobileDisplay() {
               sx={{
                 display: "flex",
                 position: "absolute",
-                top: "15%",
-                left: "1%",
+                top: { xs: "11%", sm: "5%" },
+                left: { xs: "1%", sm: "67%" },
               }}
             ></Skeleton>
           )}

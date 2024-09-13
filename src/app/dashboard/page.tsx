@@ -38,6 +38,7 @@ export default function Dashboard() {
   const [weatherIcon, setWeatherIcon] = useState("");
   const [weatherMessage, setWeatherMessage] = useState("");
   const [subject, setSubject] = useState("");
+  const [admin, setAdmin] = useState(false);
   const [content, setContent] = useState("");
   const [countryLoaded, setCountryLoaded] = useState(false);
   const [weatherLoaded, setWeatherLoaded] = useState(false);
@@ -51,6 +52,12 @@ export default function Dashboard() {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const checkRole = async () => {
+    const response = await fetch("/api/admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
   };
   useEffect(() => {
     const findUserCountryData = data.find(
@@ -100,6 +107,11 @@ export default function Dashboard() {
       console.log("New User Detected");
     }
   }, [session.data?.user?.name, session.status]);
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      checkRole();
+    }
+  }, [session.status]);
   interface WeatherData {
     main: {
       temp: number;

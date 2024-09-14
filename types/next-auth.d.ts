@@ -10,6 +10,8 @@ declare module "next-auth" {
       image?: string;
       /** The user's status (either true or false) */
       isBanned: boolean;
+      /**The user's location */
+      country: string;
     };
   }
 }

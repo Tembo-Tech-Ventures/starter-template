@@ -49,6 +49,7 @@ export default function Container() {
   console.log(`Username: ${session.status}`);
   const handleOpen = () => {
     setOpen(true);
+    updateCountry();
   };
   const handleClose = () => {
     setOpen(false);
@@ -59,6 +60,20 @@ export default function Container() {
       headers: { "Content-Type": "application/json" },
     });
   };
+  const updateCountry = async () => {
+    const response = await fetch("/api/country", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ userCountry }),
+    });
+    if (response.ok) {
+      console.log(
+        `Data collected successfully. Your country is ${session.data?.user.country}`,
+      );
+    } else {
+      console.error("Failed to gather user's country");
+    }
+  };
   useEffect(() => {
     const findUserCountryData = data.find(
       (item) => item.country === userCountry,
@@ -66,6 +81,7 @@ export default function Container() {
 
     if (findUserCountryData) {
       console.log(`Your country is ${findUserCountryData.percentage}`);
+      console.log(typeof weatherData);
       setIcon("agriculture");
       setSubject(`${findUserCountryData.percentage}%`);
       setContent(`${findUserCountryData.content}`);
@@ -74,7 +90,7 @@ export default function Container() {
       setSubject(`Error`);
       setContent("We don't support your country");
     }
-  }, [userCountry]);
+  }, [userCountry, weatherData]);
 
   useEffect(() => {
     if (session.status === "unauthenticated") {

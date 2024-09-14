@@ -8,6 +8,9 @@ export default async function Dashboard() {
   if (session.user.isBanned) {
     redirect("/banned");
   }
+  if (!session.user) {
+    redirect("/auth/login");
+  }
   return (
     <Box>
       <Container />

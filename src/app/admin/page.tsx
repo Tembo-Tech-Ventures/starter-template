@@ -22,6 +22,7 @@ export type User = {
   email: string;
   role: string;
   isBanned: boolean;
+  country: string;
 };
 
 export default function AdminPage() {
@@ -185,7 +186,7 @@ export default function AdminPage() {
                     {user.email}
                   </TableCell>
                   <TableCell width={100} sx={tableStyles}>
-                    Unknown
+                    {user.country}
                   </TableCell>
                   <TableCell width={80} sx={tableStyles}>
                     Free

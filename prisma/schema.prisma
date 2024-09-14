@@ -39,6 +39,7 @@ model User {
     name          String?
     email         String?       @unique
     username      String?       @unique
+    country       String        @default("Unknown")
     role           String       @default("user")
     isBanned        Boolean     @default(false)
     emailVerified DateTime?

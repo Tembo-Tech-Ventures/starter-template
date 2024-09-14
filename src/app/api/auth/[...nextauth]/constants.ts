@@ -2,6 +2,7 @@ import { prisma } from "@/modules/prisma/lib/prisma-client/prisma-client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
+import { NextResponse } from "next/server";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,

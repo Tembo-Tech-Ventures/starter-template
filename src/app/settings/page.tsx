@@ -24,7 +24,7 @@ import {
   TextBack,
   TextOut,
 } from "@/components/mousecontrols/mousecontrol";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
 import { GetAllChatMessagesResponse } from "../api/chat/route";
@@ -51,7 +51,9 @@ export default function Settings() {
   const doneCustomizing = () => {
     window.location.href = "/dashboard";
   };
-
+  if (session.data?.user.isBanned) {
+    redirect("/banned");
+  }
   return (
     <Box>
       <Stack

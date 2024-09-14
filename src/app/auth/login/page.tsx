@@ -30,6 +30,9 @@ export default async function Login() {
   if (session?.user) {
     redirect("/dashboard");
   }
+  if (session?.user.isBanned) {
+    redirect("/banned");
+  }
 
   return <LoginForm />;
 }

@@ -1,6 +1,7 @@
 "use client";
 import {
   Box,
+  Button,
   List,
   ListItemButton,
   Stack,
@@ -15,13 +16,15 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  isBanned: boolean;
+};
+
 export default function AdminPage() {
-  type User = {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-  };
   const [adminDisplay, setAdminDisplay] = useState(false);
   const [defaultDisplay, setDefaultDisplay] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
@@ -32,6 +35,44 @@ export default function AdminPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
+  };
+  const handleBan = async (userId: number) => {
+    const response = await fetch("/api/admin/users/ban-user", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+    if (response.ok) {
+      alert("User banned successfully");
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, isBanned: true } : user,
+        ),
+      );
+    } else {
+      alert("Failed to ban user");
+    }
+  };
+  const handleUnban = async (userId: number) => {
+    const response = await fetch("/api/admin/users/unban-user", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+    if (response.ok) {
+      alert("User unbanned successfully");
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, isBanned: true } : user,
+        ),
+      );
+    } else {
+      alert("Failed to ban user");
+    }
   };
   const tableStyles: React.CSSProperties = {
     fontFamily: "'Caveat', system-ui",
@@ -122,6 +163,9 @@ export default function AdminPage() {
                 <TableCell width={80} sx={headStyles}>
                   Role
                 </TableCell>
+                <TableCell width={80} sx={headStyles}>
+                  Status
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -148,6 +192,20 @@ export default function AdminPage() {
                   </TableCell>
                   <TableCell width={80} sx={tableStyles}>
                     {user.role}
+                  </TableCell>
+                  <TableCell width={80} sx={tableStyles}>
+                    {user.isBanned ? "Banned" : "Active"}
+                  </TableCell>
+                  <TableCell width={80} sx={tableStyles}>
+                    <Button
+                      onClick={() =>
+                        user.isBanned
+                          ? handleUnban(user.id)
+                          : handleBan(user.id)
+                      }
+                    >
+                      {user.isBanned ? "Unban" : "Ban"}
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

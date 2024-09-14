@@ -8,6 +8,8 @@ declare module "next-auth" {
       email?: string;
       name?: string;
       image?: string;
+      /** The user's status (either true or false) */
+      isBanned: boolean;
     };
   }
 }

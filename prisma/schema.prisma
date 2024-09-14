@@ -40,6 +40,7 @@ model User {
     email         String?       @unique
     username      String?       @unique
     role           String       @default("user")
+    isBanned        Boolean     @default(false)
     emailVerified DateTime?
     image         String?
     accounts      Account[]

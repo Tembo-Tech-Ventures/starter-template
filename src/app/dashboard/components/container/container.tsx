@@ -85,12 +85,27 @@ export default function Container() {
       setIcon("agriculture");
       setSubject(`${findUserCountryData.percentage}%`);
       setContent(`${findUserCountryData.content}`);
+      const updateCountry = async () => {
+        const response = await fetch("/api/country", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ userCountry }),
+        });
+        if (response.ok) {
+          console.log(
+            `Data collected successfully. Your country is ${session.data?.user.country}`,
+          );
+        } else {
+          console.error("Failed to gather user's country");
+        }
+      };
+      updateCountry();
     } else {
       setIcon("error");
       setSubject(`Error`);
       setContent("We don't support your country");
     }
-  }, [userCountry, weatherData]);
+  }, [userCountry, weatherData, session.data?.user]);
 
   useEffect(() => {
     if (session.status === "unauthenticated") {

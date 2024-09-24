@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       {
         message: "Must be logged in to attempt this call",
       },
-      { status: 500 },
+      { status: 401 },
     );
   }
   console.log(userCountry);

@@ -60,12 +60,7 @@ export function MenuBar() {
         icon="person"
       />
       <hr />
-      <MenuButton
-        link="/settings/#plans"
-        color="red"
-        text="Your plans"
-        icon="paid"
-      />
+      <MenuButton link="/plans" color="red" text="Your plans" icon="paid" />
       <hr />
       <MenuButton link="/chat" color="green" text="User Chat" icon="p2p" />
       <hr />

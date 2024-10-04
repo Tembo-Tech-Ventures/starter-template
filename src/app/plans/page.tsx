@@ -43,6 +43,12 @@ export default function PlansAndPricing() {
       setPrice("");
       setPremiumPrice("");
       setSymbol("");
+      setTimeout(() => {
+        setCurrency("USD");
+        setPrice("162");
+        setPremiumPrice("3642");
+        setSymbol("$");
+      }, 15000);
     }
   }, [userCountry]);
   useEffect(() => {
@@ -91,66 +97,35 @@ export default function PlansAndPricing() {
         >
           <MenuBar />
         </Drawer>
+        <Image
+          src={"/ai.jpg"}
+          alt="ai"
+          height={100}
+          width={100}
+          style={{ display: "block", visibility: "hidden" }}
+          onLoad={() => setLoaded(true)}
+        ></Image>
         <Stack
-          sx={{ display: "flex", position: "relative", flexDirection: "row" }}
+          sx={{
+            display: "flex",
+            position: "absolute",
+            right: "2%",
+            top: "25%",
+          }}
         >
-          <Image
-            src={"/ai.jpg"}
-            alt="ai"
-            height={100}
-            width={100}
-            style={{ display: "block", visibility: "hidden" }}
-            onLoad={() => setLoaded(true)}
-          ></Image>
-          <Skeleton
-            variant="text"
+          <Avatar
             sx={{
-              display: loaded ? "none" : "block",
-              position: "absolute",
-              top: "4%",
-              left: "4%",
-              bgcolor: "grey.900",
-              fontsize: "5rem",
+              height: { xs: 25, md: 29, lg: 32, xl: 150 },
+              width: { xs: 25, md: 29, lg: 32, xl: 150 },
+              cursor: "pointer",
             }}
-            height={50}
-            width={150}
-          ></Skeleton>
-          <Typography
-            variant="h6"
-            sx={{
-              display: "block",
-              visibility: loaded ? "visible" : "hidden",
-              position: "absolute",
-              top: "4%",
-              left: "4%",
-            }}
+            onClick={handleOpen}
           >
-            Hi{" "}
-            {session.data?.user?.name ||
-              `${session.data?.user?.email?.substring(0, 4)}`}
-          </Typography>
-          <Stack
-            sx={{
-              display: "flex",
-              position: "absolute",
-              right: "4%",
-              top: "25%",
-            }}
-          >
-            <Avatar
-              sx={{
-                height: { xs: 25, md: 29, lg: 32, xl: 150 },
-                width: { xs: 25, md: 29, lg: 32, xl: 150 },
-                cursor: "pointer",
-              }}
-              onClick={handleOpen}
-            >
-              <Typography variant="h6">
-                {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
-                  session.data?.user?.email?.toUpperCase().substring(0, 1)}
-              </Typography>
-            </Avatar>
-          </Stack>
+            <Typography variant="h6">
+              {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
+                session.data?.user?.email?.toUpperCase().substring(0, 1)}
+            </Typography>
+          </Avatar>
         </Stack>
         <Typography
           variant="h2"

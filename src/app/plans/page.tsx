@@ -89,7 +89,7 @@ export default function PlansAndPricing() {
             fourthRemark="Decentralized chat"
             fifthRemark="AI Chat Feature"
             sixthRemark="Access to a world map"
-            remarkColor="gray.600"
+            remarkColor="grey.600"
             render={"h5"}
             duration={null}
           />
@@ -106,7 +106,7 @@ export default function PlansAndPricing() {
             fourthRemark="close"
             fifthRemark="close"
             sixthRemark="close"
-            remarkColor="red"
+            remarkColor="grey.600"
             render={"span"}
             duration="/month"
           />
@@ -123,7 +123,7 @@ export default function PlansAndPricing() {
             fourthRemark="check"
             fifthRemark="close"
             sixthRemark="close"
-            remarkColor="red"
+            remarkColor="grey.600"
             render={"span"}
             duration="/month"
           />
@@ -134,7 +134,7 @@ export default function PlansAndPricing() {
             price={25}
             currency={currency}
             description="Premium plan"
-            remarkColor="red"
+            remarkColor="grey.600"
             firstRemark="check"
             secondRemark="check"
             thirdRemark="check"

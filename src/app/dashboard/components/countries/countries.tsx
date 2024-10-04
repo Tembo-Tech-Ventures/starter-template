@@ -45,6 +45,7 @@ export const data = [
     content: "Increase in agricultural output",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Belgium",
@@ -52,6 +53,7 @@ export const data = [
     content: "Decrease in production value",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Benin",
@@ -59,6 +61,7 @@ export const data = [
     content: "Increase in market goods",
     currency: "XOF",
     symbol: "Fr",
+    rate: 591,
   },
   {
     country: "Brazil",
@@ -66,6 +69,7 @@ export const data = [
     content: "Increase in agricultural productivity",
     currency: "BRL",
     symbol: "R$",
+    rate: 5.46,
   },
   {
     country: "Cameroon",
@@ -73,6 +77,7 @@ export const data = [
     content: "Increase in production index",
     currency: "XAF",
     symbol: "Fr",
+    rate: 598.5,
   },
   {
     country: "Canada",
@@ -80,6 +85,7 @@ export const data = [
     content: "Decrease in number of farms",
     currency: "CAD",
     symbol: "$",
+    rate: 1.36,
   },
   {
     country: "China",
@@ -87,6 +93,7 @@ export const data = [
     content: "Increase in grain production",
     currency: "CNY",
     symbol: "¥",
+    rate: 7.02,
   },
   {
     country: "Colombia",
@@ -94,6 +101,7 @@ export const data = [
     content: "Increase in informal land tenure",
     currency: "COP",
     symbol: "$",
+    rate: 4165.64,
   },
   {
     country: "Egypt",
@@ -101,6 +109,7 @@ export const data = [
     content: "Increase in GDP",
     currency: "EGP",
     symbol: "ج.م",
+    rate: 48.29,
   },
   {
     country: "France",
@@ -108,6 +117,7 @@ export const data = [
     content: "Decrease in produce price",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Germany",
@@ -115,6 +125,7 @@ export const data = [
     content: "Decrease in economic assessment",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Ghana",
@@ -122,6 +133,7 @@ export const data = [
     content: "Decrease in food index",
     currency: "GHS",
     symbol: "₵",
+    rate: 15.85,
   },
   {
     country: "Hungary",
@@ -129,6 +141,7 @@ export const data = [
     content: "Increase in agricultural production",
     currency: "HUF",
     symbol: "Ft",
+    rate: 366.17,
   },
   {
     country: "India",
@@ -136,6 +149,7 @@ export const data = [
     content: "Increase in agricultural production",
     currency: "INR",
     symbol: "₹",
+    rate: 15480,
   },
   {
     country: "Indonesia",
@@ -143,6 +157,7 @@ export const data = [
     content: "Decrease in agricultural workforce",
     currency: "IDR",
     symbol: "Rp",
+    rate: 83.92,
   },
   {
     country: "Iran",
@@ -150,6 +165,7 @@ export const data = [
     content: "Increase to the GDP",
     currency: "IRR",
     symbol: "﷼",
+    rate: 42000,
   },
   {
     country: "Iraq",
@@ -157,6 +173,7 @@ export const data = [
     content: "Decrease in crop yield",
     currency: "IQD",
     symbol: "ع.د",
+    rate: 1309,
   },
   {
     country: "Israel",
@@ -164,6 +181,7 @@ export const data = [
     content: "Decrease in productivity",
     currency: "ILS",
     symbol: "₪",
+    rate: 3.81,
   },
   {
     country: "Italy",
@@ -171,6 +189,7 @@ export const data = [
     content: "Increase in agricultural market",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Japan",
@@ -178,6 +197,7 @@ export const data = [
     content: "Decrease in the number of farms",
     currency: "JPY",
     symbol: "¥",
+    rate: 148.71,
   },
   {
     country: "Kenya",
@@ -185,6 +205,7 @@ export const data = [
     content: "Increase in sugarcane production",
     currency: "KES",
     symbol: "Sh",
+    rate: 128.5,
   },
   {
     country: "Madagascar",
@@ -192,6 +213,7 @@ export const data = [
     content: "Increase in rural poverty",
     currency: "MGA",
     symbol: "Ar",
+    rate: 4556.46,
   },
   {
     country: "Malaysia",
@@ -199,6 +221,7 @@ export const data = [
     content: "Increase in agricultural sector",
     currency: "MYR",
     symbol: "RM",
+    rate: 4.21,
   },
   {
     country: "Mexico",
@@ -206,6 +229,7 @@ export const data = [
     content: "Decrease in agricultural productivity",
     currency: "MXN",
     symbol: "$",
+    rate: 19.15,
   },
   {
     country: "Netherlands",
@@ -213,6 +237,7 @@ export const data = [
     content: "Increase in agricultural exports",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "New Zealand",
@@ -220,6 +245,7 @@ export const data = [
     content: "Increase in irrigated land",
     currency: "NZD",
     symbol: "$",
+    rate: 1.62,
   },
   {
     country: "Niger",
@@ -227,6 +253,7 @@ export const data = [
     content: "Increase in agricultural sector",
     currency: "XOF",
     symbol: "Fr",
+    rate: 591,
   },
   {
     country: "Nigeria",
@@ -234,6 +261,7 @@ export const data = [
     content: "Increase in agricultural sector",
     currency: "NGN",
     symbol: "₦",
+    rate: 780,
   },
   {
     country: "Portugal",
@@ -241,6 +269,7 @@ export const data = [
     content: "Increase in crop production",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Qatar",
@@ -248,6 +277,7 @@ export const data = [
     content: "Decrease in food production",
     currency: "QAR",
     symbol: "ر.ق",
+    rate: 3.64,
   },
   {
     country: "Russia",
@@ -255,6 +285,7 @@ export const data = [
     content: "Increase in agricultural productivity",
     currency: "RUB",
     symbol: "₽",
+    rate: 95.25,
   },
   {
     country: "Saudi Arabia",
@@ -262,6 +293,7 @@ export const data = [
     content: "Increase in agricultural sector",
     currency: "SAR",
     symbol: "ر.س",
+    rate: 3.76,
   },
   {
     country: "Singapore",
@@ -269,6 +301,7 @@ export const data = [
     content: "Increase in food production",
     currency: "SGD",
     symbol: "$",
+    rate: 1.31,
   },
   {
     country: "South Africa",
@@ -276,6 +309,7 @@ export const data = [
     content: "Decrease in agricultural productivity",
     currency: "ZAR",
     symbol: "R",
+    rate: 17.48,
   },
   {
     country: "Spain",
@@ -283,6 +317,7 @@ export const data = [
     content: "Increase in average production",
     currency: "EUR",
     symbol: "€",
+    rate: 0.91,
   },
   {
     country: "Thailand",
@@ -290,6 +325,7 @@ export const data = [
     content: "Increase in middle-aged labor",
     currency: "THB",
     symbol: "฿",
+    rate: 33.27,
   },
   {
     country: "Togo",
@@ -297,6 +333,7 @@ export const data = [
     content: "Increase in post-harvest loss",
     currency: "TGO",
     symbol: "Fr",
+    rate: 591,
   },
   {
     country: "Turkey",
@@ -304,6 +341,7 @@ export const data = [
     content: "Increase in gross value",
     currency: "TRY",
     symbol: "₺",
+    rate: 34.24,
   },
   {
     country: "Ukraine",
@@ -311,6 +349,7 @@ export const data = [
     content: "Increase in crop production",
     currency: "UAH",
     symbol: "₴",
+    rate: 41.12,
   },
   {
     country: "United Arab Emirates",
@@ -318,6 +357,7 @@ export const data = [
     content: "Increase in crop production",
     currency: "AED",
     symbol: "د.إ",
+    rate: 3.67,
   },
   {
     country: "United Kingdom",
@@ -325,6 +365,7 @@ export const data = [
     content: "Decrease in agricultural productivity",
     currency: "GBP",
     symbol: "£",
+    rate: 0.76
   },
   {
     country: "United States",
@@ -334,5 +375,6 @@ export const data = [
     symbol: "$",
     basicPrice: 162,
     premiumPrice: 3642,
+    rate: 1,
   },
 ];

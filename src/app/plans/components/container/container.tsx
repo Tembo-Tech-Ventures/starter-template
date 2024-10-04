@@ -15,7 +15,7 @@ export default function PlanHolder() {
   const [value, setValue] = useState("");
   const [price, setPrice] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [application, setApplication] = useState<User[]>([]);
+  const [application, setApplication] = useState<User[]>([] || "");
   const [available, setAvailable] = useState(false);
   const [premiumPrice, setPremiumPrice] = useState("");
   const [open, setOpen] = useState(false);
@@ -202,10 +202,11 @@ export default function PlanHolder() {
         </Typography>
         {application.map((user) => (
           <div key={user.id}>
-            <Typography
-              variant="body1"
-              sx={{ color: "blue.600", zIndex: 500 }}
-            >{`You are currently on the ${user.plan} plan`}</Typography>
+            <Typography variant="body1" sx={{ color: "blue.600", zIndex: 500 }}>
+              {user.plan === "new"
+                ? "You do not have a plan yet"
+                : `You are currently on the ${user.plan} plan`}
+            </Typography>
           </div>
         ))}
         <Stack

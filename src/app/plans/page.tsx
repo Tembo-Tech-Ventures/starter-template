@@ -97,35 +97,46 @@ export default function PlansAndPricing() {
         >
           <MenuBar />
         </Drawer>
-        <Image
-          src={"/ai.jpg"}
-          alt="ai"
-          height={100}
-          width={100}
-          style={{ display: "block", visibility: "hidden" }}
-          onLoad={() => setLoaded(true)}
-        ></Image>
         <Stack
           sx={{
             display: "flex",
             position: "absolute",
-            right: "2%",
-            top: "25%",
+            flexDirection: "row",
+            top: 0,
+            left: 0,
+            width: "100%",
           }}
         >
-          <Avatar
+          <Image
+            src={"/ai.jpg"}
+            alt="ai"
+            height={100}
+            width={100}
+            style={{ display: "block", visibility: "hidden" }}
+            onLoad={() => setLoaded(true)}
+          ></Image>
+          <Stack
             sx={{
-              height: { xs: 25, md: 29, lg: 32, xl: 150 },
-              width: { xs: 25, md: 29, lg: 32, xl: 150 },
-              cursor: "pointer",
+              display: "flex",
+              position: "absolute",
+              right: "4%",
+              top: "25%",
             }}
-            onClick={handleOpen}
           >
-            <Typography variant="h6">
-              {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
-                session.data?.user?.email?.toUpperCase().substring(0, 1)}
-            </Typography>
-          </Avatar>
+            <Avatar
+              sx={{
+                height: { xs: 25, md: 29, lg: 32, xl: 150 },
+                width: { xs: 25, md: 29, lg: 32, xl: 150 },
+                cursor: "pointer",
+              }}
+              onClick={handleOpen}
+            >
+              <Typography variant="h6">
+                {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
+                  session.data?.user?.email?.toUpperCase().substring(0, 1)}
+              </Typography>
+            </Avatar>
+          </Stack>
         </Stack>
         <Typography
           variant="h2"

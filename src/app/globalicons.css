@@ -40,6 +40,19 @@
   left: 1%;
   color: #000;
 }
+.purchase {
+  display: flex;
+    background-size: 200% auto;
+    background-image: linear-gradient(-175deg, blue 0%, purple 100%);
+    align-items: center;
+    justify-content: center;
+}
+.purchase:hover {
+  display: flex;
+  background-image: linear-gradient(-175deg, blue 0%, purple 100%);
+  background-size: 200% auto;
+  animation: purchase 1s linear infinite;
+}
 #bars:hover {
   color: white;
   background-color: black;
@@ -137,6 +150,9 @@
     color: transparent;
     transition: 5s ease-in-out;
   }
+}
+@keyframes purchase {
+  to {background-position: 200% center;}
 }
 
 #idea {

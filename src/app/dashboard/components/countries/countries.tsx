@@ -104,6 +104,14 @@ export const data = [
     rate: 4165.64,
   },
   {
+    country: "Dubai",
+    percentage: 20,
+    content: "Increase in oaten import",
+    currency: "AED",
+    symbol: "د.إ",
+    rate: 3.67,
+  },
+  {
     country: "Egypt",
     percentage: 91,
     content: "Increase in GDP",
@@ -365,7 +373,7 @@ export const data = [
     content: "Decrease in agricultural productivity",
     currency: "GBP",
     symbol: "£",
-    rate: 0.76
+    rate: 0.76,
   },
   {
     country: "United States",
@@ -378,3 +386,21 @@ export const data = [
     rate: 1,
   },
 ];
+
+const universalRate = data.find(
+  (country) => country.country === "United States",
+)?.basicPrice as any;
+const premiumRate = data.find((country) => country.country === "United States")
+  ?.premiumPrice as any;
+data.forEach((country) => {
+  if (country.rate && country.rate !== 0) {
+    country.basicPrice = country.rate * universalRate;
+  } else {
+    console.log("Rate not available for country");
+  }
+});
+data.forEach((country) => {
+  if (country.rate && country.rate !== 0) {
+    country.premiumPrice = country.rate * premiumRate;
+  }
+});

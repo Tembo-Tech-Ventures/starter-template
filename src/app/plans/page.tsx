@@ -1,21 +1,48 @@
 "use client";
-import { Box, Skeleton, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Drawer,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { PlanCard } from "./components/plan-cards";
 import { useEffect, useState } from "react";
 import { data } from "../dashboard/components/countries/countries";
+import "../globalicons.css";
+import { useSession } from "next-auth/react";
+import { MenuBar } from "@/components/menubar/menubar";
+import Image from "next/image";
 
 export default function PlansAndPricing() {
   const [userCountry, setUserCountry] = useState();
   const [currency, setCurrency] = useState("");
+  const [price, setPrice] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const [premiumPrice, setPremiumPrice] = useState("");
+  const [open, setOpen] = useState(false);
   const [symbol, setSymbol] = useState("");
+  const session = useSession();
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     const userData = data.find((item) => item.country === userCountry);
     if (userData) {
       setCurrency(userData.currency);
       setSymbol(userData.symbol);
+      setPrice(`${userData.basicPrice?.toLocaleString()}`);
+      setPremiumPrice(`${userData.premiumPrice?.toLocaleString()}`);
     } else {
-      setCurrency("USD");
-      setSymbol("$");
+      setCurrency("");
+      setPrice("");
+      setPremiumPrice("");
+      setSymbol("");
     }
   }, [userCountry]);
   useEffect(() => {
@@ -54,6 +81,77 @@ export default function PlansAndPricing() {
           width: "100%",
         }}
       >
+        <Drawer
+          open={open}
+          onClose={handleClose}
+          anchor="right"
+          PaperProps={{
+            sx: { width: { xs: 75, sm: 100, md: 150, lg: 250, xl: 350 } },
+          }}
+        >
+          <MenuBar />
+        </Drawer>
+        <Stack
+          sx={{ display: "flex", position: "relative", flexDirection: "row" }}
+        >
+          <Image
+            src={"/ai.jpg"}
+            alt="ai"
+            height={100}
+            width={100}
+            style={{ display: "block", visibility: "hidden" }}
+            onLoad={() => setLoaded(true)}
+          ></Image>
+          <Skeleton
+            variant="text"
+            sx={{
+              display: loaded ? "none" : "block",
+              position: "absolute",
+              top: "4%",
+              left: "4%",
+              bgcolor: "grey.900",
+              fontsize: "5rem",
+            }}
+            height={50}
+            width={150}
+          ></Skeleton>
+          <Typography
+            variant="h6"
+            sx={{
+              display: "block",
+              visibility: loaded ? "visible" : "hidden",
+              position: "absolute",
+              top: "4%",
+              left: "4%",
+            }}
+          >
+            Hi{" "}
+            {session.data?.user?.name ||
+              `${session.data?.user?.email?.substring(0, 4)}`}
+          </Typography>
+          <Stack
+            sx={{
+              display: "flex",
+              position: "absolute",
+              right: "4%",
+              top: "25%",
+            }}
+          >
+            <Avatar
+              sx={{
+                height: { xs: 25, md: 29, lg: 32, xl: 150 },
+                width: { xs: 25, md: 29, lg: 32, xl: 150 },
+                cursor: "pointer",
+              }}
+              onClick={handleOpen}
+            >
+              <Typography variant="h6">
+                {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
+                  session.data?.user?.email?.toUpperCase().substring(0, 1)}
+              </Typography>
+            </Avatar>
+          </Stack>
+        </Stack>
         <Typography
           variant="h2"
           sx={{
@@ -92,7 +190,11 @@ export default function PlansAndPricing() {
             remarkColor="grey.600"
             render={"h5"}
             duration={null}
-          />
+          >
+            <Button sx={{ display: "flex", visibility: "hidden" }}>
+              Upgrade Now
+            </Button>
+          </PlanCard>
           <PlanCard
             tier="Free"
             symbol={symbol}
@@ -109,11 +211,13 @@ export default function PlansAndPricing() {
             remarkColor="grey.600"
             render={"span"}
             duration="/month"
-          />
+          >
+            <Button className="purchase">Start for free</Button>
+          </PlanCard>
           <PlanCard
             tier="Basic"
             symbol={symbol}
-            price={10}
+            price={price}
             currency={currency}
             category="material-symbols-outlined"
             description="Basic plan"
@@ -126,12 +230,14 @@ export default function PlansAndPricing() {
             remarkColor="grey.600"
             render={"span"}
             duration="/month"
-          />
+          >
+            <Button className="purchase">Purchase Now</Button>
+          </PlanCard>
           <PlanCard
             tier="Premium"
             category="material-symbols-outlined"
             symbol={symbol}
-            price={25}
+            price={premiumPrice}
             currency={currency}
             description="Premium plan"
             remarkColor="grey.600"
@@ -143,7 +249,9 @@ export default function PlansAndPricing() {
             sixthRemark="check"
             render={"span"}
             duration="/month"
-          />
+          >
+            <Button className="purchase">Purchase Now</Button>
+          </PlanCard>
         </Stack>
       </Stack>
     </Box>

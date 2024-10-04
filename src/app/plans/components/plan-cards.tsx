@@ -21,10 +21,11 @@ export function PlanCard({
   render,
   category,
   duration,
+  children,
 }: {
   tier: string;
   symbol: string;
-  price: number | null;
+  price: number | null | string;
   currency: string;
   description: string;
   remarkColor: string;
@@ -34,6 +35,7 @@ export function PlanCard({
   fourthRemark?: string;
   fifthRemark?: string;
   sixthRemark?: string;
+  children?: React.ReactNode;
   render: ElementType<any>;
   category: string;
   duration: string | null;
@@ -283,6 +285,10 @@ export function PlanCard({
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
+          </Stack>
+          <br />
+          <Stack sx={{ display: "flex", position: "relative", width: "48%" }}>
+            {children}
           </Stack>
         </Stack>
       </Paper>

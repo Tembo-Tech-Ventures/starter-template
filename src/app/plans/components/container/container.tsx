@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { PlanCard } from "../plan-cards";
 import Image from "next/image";
+import Marquee from "react-fast-marquee";
+import { User } from "@/app/admin/page";
 
 export default function PlanHolder() {
   const [userCountry, setUserCountry] = useState();
@@ -13,33 +15,68 @@ export default function PlanHolder() {
   const [value, setValue] = useState("");
   const [price, setPrice] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [application, setApplication] = useState<User[]>([]);
   const [available, setAvailable] = useState(false);
   const [premiumPrice, setPremiumPrice] = useState("");
   const [open, setOpen] = useState(false);
   const [symbol, setSymbol] = useState("");
   const session = useSession();
+  useEffect(() => {
+    const fetchPlan = async () => {
+      const response = await fetch("/api/plans", {
+        method: "GET",
+      });
+      const data: User[] = await response.json();
+      setApplication(data);
+    };
+    fetchPlan();
+  });
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const submitPlan = async () => {
+  const submitPlan = async (registration: string) => {
     const request = await fetch("/api/plans", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ value }),
+      body: JSON.stringify({ registration }),
     });
     if (request.ok) {
       console.log("Plan changed successfully");
       alert("Plan changed successfully");
+      const response = await fetch("/api/plans", {
+        method: "GET",
+      });
+      const data: User[] = await response.json();
+      setApplication(data);
     } else {
       console.error("Failed to change plan");
       alert("Failed to change plan");
     }
   };
+  useEffect(() => {
+    if (userCountry) {
+      const updateUserCountry = async () => {
+        const response = await fetch(`/api/country`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userCountry }),
+        });
+        if (response.ok) {
+          console.log("Country updated successfully");
+        } else {
+          console.error("Failed to fetch user's country");
+        }
+      };
+      updateUserCountry();
+    }
+  }, [userCountry]);
   useEffect(() => {
     if (session.data?.user) {
       setAvailable(true);
@@ -93,7 +130,7 @@ export default function PlanHolder() {
       <Stack
         sx={{
           background: "linear-gradient(to bottom right, blue, purple)",
-          height: "100vh",
+          height: "100%",
           width: "100%",
         }}
       >
@@ -151,7 +188,7 @@ export default function PlanHolder() {
           </Stack>
         </Stack>
         <Typography
-          variant="h2"
+          variant="h3"
           sx={{
             width: "100%",
             textAlign: "center",
@@ -163,6 +200,14 @@ export default function PlanHolder() {
         >
           Plans & Pricing
         </Typography>
+        {application.map((user) => (
+          <div key={user.id}>
+            <Typography
+              variant="body1"
+              sx={{ color: "blue.600", zIndex: 500 }}
+            >{`You are currently on the ${user.plan} plan`}</Typography>
+          </div>
+        ))}
         <Stack
           sx={{
             display: "flex",
@@ -185,6 +230,8 @@ export default function PlanHolder() {
             fourthRemark="Decentralized chat"
             fifthRemark="AI Chat Feature"
             sixthRemark="Access to a world map"
+            seventhRemark="Plant detection trial (10 days)"
+            eighthRemark="Plant detection System"
             remarkColor="grey.600"
             render={"h5"}
             duration={null}
@@ -201,24 +248,18 @@ export default function PlanHolder() {
             category="material-symbols-outlined"
             description="Free plan"
             firstRemark="close"
-            secondRemark="close"
+            secondRemark="check"
             thirdRemark="check"
-            fourthRemark="close"
+            fourthRemark="check"
             fifthRemark="close"
             sixthRemark="close"
+            seventhRemark="check"
+            eighthRemark="close"
             remarkColor="grey.600"
             render={"span"}
             duration="/month"
           >
-            <Button
-              className="purchase"
-              onClick={() => {
-                setValue("free");
-                setTimeout(() => {
-                  submitPlan();
-                }, 3500);
-              }}
-            >
+            <Button className="purchase" onClick={() => submitPlan("free")}>
               Start for free
             </Button>
           </PlanCard>
@@ -235,19 +276,13 @@ export default function PlanHolder() {
             fourthRemark="check"
             fifthRemark="close"
             sixthRemark="close"
+            seventhRemark="check"
+            eighthRemark="close"
             remarkColor="grey.600"
             render={"span"}
             duration="/month"
           >
-            <Button
-              className="purchase"
-              onClick={() => {
-                setValue("basic");
-                setTimeout(() => {
-                  submitPlan();
-                }, 3500);
-              }}
-            >
+            <Button className="purchase" onClick={() => submitPlan("basic")}>
               Purchase Now
             </Button>
           </PlanCard>
@@ -265,18 +300,12 @@ export default function PlanHolder() {
             fourthRemark="check"
             fifthRemark="check"
             sixthRemark="check"
+            seventhRemark="check"
+            eighthRemark="check"
             render={"span"}
             duration="/month"
           >
-            <Button
-              className="purchase"
-              onClick={() => {
-                setValue("premium");
-                setTimeout(() => {
-                  submitPlan();
-                }, 3500);
-              }}
-            >
+            <Button className="purchase" onClick={() => submitPlan("premium")}>
               Purchase Now
             </Button>
           </PlanCard>

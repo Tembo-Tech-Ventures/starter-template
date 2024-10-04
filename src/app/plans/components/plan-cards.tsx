@@ -18,6 +18,8 @@ export function PlanCard({
   fourthRemark,
   fifthRemark,
   sixthRemark,
+  seventhRemark,
+  eighthRemark,
   render,
   category,
   duration,
@@ -35,6 +37,8 @@ export function PlanCard({
   fourthRemark?: string;
   fifthRemark?: string;
   sixthRemark?: string;
+  seventhRemark?: string;
+  eighthRemark?: string;
   children?: React.ReactNode;
   render: ElementType<any>;
   category: string;
@@ -281,6 +285,42 @@ export function PlanCard({
                 variant="body1"
               >
                 {sixthRemark}
+              </Typography>
+            ) : (
+              <Skeleton variant="text" height={30} width={100} />
+            )}
+            {imageLoaded ? (
+              <Typography
+                sx={remarkStyles}
+                className={category}
+                component={render}
+                variant="body1"
+              >
+                {sixthRemark}
+              </Typography>
+            ) : (
+              <Skeleton variant="text" height={30} width={100} />
+            )}
+            {imageLoaded ? (
+              <Typography
+                sx={remarkStyles}
+                className={category}
+                component={render}
+                variant="body1"
+              >
+                {seventhRemark}
+              </Typography>
+            ) : (
+              <Skeleton variant="text" height={30} width={100} />
+            )}
+            {imageLoaded ? (
+              <Typography
+                sx={remarkStyles}
+                className={category}
+                component={render}
+                variant="body1"
+              >
+                {eighthRemark}
               </Typography>
             ) : (
               <Skeleton variant="text" height={30} width={100} />

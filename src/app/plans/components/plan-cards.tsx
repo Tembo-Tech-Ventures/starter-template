@@ -296,18 +296,6 @@ export function PlanCard({
                 component={render}
                 variant="body1"
               >
-                {sixthRemark}
-              </Typography>
-            ) : (
-              <Skeleton variant="text" height={30} width={100} />
-            )}
-            {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
                 {seventhRemark}
               </Typography>
             ) : (

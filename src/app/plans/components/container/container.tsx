@@ -124,6 +124,22 @@ export default function PlanHolder() {
       });
     }
   };
+  const paystackConfig = (plan: string) => {
+    return {
+      email: session.data?.user?.email || "user@example.com",
+      amount:
+        plan === "basic" ? parseInt(price) * 100 : parseInt(premiumPrice) * 100, // Amount in kobo
+      publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+      text: `Subscribe to ${plan.charAt(0).toUpperCase() + plan.slice(1)}`,
+      onSuccess: (response: any) => {
+        alert(
+          `Payment successful! Transaction reference: ${response.reference}`,
+        );
+        submitPlan(plan); // Update the plan
+      },
+      onClose: () => alert("Payment closed"),
+    };
+  };
 
   return (
     <Box>
@@ -202,11 +218,16 @@ export default function PlanHolder() {
         </Typography>
         {application.map((user) => (
           <div key={user.id}>
-            <Typography variant="body1" sx={{ color: "blue.600", zIndex: 500 }}>
-              {user.plan === "new"
-                ? "You do not have a plan yet"
-                : `You are currently on the ${user.plan} plan`}
-            </Typography>
+            <Marquee>
+              <Typography
+                variant="body1"
+                sx={{ color: "blue.600", zIndex: 500, fontFamily: "monospace" }}
+              >
+                {user.plan === "new"
+                  ? "You do not have a plan yet"
+                  : `You are currently on the ${user.plan} plan`}
+              </Typography>
+            </Marquee>
           </div>
         ))}
         <Stack

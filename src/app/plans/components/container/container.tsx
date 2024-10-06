@@ -8,12 +8,15 @@ import { PlanCard } from "../plan-cards";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
 import { User } from "@/app/admin/page";
+import { PaystackButton } from "react-paystack";
 
 export default function PlanHolder() {
   const [userCountry, setUserCountry] = useState();
   const [currency, setCurrency] = useState("");
   const [value, setValue] = useState("");
   const [price, setPrice] = useState("");
+  const [basicDisplay, setBasicDisplay] = useState("");
+  const [premiumDisplay, setPremiumDisplay] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [application, setApplication] = useState<User[]>([] || "");
   const [available, setAvailable] = useState(false);
@@ -37,6 +40,13 @@ export default function PlanHolder() {
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(() => {
+    const userData = data.find((item) => item.country === userCountry);
+    if (price) {
+      setBasicDisplay(`${userData?.basicPrice?.toLocaleString()}`);
+      setPremiumDisplay(`${userData?.premiumPrice?.toLocaleString()}`);
+    }
+  }, [price, userCountry]);
   const submitPlan = async (registration: string) => {
     const request = await fetch("/api/plans", {
       method: "POST",
@@ -89,8 +99,8 @@ export default function PlanHolder() {
     if (userData) {
       setCurrency(userData.currency);
       setSymbol(userData.symbol);
-      setPrice(`${userData.basicPrice?.toLocaleString()}`);
-      setPremiumPrice(`${userData.premiumPrice?.toLocaleString()}`);
+      setPrice(`${userData.basicPrice}`);
+      setPremiumPrice(`${userData.premiumPrice}`);
     } else {
       setCurrency("USD");
       setPrice("162");
@@ -128,8 +138,10 @@ export default function PlanHolder() {
     return {
       email: session.data?.user?.email || "user@example.com",
       amount:
-        plan === "basic" ? parseInt(price) * 100 : parseInt(premiumPrice) * 100, // Amount in kobo
-      publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+        plan === "Basic Plan"
+          ? parseInt(price) * 100
+          : parseInt(premiumPrice) * 100, // Amount in kobo
+      publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY}`,
       text: `Subscribe to ${plan.charAt(0).toUpperCase() + plan.slice(1)}`,
       onSuccess: (response: any) => {
         alert(
@@ -225,7 +237,7 @@ export default function PlanHolder() {
               >
                 {user.plan === "new"
                   ? "You do not have a plan yet"
-                  : `You are currently on the ${user.plan} plan`}
+                  : `You are currently on the ${user.plan}`}
               </Typography>
             </Marquee>
           </div>
@@ -234,7 +246,13 @@ export default function PlanHolder() {
           sx={{
             display: "flex",
             position: "relative",
-            flexDirection: "row",
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+              lg: "row",
+              xl: "row",
+            },
             gap: 0,
             width: "100%",
           }}
@@ -281,14 +299,17 @@ export default function PlanHolder() {
             render={"span"}
             duration="/month"
           >
-            <Button className="purchase" onClick={() => submitPlan("free")}>
+            <Button
+              className="purchase"
+              onClick={() => submitPlan("Free plan")}
+            >
               Start for free
             </Button>
           </PlanCard>
           <PlanCard
             tier="Basic"
             symbol={symbol}
-            price={price}
+            price={basicDisplay}
             currency={currency}
             category="material-symbols-outlined"
             description="Basic plan"
@@ -304,15 +325,16 @@ export default function PlanHolder() {
             render={"span"}
             duration="/month"
           >
-            <Button className="purchase" onClick={() => submitPlan("basic")}>
-              Purchase Now
-            </Button>
+            <PaystackButton
+              {...paystackConfig("Basic Plan")}
+              className="paystack"
+            />
           </PlanCard>
           <PlanCard
             tier="Premium"
             category="material-symbols-outlined"
             symbol={symbol}
-            price={premiumPrice}
+            price={premiumDisplay}
             currency={currency}
             description="Premium plan"
             remarkColor="grey.600"
@@ -327,9 +349,10 @@ export default function PlanHolder() {
             render={"span"}
             duration="/month"
           >
-            <Button className="purchase" onClick={() => submitPlan("premium")}>
-              Purchase Now
-            </Button>
+            <PaystackButton
+              {...paystackConfig("Premium Plan")}
+              className="paystack"
+            />
           </PlanCard>
         </Stack>
       </Stack>

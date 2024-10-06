@@ -269,7 +269,7 @@ export const data = [
     content: "Increase in agricultural sector",
     currency: "NGN",
     symbol: "₦",
-    rate: 780,
+    rate: 1600,
   },
   {
     country: "Portugal",

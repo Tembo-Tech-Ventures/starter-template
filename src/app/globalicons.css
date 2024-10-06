@@ -47,6 +47,16 @@
     align-items: center;
     justify-content: center;
 }
+.paystack {
+  display: flex;
+    background-size: 200% auto;
+    background-image: linear-gradient(-175deg, blue 0%, purple 100%);
+    align-items: center;
+    justify-content: center;
+    height: 37px;
+    border: transparent;
+    color: rgb(106, 106, 196);
+}
 .purchase:hover {
   display: flex;
   background-image: linear-gradient(-175deg, blue 0%, purple 100%);

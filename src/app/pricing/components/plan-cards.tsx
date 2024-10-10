@@ -24,6 +24,7 @@ export function PlanCard({
   category,
   duration,
   children,
+  remarkChildren,
 }: {
   tier: string;
   symbol: string;
@@ -43,6 +44,7 @@ export function PlanCard({
   render: ElementType<any>;
   category: string;
   duration: string | null;
+  remarkChildren?: React.ReactNode;
 }) {
   const [loaded, setLoaded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -86,7 +88,7 @@ export function PlanCard({
     fontOpticalSizing: "auto",
   };
   return (
-    <Stack sx={{ width: "25%" }}>
+    <Stack sx={{ width: { xs: 900, sm: 167, md: 175, lg: "25%", xl: "42%" } }}>
       <Image
         alt="Loader"
         src={"/profile.png"}
@@ -218,98 +220,58 @@ export function PlanCard({
             }}
           >
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                variant="body1"
-                component={render}
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {firstRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                component={render}
-                className={category}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {secondRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {thirdRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {fourthRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {fifthRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {sixthRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {seventhRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}
             {imageLoaded ? (
-              <Typography
-                sx={remarkStyles}
-                className={category}
-                component={render}
-                variant="body1"
-              >
+              <span className={category} style={{ color: "gray" }}>
                 {eighthRemark}
-              </Typography>
+              </span>
             ) : (
               <Skeleton variant="text" height={30} width={100} />
             )}

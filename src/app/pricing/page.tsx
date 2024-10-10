@@ -5,8 +5,10 @@ import { redirect } from "next/navigation";
 
 export default async function PlansAndPricing() {
   const session = await getServerSession();
-  if (!session) {
-    redirect("/auth/login");
+  if (session) {
+    if (session.user.role !== "admin") {
+      redirect("/dashboard");
+    }
   }
 
   return <PlanHolder />;

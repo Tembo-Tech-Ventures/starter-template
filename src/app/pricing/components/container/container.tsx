@@ -140,14 +140,14 @@ export default function PlanHolder() {
       amount:
         plan === "Basic Plan"
           ? parseInt(price) * 100
-          : parseInt(premiumPrice) * 100, // Amount in kobo
+          : parseInt(premiumPrice) * 100,
       publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY}`,
       text: `Subscribe to ${plan.charAt(0).toUpperCase() + plan.slice(1)}`,
       onSuccess: (response: any) => {
         alert(
           `Payment successful! Transaction reference: ${response.reference}`,
         );
-        submitPlan(plan); // Update the plan
+        submitPlan(plan);
       },
       onClose: () => alert("Payment closed"),
     };
@@ -158,8 +158,8 @@ export default function PlanHolder() {
       <Stack
         sx={{
           background: "linear-gradient(to bottom right, blue, purple)",
-          height: "100%",
-          width: "100%",
+          height: { xs: "100%", sm: "100%", md: "100%", lg: "100vh" },
+          width: { xs: 930, sm: "100%", md: "100%", lg: "100%", xl: "100%" },
         }}
       >
         <Drawer

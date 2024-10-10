@@ -39,6 +39,8 @@ export default function Container() {
   const [weatherMessage, setWeatherMessage] = useState("");
   const [subject, setSubject] = useState("");
   const [admin, setAdmin] = useState(false);
+  const [percentage, setPercentage] = useState("");
+  const [user, setUser] = useState(0);
   const [content, setContent] = useState("");
   const [countryLoaded, setCountryLoaded] = useState(false);
   const [weatherLoaded, setWeatherLoaded] = useState(false);
@@ -46,7 +48,44 @@ export default function Container() {
   const [userState, setUserState] = useState();
   const session = useSession();
   const router = useRouter();
-  console.log(`Username: ${session.status}`);
+  const [count, setCount] = useState(0);
+  const [percount, setPercount] = useState(0.0);
+  const perstep = 0.1;
+  const targetValue = user;
+  const percentValue = parseInt(percentage);
+  const incrementSpeed = 50;
+  const perspeed = 0.000001;
+  const step = 1;
+  useEffect(() => {
+    if (user) {
+      const interval = setInterval(() => {
+        setCount((prevCount) => {
+          if (prevCount >= targetValue) {
+            clearInterval(interval);
+            return prevCount;
+          }
+          return prevCount + step;
+        });
+      }, incrementSpeed);
+
+      return () => clearInterval(interval);
+    }
+  }, [targetValue, incrementSpeed, step, user]);
+  useEffect(() => {
+    if (percentage) {
+      const interval = setInterval(() => {
+        setPercount((prevCount) => {
+          if (prevCount >= percentValue) {
+            clearInterval(interval);
+            return prevCount;
+          }
+          return Math.min(prevCount + perstep, parseInt(percentage));
+        });
+      }, perspeed);
+
+      return () => clearInterval(interval);
+    }
+  }, [percentValue, perspeed, perstep, user, percentage]);
   const handleOpen = () => {
     setOpen(true);
     updateCountry();
@@ -74,6 +113,21 @@ export default function Container() {
       console.error("Failed to gather user's country");
     }
   };
+  useEffect(() => {
+    const getNumbers = async () => {
+      const count = await fetch("/api/admin/users/count");
+      const apiPercent = await fetch("/api/admin/users/percent");
+      const data = await count.json();
+      const value = await apiPercent.json();
+      console.log(data);
+      setUser(data);
+      setPercentage(value);
+      if (value !== 0.0) {
+        console.log(typeof percentage);
+      }
+    };
+    getNumbers();
+  }, [percentage]);
   useEffect(() => {
     const findUserCountryData = data.find(
       (item) => item.country === userCountry,
@@ -486,12 +540,12 @@ export default function Container() {
         >
           <GlobalCard
             icon={"grid_view"}
-            subject="5+"
+            subject={`${count}+`}
             content="Users have connected"
           ></GlobalCard>
           <GlobalCard
             icon={"commit"}
-            subject="5.7%"
+            subject={`${percount.toFixed(1)}%`}
             content="Active users on the site"
           ></GlobalCard>
           <GlobalCard

@@ -15,6 +15,29 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: user.email },
+      });
+
+      if (dbUser) {
+        // Update the last login time when the user logs in
+        await prisma.user.update({
+          where: { email: user.email },
+          data: {
+            lastLogin: new Date(),
+          },
+        });
+      } else {
+        // If the user doesn't exist, create a new record
+        await prisma.user.create({
+          data: {
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            lastLogin: new Date(), // Set initial login time
+          },
+        });
+      }
       return {
         ...session,
         user,

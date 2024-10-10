@@ -39,10 +39,11 @@ model User {
     name          String?
     email         String?       @unique
     username      String?       @unique
+    lastLogin     DateTime      @default(now())
     country       String        @default("Unknown")
     role          String        @default("user")
     isBanned      Boolean       @default(false)
-    plan          String          @default("new")
+    plan          String        @default("new")
     emailVerified DateTime?
     image         String?
     accounts      Account[]

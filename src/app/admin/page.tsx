@@ -24,6 +24,7 @@ export type User = {
   isBanned: boolean;
   country: string;
   plan: string;
+  lastLogin: string;
 };
 
 export default function AdminPage() {
@@ -57,6 +58,22 @@ export default function AdminPage() {
       alert("Failed to ban user");
     }
   };
+  const handleKick = async (userId: number) => {
+    const request = await fetch("/api/admin/users/kick-user", {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+    if (request.ok) {
+      alert("User kicked successfully");
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    } else if (request.status === 403) {
+      alert("You must be an admin to carry out this action");
+      console.error("Unauthorized access");
+    }
+  };
   const handleUnban = async (userId: number) => {
     const response = await fetch("/api/admin/users/unban-user", {
       method: "POST",
@@ -69,7 +86,7 @@ export default function AdminPage() {
       alert("User unbanned successfully");
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
-          user.id === userId ? { ...user, isBanned: true } : user,
+          user.id === userId ? { ...user, isBanned: false } : user,
         ),
       );
     } else {
@@ -168,6 +185,9 @@ export default function AdminPage() {
                 <TableCell width={80} sx={headStyles}>
                   Status
                 </TableCell>
+                <TableCell width={100} sx={headStyles}>
+                  Last seen
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -197,6 +217,12 @@ export default function AdminPage() {
                   </TableCell>
                   <TableCell width={80} sx={tableStyles}>
                     {user.isBanned ? "Banned" : "Active"}
+                  </TableCell>
+                  <TableCell width={100} sx={tableStyles}>
+                    {new Date(user.lastLogin).toLocaleString()}
+                  </TableCell>
+                  <TableCell width={80} sx={tableStyles}>
+                    <Button onClick={() => handleKick(user.id)}>Kick</Button>
                   </TableCell>
                   <TableCell width={80} sx={tableStyles}>
                     <Button

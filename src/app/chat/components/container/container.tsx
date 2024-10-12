@@ -193,7 +193,7 @@ export default function Container() {
                     display: "flex",
                     position: "relative",
                     flexDirection: "row",
-                    gap: 0,
+                    gap: 10,
                   }}
                 >
                   <CldImage

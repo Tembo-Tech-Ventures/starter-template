@@ -2,7 +2,15 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Pusher from "pusher-js";
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Drawer,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import "../../../globalicons.css";
 import { useRouter } from "next/navigation";
 import { NavBar } from "@/components/navbar/navbar";
@@ -20,10 +28,10 @@ import { GetAllMessagesResponse } from "../../../api/messages/route";
 import { GetAllChatMessagesResponse } from "../../../api/chat/route";
 import { Mice } from "@/components/mice/mouse";
 import { MenuBar } from "@/components/menubar/menubar";
-import { PointBack, PointOut } from "@/components/mousecontrols/mousecontrol";
 import { rotarySwitch, rotaryUnit } from "@/components/rotary-unit/rotary-unit";
 import { faCloudShowersWater } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CldImage } from "next-cloudinary";
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
   cluster: "mt1",
@@ -34,8 +42,11 @@ export default function Container() {
   const [messages, setMessages] = useState<
     GetAllChatMessagesResponse["messages"]
   >([]);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState("left");
   const generator = `${Math.floor(Math.random() * 10000)}`;
 
   const [input, setInput] = useState<string>("");
@@ -44,6 +55,18 @@ export default function Container() {
   const { data: databaseChatMessages } = useAllChatMessages();
 
   console.log("@@ databaseChatMessages", databaseChatMessages);
+  console.log(
+    `message owner: ${databaseChatMessages?.map(
+      (data) => data.ownerId,
+    )}, real owner: ${session.data?.user.id}`,
+  );
+  useEffect(() => {
+    if (!session.data?.user.image) {
+      setImageLoaded(true);
+    } else {
+      setImageLoaded(false);
+    }
+  }, [session.data?.user.image]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -52,6 +75,12 @@ export default function Container() {
     }
   }, [messages]);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     const channel = pusher.subscribe("chat");
 
@@ -79,43 +108,77 @@ export default function Container() {
     }
     Update();
   }, [session.data?.user]);
+  const isUserMessage = databaseChatMessages?.map(
+    (message) => message.ownerId === session.data?.user.id,
+  );
+  useEffect(() => {
+    const holder = databaseChatMessages?.find(
+      (user) => user.ownerId === session.data?.user.id,
+    );
+    if (holder) {
+      setPosition("right");
+      console.log("These are your messages");
+    }
+  }, [databaseChatMessages, session.data?.user.id]);
 
   return (
     <Box>
       <Stack
         style={{
-          backgroundImage: "url('/Cht.jpg')",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
+          backgroundColor: "white",
           height: "100vh",
           width: "100%",
-          cursor: "none",
-        }}
-        onMouseOver={(e) => {
-          var mouse = document.getElementById("mouse") as HTMLElement;
-          var pointer = document.getElementById("pointer") as HTMLElement;
-          window.addEventListener("mousemove", (t) => {
-            mouse!.style.top = `${t.clientY}px`;
-            mouse!.style.left = `${t.clientX}px`;
-            pointer!.style.top = `${t.clientY}px`;
-            pointer!.style.left = `${t.clientX}px`;
-          });
+          display: "flex",
+          position: "absolute",
+          top: 0,
+          left: 0,
         }}
       >
-        <Mice />
+        <Stack
+          sx={{
+            display: "flex",
+            position: "absolute",
+            right: "4%",
+            top: "5%",
+          }}
+        >
+          <Avatar
+            sx={{
+              height: { xs: 25, md: 29, lg: 32, xl: 150 },
+              width: { xs: 25, md: 29, lg: 32, xl: 150 },
+              cursor: "pointer",
+            }}
+            onClick={handleOpen}
+          >
+            <Typography variant="h6">
+              {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
+                session.data?.user?.email?.toUpperCase().substring(0, 1)}
+            </Typography>
+          </Avatar>
+        </Stack>
         <Stack>
-          <NavBar />
+          <Drawer
+            open={open}
+            onClose={handleClose}
+            anchor="right"
+            PaperProps={{
+              sx: { width: { xs: 75, sm: 100, md: 150, lg: 250, xl: 350 } },
+            }}
+          >
+            <MenuBar />
+          </Drawer>
         </Stack>
         <Stack>
           <div
             ref={chatContainerRef}
             style={{
-              backgroundColor: "rgba(128, 128, 128, 0.3)",
+              backgroundColor: "white",
               display: "flex",
               flexDirection: "column",
+              gap: 5,
               position: "absolute",
               height: 500,
-              width: 1000,
+              width: "100%",
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
@@ -124,49 +187,69 @@ export default function Container() {
           >
             {[...(databaseChatMessages || []), ...messages].map(
               (message, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  style={{
+                    display: "flex",
+                    position: "relative",
+                    flexDirection: "row",
+                    gap: 0,
+                  }}
+                >
+                  <CldImage
+                    src={message.image || "new-user_enkjde"}
+                    width={50}
+                    height={50}
+                    alt="Uploaded Image"
+                    style={{ objectFit: "cover", borderRadius: 100 }}
+                    draggable="false"
+                  />
                   <div
                     style={{
-                      backgroundColor: "rgba(255, 255, 255, 0.5)",
-                      borderRadius: 20,
-                      width: 300,
-                      height: "auto",
+                      display: "flex",
+                      position: "relative",
+                      flexDirection: "column",
+                      height: 100,
+                      alignItems: "flex-start",
                     }}
                   >
-                    <h6
+                    <div
                       style={{
                         display: "flex",
                         position: "relative",
-                        top: 10,
-                        left: 20,
-                        fontWeight: "bold",
-                        backgroundColor: "transparent",
+                        flexDirection: "row",
                       }}
                     >
-                      {message.owner?.name ||
-                        `New User(${message.owner?.id.substring(0, 5)})`}
-                    </h6>
-                    <h6
-                      style={{
-                        display: "flex",
-                        position: "relative",
-                        top: -30,
-                        right: -170,
-                        color: "rgba(50.2, 50.2, 50.2, 0.5)",
-                        height: 2,
-                      }}
-                    >
-                      {new Date(message.createdAt).toLocaleString()}
-                    </h6>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          display: "flex",
+                          position: "relative",
+                          fontWeight: "bold",
+                          backgroundColor: "transparent",
+                        }}
+                      >
+                        {message.owner?.name ||
+                          `New User(${message.owner?.id.substring(0, 5)})`}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        style={{
+                          display: "flex",
+                          position: "relative",
+                          color: "rgba(50.2, 50.2, 50.2, 0.5)",
+                        }}
+                      >
+                        {new Date(message.createdAt).toLocaleString()}
+                      </Typography>
+                    </div>
                     <h4
                       style={{
                         backgroundColor: "transparent",
                         display: "flex",
                         position: "relative",
-                        alignItems: "center",
-                        justifyContent: "center",
                         borderRadius: 50,
-                        width: 250,
+                        height: "fit-content",
                         fontFamily: "'Indie Flower', cursive",
                       }}
                     >
@@ -183,7 +266,6 @@ export default function Container() {
               position: "absolute",
               flexDirection: "row",
               top: 500,
-              cursor: "none",
             }}
           >
             <form
@@ -209,7 +291,6 @@ export default function Container() {
                   display: "flex",
                   position: "fixed",
                   bottom: 0,
-                  cursor: "none",
                   marginTop: "auto",
                   alignItems: "bottom",
                   justifyContent: "bottom",
@@ -224,18 +305,6 @@ export default function Container() {
                 }}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onMouseOver={(e) => {
-                  var mouse = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  mouse.srcset = "/text-cursor.png";
-                }}
-                onMouseOut={(e) => {
-                  var mouse = document.getElementById(
-                    "mouse",
-                  ) as HTMLImageElement;
-                  mouse.srcset = "/cursor.png";
-                }}
               />
               <button
                 style={{
@@ -287,9 +356,6 @@ export default function Container() {
                     var mouse = document.getElementById(
                       "mouse",
                     ) as HTMLImageElement;
-                    mouse.srcset = "/cursor.png";
-                    mouse.height = 30;
-                    mouse.width = 30;
                     button.style.backgroundColor = "green";
                     button.style.color = "black";
                     button.style.transition = "1s ease-in-out";

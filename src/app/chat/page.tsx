@@ -29,6 +29,9 @@ export default async function Chat() {
   if (session.user.isBanned) {
     redirect("/banned");
   }
+  if (!session) {
+    redirect("/auth/login");
+  }
 
   return (
     <Box>

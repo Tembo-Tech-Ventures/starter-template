@@ -79,7 +79,7 @@ export default function Container() {
             clearInterval(interval);
             return prevCount;
           }
-          return prevCount + perstep;
+          return Math.min(prevCount + perstep, percentValue);
         });
       }, perspeed);
 

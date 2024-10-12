@@ -41,6 +41,7 @@ model User {
     username      String?       @unique
     lastLogin     DateTime      @default(now())
     country       String        @default("Unknown")
+    streetAddress String        @default("Unknown")
     role          String        @default("user")
     isBanned      Boolean       @default(false)
     plan          String        @default("new")

@@ -152,6 +152,26 @@ export default function Settings() {
                 Email: {session.data?.user?.email}
               </Typography>
               <br />
+              <Typography
+                variant="h4"
+                id="userCountry"
+                className="userComponents"
+                onMouseOver={TextOut}
+                onMouseOut={TextBack}
+              >
+                Country: {session.data?.user?.country}
+              </Typography>
+              <br />
+              <Typography
+                variant="h4"
+                className="userComponents"
+                id="userStreet"
+                onMouseOver={TextOut}
+                onMouseOut={TextBack}
+              >
+                Address: {session.data?.user.streetAddress}
+              </Typography>
+              <br />
               <Button
                 variant="outlined"
                 id="editProfile"

@@ -42,9 +42,15 @@ export default function Container() {
   const [percentage, setPercentage] = useState("");
   const [user, setUser] = useState(0);
   const [content, setContent] = useState("");
+  const [location, setLocation] = useState({
+    street: null,
+    city: null,
+    state: null,
+    country: null,
+  });
   const [countryLoaded, setCountryLoaded] = useState(false);
   const [weatherLoaded, setWeatherLoaded] = useState(false);
-  const [userCountry, setUserCountry] = useState();
+  const [userStreet, setUserStreet] = useState();
   const [userState, setUserState] = useState();
   const session = useSession();
   const router = useRouter();
@@ -103,11 +109,11 @@ export default function Container() {
     const response = await fetch("/api/country", {
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ userCountry }),
+      body: JSON.stringify(location),
     });
     if (response.ok) {
       console.log(
-        `Data collected successfully. Your country is ${session.data?.user.country}`,
+        `Data collected successfully. Your country is ${session.data?.user.country} and your street is ${session.data?.user.streetAddress}`,
       );
     } else {
       console.error("Failed to gather user's country");
@@ -130,7 +136,7 @@ export default function Container() {
   }, [percentage]);
   useEffect(() => {
     const findUserCountryData = data.find(
-      (item) => item.country === userCountry,
+      (item) => item.country === location.country,
     );
 
     if (findUserCountryData) {
@@ -143,11 +149,11 @@ export default function Container() {
         const response = await fetch("/api/country", {
           method: "POST",
           headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ userCountry }),
+          body: JSON.stringify(location),
         });
         if (response.ok) {
           console.log(
-            `Data collected successfully. Your country is ${session.data?.user.country}`,
+            `Data collected successfully. Your country is ${session.data?.user.country} and your street is ${session.data?.user.streetAddress}`,
           );
         } else {
           console.error("Failed to gather user's country");
@@ -159,7 +165,7 @@ export default function Container() {
       setSubject(`Error`);
       setContent("We don't support your country");
     }
-  }, [userCountry, weatherData, session.data?.user]);
+  }, [location, weatherData, session.data?.user]);
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -267,18 +273,41 @@ export default function Container() {
   }, [weatherData]);
 
   useEffect(() => {
-    if (userCountry) {
+    if (location.country) {
       setCountryLoaded(true);
     }
-  }, [userCountry]);
+  }, [location]);
 
   useEffect(() => {
+    const fetchUserCountry = async (latitude: number, longitude: number) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const { latitude, longitude } = position.coords;
+          const apiKey = "570ee4b49ecf4bf786052677c5f4a082";
+          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&pretty=1`;
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data.results.length > 0) {
+              setLocation({
+                ...location,
+                country: data.results[0].components.country,
+                street: data.results[0].components.road,
+              });
+              console.log(`Your street is this: ${data.results[0].formatted}`);
+            }
+          } catch (error) {
+            console.error("Error fetching user country:", error);
+          }
+        });
+      }
+    };
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       const { latitude, longitude } = coords;
 
       fetchUserCountry(latitude, longitude);
     });
-  }, []);
+  }, [location]);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       const { latitude, longitude } = coords;
@@ -316,7 +345,12 @@ export default function Container() {
           const response = await fetch(url);
           const data = await response.json();
           if (data.results.length > 0) {
-            setUserCountry(data.results[0].components.country);
+            setLocation({
+              ...location,
+              country: data.results[0].components.country,
+              street: data.results[0].components.road,
+            });
+            console.log(`Your street is this: ${data.results[0].formatted}`);
           }
         } catch (error) {
           console.error("Error fetching user country:", error);

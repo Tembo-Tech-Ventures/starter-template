@@ -174,7 +174,7 @@ export default function AdminPage() {
                 <TableCell width={150} sx={headStyles}>
                   Email
                 </TableCell>
-                <TableCell width={100} sx={headStyles}>
+                <TableCell width={200} sx={headStyles}>
                   Address
                 </TableCell>
                 <TableCell width={80} sx={headStyles}>
@@ -207,7 +207,7 @@ export default function AdminPage() {
                   <TableCell width={150} sx={tableStyles}>
                     {user.email}
                   </TableCell>
-                  <TableCell width={100} sx={tableStyles}>
+                  <TableCell width={200} sx={tableStyles}>
                     {user.address}
                   </TableCell>
                   <TableCell width={80} sx={tableStyles}>

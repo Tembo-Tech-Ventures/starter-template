@@ -558,6 +558,9 @@ option {
   font-weight: 400;
   font-style: normal;
 }
+.uploadButton {
+  display: none;
+}
 #editProfile {
   display: flex;
   position: relative;

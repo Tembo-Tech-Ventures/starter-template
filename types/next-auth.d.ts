@@ -9,7 +9,7 @@ declare module "next-auth" {
       role?: string;
       email?: string;
       name?: string;
-      image?: string;
+      image: string;
       /** The user's status (either true or false) */
       isBanned: boolean;
       /** The user's plan (free, premium, etc.) */

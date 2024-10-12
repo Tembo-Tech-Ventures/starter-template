@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       id: session.user.id,
     },
     data: {
-      streetAddress: street,
+      address: street,
       country: country,
     },
   });

@@ -125,15 +125,15 @@ export default function Settings() {
                   justifyContent: "center",
                 }}
               >
-                <Avatar style={{ height: 150, width: 150 }}>
-                  <Typography variant="h3">
+                <Avatar style={{ height: 175, width: 175 }}>
+                  <Typography variant="h1">
                     {session.data?.user?.name?.substring(0, 1).toUpperCase()}
                   </Typography>
                 </Avatar>
               </Stack>
               <br />
               <Typography
-                variant="h4"
+                variant="h5"
                 id="userName"
                 className="userComponents"
                 onMouseOver={TextOut}
@@ -143,7 +143,7 @@ export default function Settings() {
               </Typography>
               <br />
               <Typography
-                variant="h4"
+                variant="h5"
                 id="userEmail"
                 className="userComponents"
                 onMouseOver={TextOut}
@@ -153,23 +153,13 @@ export default function Settings() {
               </Typography>
               <br />
               <Typography
-                variant="h4"
-                id="userCountry"
-                className="userComponents"
-                onMouseOver={TextOut}
-                onMouseOut={TextBack}
-              >
-                Country: {session.data?.user?.country}
-              </Typography>
-              <br />
-              <Typography
-                variant="h4"
+                variant="h5"
                 className="userComponents"
                 id="userStreet"
                 onMouseOver={TextOut}
                 onMouseOut={TextBack}
               >
-                Address: {session.data?.user.streetAddress}
+                Address: {session.data?.user.address}
               </Typography>
               <br />
               <Button

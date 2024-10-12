@@ -22,7 +22,8 @@ export type User = {
   email: string;
   role: string;
   isBanned: boolean;
-  country: string;
+  address: string;
+  country?: string;
   plan: string;
   lastLogin: string;
 };
@@ -174,7 +175,7 @@ export default function AdminPage() {
                   Email
                 </TableCell>
                 <TableCell width={100} sx={headStyles}>
-                  Country
+                  Address
                 </TableCell>
                 <TableCell width={80} sx={headStyles}>
                   Plan
@@ -207,7 +208,7 @@ export default function AdminPage() {
                     {user.email}
                   </TableCell>
                   <TableCell width={100} sx={tableStyles}>
-                    {user.country}
+                    {user.address}
                   </TableCell>
                   <TableCell width={80} sx={tableStyles}>
                     {user.plan}

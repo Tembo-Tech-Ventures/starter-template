@@ -44,10 +44,10 @@ declare module "next-auth" {
         startDate: Date;
         endDate: Date | null;
       }[];
-      /**The user's location */
+      /**The user's country */
       country: string;
-      /** The user's current house address */
-      streetAddress: string;
+      /** The user's current location */
+      address: string;
     };
   }
 }

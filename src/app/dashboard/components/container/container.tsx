@@ -113,7 +113,7 @@ export default function Container() {
     });
     if (response.ok) {
       console.log(
-        `Data collected successfully. Your country is ${session.data?.user.country} and your street is ${session.data?.user.streetAddress}`,
+        `Data collected successfully. Your country is ${session.data?.user.country}`,
       );
     } else {
       console.error("Failed to gather user's country");
@@ -153,7 +153,7 @@ export default function Container() {
         });
         if (response.ok) {
           console.log(
-            `Data collected successfully. Your country is ${session.data?.user.country} and your street is ${session.data?.user.streetAddress}`,
+            `Data collected successfully. Your country is ${session.data?.user.country}`,
           );
         } else {
           console.error("Failed to gather user's country");
@@ -292,9 +292,8 @@ export default function Container() {
               setLocation({
                 ...location,
                 country: data.results[0].components.country,
-                street: data.results[0].components.road,
+                street: data.results[0].formatted,
               });
-              console.log(`Your street is this: ${data.results[0].formatted}`);
             }
           } catch (error) {
             console.error("Error fetching user country:", error);

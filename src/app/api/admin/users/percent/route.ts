@@ -6,8 +6,8 @@ export const GET = async () => {
   const past30Days = new Date(now.setDate(now.getDate() - 30));
 
   // Query for users who logged in within the last 30 days
-  const activeUsers = 100;
-  const totalUsers = 7;
+  const activeUsers = 1;
+  const totalUsers = await prisma.user.count();
   const activeUsersCount = ((activeUsers / totalUsers) * 100).toFixed(1); // Convert to percentage
   console.log(activeUsersCount);
   return NextResponse.json(activeUsersCount);

@@ -54,7 +54,7 @@ export default function Container() {
   const targetValue = user;
   const percentValue = parseInt(percentage);
   const incrementSpeed = 50;
-  const perspeed = 0.000001;
+  const perspeed = 50;
   const step = 1;
   useEffect(() => {
     if (user) {
@@ -79,7 +79,7 @@ export default function Container() {
             clearInterval(interval);
             return prevCount;
           }
-          return Math.min(prevCount + perstep, parseInt(percentage));
+          return prevCount + perstep;
         });
       }, perspeed);
 

@@ -142,19 +142,37 @@ export default function Container() {
             top: "5%",
           }}
         >
-          <Avatar
-            sx={{
-              height: { xs: 25, md: 29, lg: 32, xl: 150 },
-              width: { xs: 25, md: 29, lg: 32, xl: 150 },
-              cursor: "pointer",
-            }}
-            onClick={handleOpen}
-          >
-            <Typography variant="h6">
-              {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
-                session.data?.user?.email?.toUpperCase().substring(0, 1)}
-            </Typography>
-          </Avatar>
+          {imageLoaded ? (
+            <Avatar
+              sx={{
+                height: { xs: 25, sm: 27, md: 29, lg: 32, xl: 150 },
+                width: { xs: 25, sm: 27, md: 29, lg: 32, xl: 150 },
+                cursor: "pointer",
+                zIndex: 50,
+              }}
+              onClick={handleOpen}
+            >
+              <Typography variant="h6">
+                {session.data?.user?.name?.substring(0, 1).toUpperCase() ||
+                  session.data?.user.image}
+              </Typography>
+            </Avatar>
+          ) : (
+            <CldImage
+              src={session.data?.user.image || ""}
+              width={32}
+              height={32}
+              alt="Uploaded Image"
+              style={{
+                objectFit: "cover",
+                borderRadius: 100,
+                cursor: "pointer",
+                zIndex: 50,
+              }}
+              draggable="false"
+              onClick={handleOpen}
+            />
+          )}
         </Stack>
         <Stack>
           <Drawer

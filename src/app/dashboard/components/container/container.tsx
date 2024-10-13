@@ -27,6 +27,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MenuBar } from "@/components/menubar/menubar";
 import MobileDisplay from "../../components/mobile-display/mobile-display";
 import TabletDisplay from "../../components/tablet-display/tablet-display";
+import { CldImage } from "next-cloudinary";
 
 export default function Container() {
   const [loaded, setLoaded] = useState(false);
@@ -48,6 +49,7 @@ export default function Container() {
     state: null,
     country: null,
   });
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [countryLoaded, setCountryLoaded] = useState(false);
   const [weatherLoaded, setWeatherLoaded] = useState(false);
   const [userStreet, setUserStreet] = useState();
@@ -77,6 +79,13 @@ export default function Container() {
       return () => clearInterval(interval);
     }
   }, [targetValue, incrementSpeed, step, user]);
+  useEffect(() => {
+    if (!session.data?.user.image) {
+      setImageLoaded(true);
+    } else {
+      setImageLoaded(false);
+    }
+  }, [session.data?.user.image]);
   useEffect(() => {
     if (percentage) {
       const interval = setInterval(() => {
@@ -514,19 +523,35 @@ export default function Container() {
               top: "25%",
             }}
           >
-            <Avatar
-              sx={{
-                height: { xs: 25, md: 29, lg: 32, xl: 150 },
-                width: { xs: 25, md: 29, lg: 32, xl: 150 },
-                cursor: "pointer",
-              }}
-              onClick={handleOpen}
-            >
-              <Typography variant="h6">
-                {session.data?.user?.name?.toUpperCase().substring(0, 1) ||
-                  session.data?.user?.email?.toUpperCase().substring(0, 1)}
-              </Typography>
-            </Avatar>
+            {imageLoaded ? (
+              <Avatar
+                sx={{
+                  height: { xs: 25, sm: 27, md: 29, lg: 32, xl: 150 },
+                  width: { xs: 25, sm: 27, md: 29, lg: 32, xl: 150 },
+                  cursor: "pointer",
+                }}
+                onClick={handleOpen}
+              >
+                <Typography variant="h6">
+                  {session.data?.user?.name?.substring(0, 1).toUpperCase() ||
+                    session.data?.user.image}
+                </Typography>
+              </Avatar>
+            ) : (
+              <CldImage
+                src={session.data?.user.image || ""}
+                width={32}
+                height={32}
+                alt="Uploaded Image"
+                style={{
+                  objectFit: "cover",
+                  borderRadius: 100,
+                  cursor: "pointer",
+                }}
+                draggable="false"
+                onClick={handleOpen}
+              />
+            )}
           </Stack>
         </Stack>
         {loaded ? (

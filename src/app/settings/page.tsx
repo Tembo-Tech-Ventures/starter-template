@@ -193,6 +193,7 @@ export default function Settings() {
                     });
                     if (request.status === 200) {
                       alert("Profile image updated successfully");
+                      window.location.reload();
                     }
                   }}
                   uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}

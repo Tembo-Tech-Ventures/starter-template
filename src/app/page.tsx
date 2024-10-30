@@ -1,8 +1,47 @@
-import { Box, List, ListItem, Stack, Typography } from "@mui/material";
+"use client";
+import { Box, Stack, Typography } from "@mui/material";
 import "./globalicons.css";
-import Image from "next/image";
+import Holder from "@/components/big-component/big-component";
+import { useState, useEffect, SetStateAction } from "react";
+import { LatestNews } from "@/components/big-component/country-news";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const [location, setLocation] = useState({
+    country: null,
+    region: null,
+    ip: null,
+    city: null,
+    latitude: null,
+    longitude: null,
+    postal_code: null,
+    timezone: null,
+    continent: null,
+    start_ip: null,
+    end_ip: null,
+    join_key: null,
+  });
+  const [news, setNews] = useState<string[]>([]);
+  const [country, setCountry] = useState("");
+  const session = useSession();
+  useEffect(() => {
+    async function fetchLocation() {
+      const res = await fetch("/api/ip");
+      const data = await res.json();
+      setLocation(data);
+    }
+
+    fetchLocation();
+  }, []);
+  useEffect(() => {
+    if (location) {
+      const gist = LatestNews.find((item) => item.country === location.country);
+      if (gist) {
+        setNews(gist.news);
+        setCountry(gist.full);
+      }
+    }
+  }, [location]);
   return (
     <Box>
       <Stack>
@@ -105,7 +144,7 @@ export default function Home() {
             fontStyle: "normal",
           }}
         >
-          About the Project
+          About the Project ({location.country})
         </Typography>
         <br />
         <Stack
@@ -151,65 +190,32 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
-          <Stack
-            sx={{
-              display: "flex",
-              position: "relative",
-              flexDirection: "row",
-              gap: 2,
-              width: "80%",
-              borderRadius: 4,
-              border: "2px solid #5ab1ff",
-              background:
-                "linear-gradient(to bottom, rgb(242,251,255), rgb(255, 255, 255))",
-            }}
+          <Holder
+            primaryColor="rgb(242,251,255)"
+            secondaryColor="rgb(255, 255, 255)"
+            borderColor="5ab1ff"
+            image="farmer"
+            topic="Project Goal"
+            topicColor="5bb4fd"
           >
-            <Stack
-              sx={{
-                display: "flex",
-                position: "relative",
-                width: "60%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src="/farmer.jpg"
-                alt=""
-                height={"80%"}
-                width={"65%"}
-                style={{ borderRadius: 9 }}
-              />
-            </Stack>
-            <Stack sx={{ display: "flex", position: "relative", width: "60%" }}>
-              <Typography variant="h4" sx={{ color: "#5db8fc" }}>
-                Project Goal
-              </Typography>
-              <br />
-              <ul style={{ color: "#667272", fontSize: 20 }}>
-                <li>
-                  AICulture trims the knowledge gap by providing information
-                </li>
-                <br />
-                <li>
-                  AICulture provides up-to-date agricultural data worldwide and
-                  in users&apos; countries to inform decision-making and
-                  strategy
-                </li>
-                <br />
-                <li>
-                  AICulture offers precise weather forecasts to help farmers
-                  plan and optimize their activities based on weather conditions
-                </li>
-                <br />
-                <li>
-                  AICulture uses chatbots and decentralized chat to provide
-                  real-time support and advice to farmers and stakeholders,
-                  enabling quick and efficient communication
-                </li>
-              </ul>
-            </Stack>
-          </Stack>
+            <li>AICulture trims the knowledge gap by providing information</li>
+            <br />
+            <li>
+              AICulture provides up-to-date agricultural data worldwide and in
+              users&apos; countries to inform decision-making and strategy
+            </li>
+            <br />
+            <li>
+              AICulture offers precise weather forecasts to help farmers plan
+              and optimize their activities based on weather conditions
+            </li>
+            <br />
+            <li>
+              AICulture uses chatbots and decentralized chat to provide
+              real-time support and advice to farmers and stakeholders, enabling
+              quick and efficient communication
+            </li>
+          </Holder>
         </Stack>
         <br />
         <Stack
@@ -221,65 +227,18 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
-          <Stack
-            sx={{
-              display: "flex",
-              position: "relative",
-              flexDirection: "row",
-              gap: 2,
-              width: "80%",
-              borderRadius: 4,
-              border: "2px solid #e63431",
-              background:
-                "linear-gradient(to bottom, rgb(253,247,245), rgb(255, 255, 255))",
-            }}
+          <Holder
+            primaryColor="rgb(253,247,245)"
+            secondaryColor="rgb(255, 255, 255)"
+            borderColor="e63431"
+            image="suffering"
+            topic={`Problem Statement (${location.city}, ${country})`}
+            topicColor="e53a30"
           >
-            <Stack
-              sx={{
-                display: "flex",
-                position: "relative",
-                width: "60%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src="/suffering.jpg"
-                alt=""
-                height={"80%"}
-                width={"65%"}
-                style={{ borderRadius: 9 }}
-              />
-            </Stack>
-            <Stack sx={{ display: "flex", position: "relative", width: "60%" }}>
-              <Typography variant="h4" sx={{ color: "#e5322e" }}>
-                Problem Statement
-              </Typography>
-              <br />
-              <ul style={{ color: "#667272", fontSize: 20 }}>
-                <li>
-                  Brazil suffers a 10% increase in deforestation rates impacting
-                  agricultural land availability.
-                </li>
-                <br />
-                <li>
-                  China suffers from water scarcity as 30% of agricultural land
-                  is affected by water scarcity.
-                </li>
-                <br />
-                <li>
-                  Canada suffers from shortage of agricultural workers due to
-                  financial struggles for farmers despite significant
-                  agricultural supports.
-                </li>
-                <br />
-                <li>
-                  France suffers a 10% decrease in wheat production dues to
-                  heatwaves leading to 8% increase in wheat prices year-on-year
-                </li>
-              </ul>
-            </Stack>
-          </Stack>
+            {news.map((gist) => (
+              <li key={session.data?.user.id}>{gist}</li>
+            ))}
+          </Holder>
         </Stack>
       </Stack>
     </Box>

@@ -5,13 +5,94 @@ import Holder from "@/components/big-component/big-component";
 import { useState, useEffect, SetStateAction } from "react";
 import { LatestNews } from "@/components/big-component/country-news";
 import { useSession } from "next-auth/react";
+import { gsap } from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+import { Flip } from "gsap/Flip";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Observer } from "gsap/Observer";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { Draggable } from "gsap/Draggable";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { EaselPlugin } from "gsap/EaselPlugin";
+import { PixiPlugin } from "gsap/PixiPlugin";
+import { TextPlugin } from "gsap/TextPlugin";
+import { useGSAP } from "@gsap/react";
 
 export default function Home() {
+  gsap.to(".project", {
+    rotation: 360,
+    duration: 2,
+    ease: "elastic.inOut(1, 0.3)",
+    scrollTrigger: {
+      trigger: ".project",
+      toggleActions: "restart none none none",
+      start: "2% 32%",
+      end: "bottom 9%",
+      markers: true,
+      scrub: true,
+    },
+  });
+  gsap.to(".overview", {
+    text: {
+      value: "Overview",
+    },
+    scale: 1.5,
+    duration: 2,
+    ease: "elastic.inOut(1, 0.3)",
+    scrollTrigger: {
+      trigger: ".project",
+      toggleActions: "restart none none none",
+      start: "2% 32%",
+      end: "bottom 9%",
+      markers: true,
+      scrub: true,
+    },
+  });
+  gsap.to(".goals", {
+    opacity: 1,
+    transition: "1s",
+    duration: 2,
+    ease: "elastic.inOut(1, 0.3)",
+    scrollTrigger: {
+      trigger: ".project",
+      toggleActions: "restart none none none",
+      start: "380 32%",
+      end: "bottom 9%",
+      markers: true,
+      scrub: true,
+    },
+  });
+  gsap.to("#aiculture", {
+    color: "green",
+    ease: "elastic.inOut(1, 0.3)",
+    scrollTrigger: {
+      trigger: "#aiculture",
+      toggleActions: "restart none none none",
+      start: "7% 0%",
+      end: "bottom 9%",
+      markers: true,
+      scrub: true,
+    },
+  });
+  gsap.registerPlugin(
+    useGSAP,
+    Flip,
+    ScrollTrigger,
+    Observer,
+    ScrollToPlugin,
+    Draggable,
+    MotionPathPlugin,
+    EaselPlugin,
+    PixiPlugin,
+    TextPlugin,
+    CustomEase,
+  );
   const [location, setLocation] = useState({
-    country: null,
-    region: null,
+    country: "",
+    country_name: null,
+    region: "",
     ip: null,
-    city: null,
+    city: "",
     latitude: null,
     longitude: null,
     postal_code: null,
@@ -39,14 +120,18 @@ export default function Home() {
       if (gist) {
         setNews(gist.news);
         setCountry(gist.full);
+      } else {
+        setNews(["Fetching news from your country..."]);
+        setCountry("Unrecognized");
       }
     }
   }, [location]);
   return (
     <Box>
-      <Stack>
+      <Stack id="boundary">
         <Typography
           variant="h1"
+          id="aiculture"
           sx={{
             display: "flex",
             position: "relative",
@@ -106,11 +191,13 @@ export default function Home() {
               color: "#1d3131",
               fontSize: { xs: 39, sm: 48, md: 52, lg: 67 },
             }}
+            className="project"
           >
             Project
           </Typography>
           <Typography
             variant="h2"
+            className="overview"
             sx={{
               display: "flex",
               position: "relative",
@@ -144,7 +231,7 @@ export default function Home() {
             fontStyle: "normal",
           }}
         >
-          About the Project ({location.country})
+          About the Project
         </Typography>
         <br />
         <Stack
@@ -162,6 +249,7 @@ export default function Home() {
         >
           <Typography
             variant="h6"
+            className="AIdescription"
             sx={{
               display: "flex",
               position: "relative",
@@ -198,23 +286,37 @@ export default function Home() {
             topic="Project Goal"
             topicColor="5bb4fd"
           >
-            <li>AICulture trims the knowledge gap by providing information</li>
-            <br />
-            <li>
-              AICulture provides up-to-date agricultural data worldwide and in
-              users&apos; countries to inform decision-making and strategy
-            </li>
-            <br />
-            <li>
-              AICulture offers precise weather forecasts to help farmers plan
-              and optimize their activities based on weather conditions
-            </li>
-            <br />
-            <li>
-              AICulture uses chatbots and decentralized chat to provide
-              real-time support and advice to farmers and stakeholders, enabling
-              quick and efficient communication
-            </li>
+            <ul
+              className="goals"
+              style={{
+                display: "flex",
+                color: "#667272",
+                fontSize: 20,
+                flexDirection: "column",
+                gap: 13,
+                opacity: 0,
+              }}
+            >
+              <li>
+                AICulture trims the knowledge gap by providing information
+              </li>
+              <br />
+              <li>
+                AICulture provides up-to-date agricultural data worldwide and in
+                users&apos; countries to inform decision-making and strategy
+              </li>
+              <br />
+              <li>
+                AICulture offers precise weather forecasts to help farmers plan
+                and optimize their activities based on weather conditions
+              </li>
+              <br />
+              <li>
+                AICulture uses chatbots and decentralized chat to provide
+                real-time support and advice to farmers and stakeholders,
+                enabling quick and efficient communication
+              </li>
+            </ul>
           </Holder>
         </Stack>
         <br />
@@ -232,12 +334,196 @@ export default function Home() {
             secondaryColor="rgb(255, 255, 255)"
             borderColor="e63431"
             image="suffering"
-            topic={`Problem Statement (${location.city}, ${country})`}
+            topic={`Problem Statement (${location.city})`}
             topicColor="e53a30"
           >
-            {news.map((gist) => (
-              <li key={session.data?.user.id}>{gist}</li>
-            ))}
+            <ul
+              style={{
+                display: "flex",
+                color: "#667272",
+                fontSize: 20,
+                flexDirection: "column",
+                gap: 13,
+              }}
+            >
+              {news.map((gist) => (
+                <li key={session.data?.user.id}>{gist}</li>
+              ))}
+            </ul>
+          </Holder>
+        </Stack>
+        <Stack
+          sx={{
+            display: "flex",
+            position: "relative",
+            flexDirection: "row",
+            gap: 2,
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            variant="h2"
+            sx={{
+              display: "flex",
+              position: "relative",
+              width: "fit-content",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "'Tilt Warp', sans-serif",
+              fontWeight: 400,
+              wordSpacing: 100,
+              color: "#1d3131",
+              fontSize: { xs: 39, sm: 48, md: 52, lg: 67 },
+            }}
+          >
+            User
+          </Typography>
+          <Typography
+            variant="h2"
+            sx={{
+              display: "flex",
+              position: "relative",
+              width: "fit-content",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "'Tilt Warp', sans-serif",
+              fontWeight: 400,
+              wordSpacing: 100,
+              color: "#6ad248",
+              fontSize: { xs: 39, sm: 48, md: 52, lg: 67 },
+            }}
+          >
+            Research
+          </Typography>
+        </Stack>
+        <Stack
+          sx={{
+            display: "flex",
+            position: "relative",
+            flexDirection: "row",
+            gap: 2,
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              display: "flex",
+              position: "relative",
+              width: "fit-content",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "'Tilt Warp', sans-serif",
+              fontWeight: 400,
+              wordSpacing: 100,
+              color: "#1d3131",
+              fontSize: { xs: 34, sm: 37, md: 47, lg: 57 },
+            }}
+          >
+            Affinity
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              display: "flex",
+              position: "relative",
+              width: "fit-content",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "'Tilt Warp', sans-serif",
+              fontWeight: 400,
+              wordSpacing: 100,
+              color: "#6ad248",
+              fontSize: { xs: 34, sm: 37, md: 47, lg: 57 },
+            }}
+          >
+            Mapping
+          </Typography>
+        </Stack>
+        <br />
+        <Stack
+          sx={{
+            display: "flex",
+            position: "relative",
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 3,
+          }}
+        >
+          <Holder
+            primaryColor="rgb(0,0,0)"
+            secondaryColor="rgb(255,255,255)"
+            borderColor="65cf34"
+            topic="Research Objective"
+            topicColor="65cf34"
+            classname="research"
+            width={"40%"}
+          >
+            <Typography variant="body1" sx={{ color: "#787f82" }}>
+              To understand user backgrounds, interests, needs and sore spots.
+              Attitudes and behaviors of users who sell products online
+            </Typography>
+          </Holder>
+          <Holder
+            primaryColor="rgb(233,217,255)"
+            secondaryColor="rgb(255,255,255)"
+            borderColor="7a1aff"
+            topic="Qualitative Research"
+            classname="qualitative"
+            topicColor="7a1aff"
+            width={"40%"}
+            height="60%"
+          >
+            <Typography variant="body1" sx={{ color: "#787f82" }}>
+              To explore and analyze the motivations, challenges, and
+              aspirations of individuals participating in community farming
+              initiatives.
+            </Typography>
+          </Holder>
+        </Stack>
+        <br />
+        <Stack
+          sx={{
+            display: "flex",
+            position: "relative",
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 3,
+          }}
+        >
+          <Holder
+            classname="quanitative"
+            primaryColor="rgb(248,220,213)"
+            secondaryColor="rgb(255,255,255)"
+            borderColor="e63530"
+            topic="Quantitative Research"
+            topicColor="e63530"
+            width={"40%"}
+          >
+            <Typography variant="body1" sx={{ color: "#787f82" }}>
+              To measure the efficiency and impact of an agricultural platform
+              on farmers&apos; productivity and profitability.
+            </Typography>
+          </Holder>
+          <Holder
+            classname="timeline"
+            primaryColor="rgb(252,242,201)"
+            secondaryColor="rgb(255,255,255)"
+            borderColor="ee9c23"
+            topic="Timeline"
+            topicColor="ee9c23"
+            width={"40%"}
+            height="60%"
+          >
+            <Typography variant="body1" sx={{ color: "#787f82" }}>
+              To measure the efficiency and impact of an agricultural platform
+              on farmers&apos; productivity and profitability.
+            </Typography>
           </Holder>
         </Stack>
       </Stack>

@@ -519,27 +519,6 @@ option {
   font-family: monospace;
 }
 
-#aiculture {
-  background-image: linear-gradient(
-    to bottom right,
-    red,
-    aqua,
-    silver,
-    indigo,
-    blue
-  );
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-family: "Tilt Prism", sans-serif;
-  position: absolute;
-  top: 110px;
-  left: 500px;
-  display: flex;
-  align-items: "center";
-  justify-content: "center";
-}
 #userDisplay {
   display: flex;
   position: relative;

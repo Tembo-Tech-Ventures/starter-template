@@ -19,61 +19,63 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
 
 export default function Home() {
-  gsap.to(".project", {
-    rotation: 360,
-    duration: 2,
-    ease: "elastic.inOut(1, 0.3)",
-    scrollTrigger: {
-      trigger: ".project",
-      toggleActions: "restart none none none",
-      start: "2% 32%",
-      end: "bottom 9%",
-      markers: true,
-      scrub: true,
-    },
-  });
-  gsap.to(".overview", {
-    text: {
-      value: "Overview",
-    },
-    scale: 1.5,
-    duration: 2,
-    ease: "elastic.inOut(1, 0.3)",
-    scrollTrigger: {
-      trigger: ".project",
-      toggleActions: "restart none none none",
-      start: "2% 32%",
-      end: "bottom 9%",
-      markers: true,
-      scrub: true,
-    },
-  });
-  gsap.to(".goals", {
-    opacity: 1,
-    transition: "1s",
-    duration: 2,
-    ease: "elastic.inOut(1, 0.3)",
-    scrollTrigger: {
-      trigger: ".project",
-      toggleActions: "restart none none none",
-      start: "380 32%",
-      end: "bottom 9%",
-      markers: true,
-      scrub: true,
-    },
-  });
-  gsap.to("#aiculture", {
-    color: "green",
-    ease: "elastic.inOut(1, 0.3)",
-    scrollTrigger: {
-      trigger: "#aiculture",
-      toggleActions: "restart none none none",
-      start: "7% 0%",
-      end: "bottom 9%",
-      markers: true,
-      scrub: true,
-    },
-  });
+  useEffect(() => {
+    gsap.to(".project", {
+      rotation: 360,
+      duration: 2,
+      ease: "elastic.inOut(1, 0.3)",
+      scrollTrigger: {
+        trigger: ".project",
+        toggleActions: "restart none none none",
+        start: "2% 32%",
+        end: "bottom 9%",
+        markers: true,
+        scrub: true,
+      },
+    });
+    gsap.to(".overview", {
+      text: {
+        value: "Overview",
+      },
+      scale: 1.5,
+      duration: 2,
+      ease: "elastic.inOut(1, 0.3)",
+      scrollTrigger: {
+        trigger: ".project",
+        toggleActions: "restart none none none",
+        start: "2% 32%",
+        end: "bottom 9%",
+        markers: true,
+        scrub: true,
+      },
+    });
+    gsap.to(".goals", {
+      opacity: 1,
+      transition: "1s",
+      duration: 2,
+      ease: "elastic.inOut(1, 0.3)",
+      scrollTrigger: {
+        trigger: ".project",
+        toggleActions: "restart none none none",
+        start: "380 32%",
+        end: "bottom 9%",
+        markers: true,
+        scrub: true,
+      },
+    });
+    gsap.to("#aiculture", {
+      color: "green",
+      ease: "elastic.inOut(1, 0.3)",
+      scrollTrigger: {
+        trigger: "#aiculture",
+        toggleActions: "restart none none none",
+        start: "7% 0%",
+        end: "bottom 9%",
+        markers: true,
+        scrub: true,
+      },
+    });
+  }, []);
   gsap.registerPlugin(
     useGSAP,
     Flip,
@@ -454,7 +456,7 @@ export default function Home() {
           }}
         >
           <Holder
-            primaryColor="rgb(0,0,0)"
+            primaryColor="rgb(225,248,222)"
             secondaryColor="rgb(255,255,255)"
             borderColor="65cf34"
             topic="Research Objective"

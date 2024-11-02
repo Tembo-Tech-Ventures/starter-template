@@ -479,7 +479,7 @@ export default function Home() {
             width={"40%"}
             height="60%"
           >
-            <Typography variant="body1" sx={{ color: "#787f82" }}>
+            <Typography variant="body1" sx={{ color: "#787f82", height: 50 }}>
               To explore and analyze the motivations, challenges, and
               aspirations of individuals participating in community farming
               initiatives.

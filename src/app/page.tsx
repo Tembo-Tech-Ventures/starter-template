@@ -29,7 +29,7 @@ export default function Home() {
         toggleActions: "restart none none none",
         start: "2% 32%",
         end: "bottom 9%",
-        markers: true,
+        markers: false,
         scrub: true,
       },
     });
@@ -45,7 +45,7 @@ export default function Home() {
         toggleActions: "restart none none none",
         start: "2% 32%",
         end: "bottom 9%",
-        markers: true,
+        markers: false,
         scrub: true,
       },
     });
@@ -59,7 +59,7 @@ export default function Home() {
         toggleActions: "restart none none none",
         start: "380 32%",
         end: "bottom 9%",
-        markers: true,
+        markers: false,
         scrub: true,
       },
     });
@@ -71,7 +71,7 @@ export default function Home() {
         toggleActions: "restart none none none",
         start: "7% 0%",
         end: "bottom 9%",
-        markers: true,
+        markers: false,
         scrub: true,
       },
     });
@@ -87,7 +87,7 @@ export default function Home() {
     EaselPlugin,
     PixiPlugin,
     TextPlugin,
-    CustomEase
+    CustomEase,
   );
   const [location, setLocation] = useState({
     country: "",
@@ -224,7 +224,7 @@ export default function Home() {
           sx={{
             display: "flex",
             position: "relative",
-            width: "40%",
+            width: { xs: "100%", sm: "100%", md: "40%", lg: "40%", xl: "40%" },
             alignItems: "center",
             justifyContent: "center",
             fontFamily: "'Quicksand', sans-serif",
@@ -240,7 +240,7 @@ export default function Home() {
           sx={{
             display: "flex",
             position: "relative",
-            width: "70%",
+            width: { xs: "100%", sm: "100%", md: "70%", lg: "70%", xl: "70%" },
             alignItems: "center",
             justifyContent: "center",
             fontFamily: "'Quicksand', sans-serif",
@@ -255,7 +255,13 @@ export default function Home() {
             sx={{
               display: "flex",
               position: "relative",
-              width: "72%",
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: "72%",
+                lg: "72%",
+                xl: "72%",
+              },
               alignItems: "center",
               justifyContent: "center",
               fontFamily: "'Quicksand', sans-serif",
@@ -415,7 +421,13 @@ export default function Home() {
         <br />
         <Stack
           sx={{
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             position: "relative",
             width: "100%",
             flexDirection: "row",
@@ -457,7 +469,13 @@ export default function Home() {
         <br />
         <Stack
           sx={{
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             position: "relative",
             width: "100%",
             flexDirection: "row",
@@ -495,6 +513,77 @@ export default function Home() {
               on farmers&apos; productivity and profitability.
             </Typography>
           </Holder>
+        </Stack>
+        <Stack
+          sx={{
+            display: {
+              xs: "flex",
+              sm: "flex",
+              md: "none",
+              lg: "none",
+              xl: "none",
+            },
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              display: "flex",
+              position: "relative",
+              color: "#65cf34",
+            }}
+          >
+            Research Objective
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#787f82" }}>
+            To understand user backgrounds, interests, needs and sore spots.
+            Attitudes and behaviors of users who sell products online
+          </Typography>
+          <br />
+          <Typography
+            variant="h4"
+            sx={{
+              display: "flex",
+              position: "relative",
+              color: "#7a1aff",
+            }}
+          >
+            Qualitative Research
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#787f82", height: 50 }}>
+            To explore and analyze the motivations, challenges, and aspirations
+            of individuals participating in community farming initiatives.
+          </Typography>
+          <br />
+          <Typography
+            variant="h4"
+            sx={{
+              display: "flex",
+              position: "relative",
+              color: "#e63530",
+            }}
+          >
+            Quantitative Research
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#787f82" }}>
+            To measure the efficiency and impact of an agricultural platform on
+            farmers&apos; productivity and profitability.
+          </Typography>
+          <br />
+          <Typography
+            variant="h4"
+            sx={{
+              display: "flex",
+              position: "relative",
+              color: "#ee9c23",
+            }}
+          >
+            Timeline
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#787f82" }}>
+            To measure the efficiency and impact of an agricultural platform on
+            farmers&apos; productivity and profitability.
+          </Typography>
         </Stack>
       </Stack>
     </Box>

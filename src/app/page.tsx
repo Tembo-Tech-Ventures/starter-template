@@ -87,7 +87,7 @@ export default function Home() {
     EaselPlugin,
     PixiPlugin,
     TextPlugin,
-    CustomEase,
+    CustomEase
   );
   const [location, setLocation] = useState({
     country: "",
@@ -273,7 +273,13 @@ export default function Home() {
         <br />
         <Stack
           sx={{
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             position: "relative",
             width: "100%",
             alignItems: "center",
@@ -324,7 +330,13 @@ export default function Home() {
         <br />
         <Stack
           sx={{
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             position: "relative",
             width: "100%",
             alignItems: "center",
@@ -400,49 +412,6 @@ export default function Home() {
             Research
           </Typography>
         </Stack>
-        <Stack
-          sx={{
-            display: "flex",
-            position: "relative",
-            flexDirection: "row",
-            gap: 2,
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              display: "flex",
-              position: "relative",
-              width: "fit-content",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: "'Tilt Warp', sans-serif",
-              fontWeight: 400,
-              wordSpacing: 100,
-              color: "#1d3131",
-              fontSize: { xs: 34, sm: 37, md: 47, lg: 57 },
-            }}
-          >
-            Affinity
-          </Typography>
-          <Typography
-            variant="h4"
-            sx={{
-              display: "flex",
-              position: "relative",
-              width: "fit-content",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: "'Tilt Warp', sans-serif",
-              fontWeight: 400,
-              wordSpacing: 100,
-              color: "#6ad248",
-              fontSize: { xs: 34, sm: 37, md: 47, lg: 57 },
-            }}
-          >
-            Mapping
-          </Typography>
-        </Stack>
         <br />
         <Stack
           sx={{
@@ -481,8 +450,7 @@ export default function Home() {
           >
             <Typography variant="body1" sx={{ color: "#787f82", height: 50 }}>
               To explore and analyze the motivations, challenges, and
-              aspirations of individuals participating in community farming
-              initiatives.
+              aspirations of individuals participating in community farming.
             </Typography>
           </Holder>
         </Stack>

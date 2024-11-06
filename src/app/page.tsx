@@ -1,5 +1,13 @@
 "use client";
-import { Box, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import { purple } from "@mui/material/colors";

@@ -1,5 +1,15 @@
 "use client";
-import { Box, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Dialog,
+  Stack,
+  Typography,
+} from "@mui/material";
 import "./globalicons.css";
 import Holder from "@/components/big-component/big-component";
 import { useState, useEffect, SetStateAction } from "react";
@@ -17,8 +27,11 @@ import { EaselPlugin } from "gsap/EaselPlugin";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const [update, setUpdate] = useState(false);
   useEffect(() => {
     gsap.to(".project", {
       rotation: 360,
@@ -128,9 +141,117 @@ export default function Home() {
       }
     }
   }, [location]);
+  useEffect(() => {
+    setUpdate(true);
+  }, []);
   return (
     <Box>
       <Stack id="boundary">
+        <Dialog open={update}>
+          <Card
+            sx={{
+              display: "flex",
+              position: "relative",
+              flexDirection: "column",
+              maxWidth: 375,
+              height: 375,
+              overflowY: "auto",
+            }}
+          >
+            <CardHeader title="Update In Progress" />
+            <CardMedia
+              component="img"
+              height={190}
+              image="/update.jpg"
+              alt="Update in progress"
+              draggable="false"
+            />
+            <CardContent>
+              <Typography
+                variant="body2"
+                fontFamily={"monospace"}
+                className="weatherHolder"
+                fontWeight={400}
+              >
+                Dear Users,
+                <br />
+                <br />
+                We are excited to inform you that AICulture is currently
+                undergoing updates to enhance your overall experience. Our team
+                is diligently working on reworking the home/landing page and the
+                login page, ensuring no layout issues, and integrating new
+                features to better serve your needs.
+                <br />
+                <br />
+                During this update period, you may experience some temporary
+                disruptions in functionality. Additionally, please note that
+                logging in to the site will not be possible for now. We
+                apologize for any inconvenience this may cause and appreciate
+                your understanding and patience as we strive to improve our
+                platform.
+                <br />
+                <br />
+                We are committed to providing you with the best possible
+                service, and these updates are part of our ongoing efforts to
+                make AICulture even more beneficial for you.
+                <br />
+                <br />
+                Thank you for your continued support! AICulture Team
+              </Typography>
+            </CardContent>
+            <Stack
+              sx={{
+                display: "flex",
+                position: "relative",
+                width: "100%",
+                flexDirection: "row",
+              }}
+            >
+              <Stack
+                sx={{ display: "flex", position: "relative", width: "50%" }}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid brown",
+                    width: "67%",
+                    display: "flex",
+                    position: "relative",
+                    float: "right",
+                    alignContent: "end",
+                  }}
+                  onClick={() => setUpdate(!update)}
+                >
+                  Cancel
+                </Button>
+              </Stack>
+              <Stack
+                sx={{
+                  display: "flex",
+                  position: "relative",
+                  width: "50%",
+                  alignItems: "end",
+                }}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid gold",
+                    width: "67%",
+                    display: "flex",
+                    position: "relative",
+                    float: "right",
+                    alignContent: "end",
+                  }}
+                  href="https://github.com/Harrison302009/Online-Agricultural-chatbot/wiki/AI-Wiki#ongoing-updates"
+                  target="_blank"
+                >
+                  Updates
+                </Button>
+              </Stack>
+            </Stack>
+          </Card>
+        </Dialog>
         <Typography
           variant="h1"
           id="aiculture"

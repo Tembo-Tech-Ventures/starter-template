@@ -28,10 +28,18 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
+import mixpanel from "mixpanel-browser";
 
 export default function Home() {
   const router = useRouter();
   const [update, setUpdate] = useState(false);
+
+  // Near entry of your product, init Mixpanel
+  mixpanel.init(`${process.env.MIXPANEL_TOKEN}`, {
+    debug: true,
+    track_pageview: true,
+    persistence: "localStorage",
+  });
   useEffect(() => {
     gsap.to(".project", {
       rotation: 360,
@@ -267,7 +275,7 @@ export default function Home() {
             fontSize: { xs: 49, sm: 68, md: 74, lg: 79, xl: 90 },
           }}
         >
-          AICulture
+          AICulture ({session.data?.user.email || "random"})
         </Typography>
         <br />
         <Typography

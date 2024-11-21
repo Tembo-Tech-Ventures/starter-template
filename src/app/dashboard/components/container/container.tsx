@@ -28,6 +28,7 @@ import { MenuBar } from "@/components/menubar/menubar";
 import MobileDisplay from "../../components/mobile-display/mobile-display";
 import TabletDisplay from "../../components/tablet-display/tablet-display";
 import { CldImage } from "next-cloudinary";
+import mixpanel from "mixpanel-browser";
 
 export default function Container() {
   const [loaded, setLoaded] = useState(false);
@@ -268,6 +269,25 @@ export default function Container() {
       </Typography>
     );
   };
+  useEffect(() => {
+    if (mixpanel.people && session.data?.user.id) {
+      mixpanel.identify(session.data?.user.id);
+      mixpanel.people.set({
+        $name: `${session.data?.user.name || "User"}`,
+        $email: `${session.data?.user.email}`,
+        plan: "new",
+        // Add anything else about the user here
+      });
+      mixpanel.track("country", {
+        "Signup Type": "Referral",
+        "Button Type": "Referral",
+      });
+    }
+  }, [
+    session.data?.user.email,
+    session.data?.user.id,
+    session.data?.user.name,
+  ]);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;

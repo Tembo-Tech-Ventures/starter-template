@@ -29,6 +29,7 @@ import MobileDisplay from "../../components/mobile-display/mobile-display";
 import TabletDisplay from "../../components/tablet-display/tablet-display";
 import { CldImage } from "next-cloudinary";
 import mixpanel from "mixpanel-browser";
+import MixpanelComponent from "@/components/Mixpanel/Mixpanel";
 
 export default function Container() {
   const [loaded, setLoaded] = useState(false);
@@ -391,6 +392,7 @@ export default function Container() {
     <Box>
       <MobileDisplay />
       <TabletDisplay />
+      <MixpanelComponent name="Dashboard Page View" data={{}} />
       <Stack
         sx={{
           display: {

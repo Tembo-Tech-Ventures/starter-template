@@ -28,18 +28,11 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
-import mixpanel from "mixpanel-browser";
+import MixpanelComponent from "@/components/Mixpanel/Mixpanel";
 
 export default function Home() {
   const router = useRouter();
   const [update, setUpdate] = useState(false);
-
-  // Near entry of your product, init Mixpanel
-  mixpanel.init(`${process.env.MIXPANEL_TOKEN}`, {
-    debug: true,
-    track_pageview: true,
-    persistence: "localStorage",
-  });
   useEffect(() => {
     gsap.to(".project", {
       rotation: 360,
@@ -154,6 +147,7 @@ export default function Home() {
   }, []);
   return (
     <Box>
+      <MixpanelComponent name="Home Page View" data={{}} />
       <Stack id="boundary">
         <Dialog open={update}>
           <Card
@@ -275,7 +269,7 @@ export default function Home() {
             fontSize: { xs: 49, sm: 68, md: 74, lg: 79, xl: 90 },
           }}
         >
-          AICulture ({session.data?.user.email || "random"})
+          AICulture
         </Typography>
         <br />
         <Typography

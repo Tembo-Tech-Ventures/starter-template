@@ -271,7 +271,7 @@ export default function Container() {
     );
   };
   useEffect(() => {
-    mixpanel.init("3a21e677529f5d3255309ba3f22ddb14", {
+    mixpanel.init(`${process.env.MIXPANEL_TOKEN}`, {
       debug: true,
       ignore_dnt: true,
       track_pageview: true,

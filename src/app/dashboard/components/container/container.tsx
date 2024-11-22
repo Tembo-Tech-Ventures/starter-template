@@ -271,23 +271,27 @@ export default function Container() {
     );
   };
   useEffect(() => {
-    if (mixpanel.people && session.data?.user.id) {
-      mixpanel.identify(session.data?.user.id);
-      mixpanel.people.set({
-        $name: `${session.data?.user.name || "User"}`,
-        $email: `${session.data?.user.email}`,
-        plan: "new",
-        // Add anything else about the user here
-      });
-      mixpanel.track("country", {
-        "Signup Type": "Referral",
-        "Button Type": "Referral",
-      });
-    }
+    mixpanel.init("3a21e677529f5d3255309ba3f22ddb14", {
+      debug: true,
+      ignore_dnt: true,
+      track_pageview: true,
+    });
+    mixpanel.track("Sign Up");
+    mixpanel.register_once({
+      name: session.data?.user.name || "User",
+      email:
+        session.data?.user.email || `${session.data?.user.name}@aiculture.uk`,
+      plan: session.data?.user.plan || "new",
+      country: session.data?.user.country || "Unknow",
+      role: session.data?.user.role || "user",
+    });
   }, [
+    session.data?.user.country,
     session.data?.user.email,
     session.data?.user.id,
     session.data?.user.name,
+    session.data?.user.plan,
+    session.data?.user.role,
   ]);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async (position) => {
@@ -392,7 +396,6 @@ export default function Container() {
     <Box>
       <MobileDisplay />
       <TabletDisplay />
-      <MixpanelComponent name="Dashboard Page View" data={{}} />
       <Stack
         sx={{
           display: {

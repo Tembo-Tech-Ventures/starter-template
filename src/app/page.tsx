@@ -29,11 +29,22 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 import MixpanelComponent from "@/components/Mixpanel/Mixpanel";
+import mixpanel from "mixpanel-browser";
 
 export default function Home() {
   const router = useRouter();
   const [update, setUpdate] = useState(false);
   useEffect(() => {
+    mixpanel.init("3a21e677529f5d3255309ba3f22ddb14", {
+      debug: true,
+      track_pageview: true,
+      ignore_dnt: true,
+    });
+    mixpanel.track("Page View");
+  });
+  useEffect(() => {
+    console.log(mixpanel.track("Page View"));
+    console.log("What's wrong");
     gsap.to(".project", {
       rotation: 360,
       duration: 2,
@@ -147,7 +158,6 @@ export default function Home() {
   }, []);
   return (
     <Box>
-      <MixpanelComponent name="Home Page View" data={{}} />
       <Stack id="boundary">
         <Dialog open={update}>
           <Card

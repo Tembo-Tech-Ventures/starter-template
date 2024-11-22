@@ -1,4 +1,5 @@
 import { RootProvider } from "@/providers/root-provider/root-provider";
+import mixpanel from "mixpanel-browser";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,6 +16,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  mixpanel.init("3a21e677529f5d3255309ba3f22ddb14", {
+    debug: true,
+    ignore_dnt: true,
+    track_pageview: true,
+  });
+  mixpanel.track("Page View");
   return (
     <html lang="en">
       <body>

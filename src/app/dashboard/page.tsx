@@ -6,11 +6,6 @@ import mixpanel from "mixpanel-browser";
 
 export default async function Dashboard() {
   const session = await getServerSession();
-  mixpanel.init(`${session.user.id}`, {
-    debug: true,
-    track_pageview: true,
-    persistence: "localStorage",
-  });
   if (!session) {
     redirect("/auth/login");
   }

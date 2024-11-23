@@ -36,18 +36,12 @@ export const authOptions: NextAuthOptions = {
 }
           </style>
           </head>
-          <body>
-            <div style="display: flex; align-items: center; padding: 20px; background-color: #f4f8ec; border-radius: 10px; border: 2px solid #d1e7d0; width: 100%; height: 150px;">
+          <body style="background-image: url('https://aiculture-uk.vercel.app/ai-mail.png'); background-size: cover; background-position: center;">
+            <div style="display: flex; align-items: center; padding: 20px; background-color: rgba(244,248,236,0.4); border-radius: 10px; border: 2px solid #d1e7d0; width: 100%; height: 150px;">
   <img src="https://aiculture-uk.vercel.app/Samp.png" height="120" width="120" style="border-radius: 50%; border: 2px solid #8bc34a;" />
   <h1 style="font-size: 36px; color: #4d7c0f; font-family: 'Poppins', sans-serif; margin-left: 20px;">
     Welcome, ${identifier.split("@")[0]}
   </h1>
-  <p style="font-size: 20px; font-family: 'Roboto', sans-serif; color: #3d550c;">
-      AI-powered solutions to revolutionize your agriculture journey!
-    </p>
-</div>
-<div style="text-align: center; margin: 20px;">
-  <img src="https://aiculture-uk.vercel.app/ai-mail.png" alt="Agriculture Image" style="width: 100%; max-width: 600px; border-radius: 10px; box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);" />
 </div>
 <h3 style="font-size: 28px; font-family: 'Roboto', sans-serif; color: #3d550c; margin-top: 20px;">
   We received a request to sign you into your account. To proceed, click the button below:
@@ -59,17 +53,17 @@ export const authOptions: NextAuthOptions = {
     </button>
   </a>
 </div>
-<p style="font-size: 18px; font-family: 'Roboto', sans-serif; color: #3d550c; text-align: center;">
+<p style="font-size: 18px; font-family: 'Roboto', sans-serif; color: #19e300; text-align: center;">
   This link will expire in 24 hours. If you did not request this, please ignore this email.
 </p>
-<p style="font-size: 18px; font-family: 'Roboto', sans-serif; color: #3d550c; text-align: center; margin-top: 20px;">
+<p style="font-size: 18px; font-family: 'Roboto', sans-serif; color: #19e300; text-align: center; margin-top: 20px;">
   Thank you for being part of our journey toward smarter and more sustainable agriculture!
 </p>
 <div style="text-align: center; margin: 30px 0;">
-  <h4 style="font-size: 20px; font-family: 'Roboto', sans-serif; color: #4d7c0f;">Follow us on social media:</h4>
+  <h4 style="font-size: 20px; font-family: 'Roboto', sans-serif; color: #19e300;">Follow us on social media:</h4>
   <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
     <a href="https://www.facebook.com" style="text-decoration: none;">
-      <img src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-facebook-social-media-icon-design-template-vector-png-image_3654755.jpg" alt="Facebook" style="width: 40px; height: 40px;" />
+      <img src="https://aiculture-uk.vercel.app/facebook.png" alt="Facebook" style="width: 40px; height: 40px;" />
     </a>
     <a href="https://www.twitter.com" style="text-decoration: none;">
       <img src="https://aiculture-uk.vercel.app/x.png" alt="X" style="width: 40px; height: 40px;" />

@@ -2,6 +2,8 @@
 import {
   Box,
   Button,
+  Icon,
+  IconButton,
   List,
   ListItemButton,
   Stack,
@@ -15,6 +17,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import "../globalicons.css";
 
 export type User = {
   id: number;
@@ -32,6 +35,7 @@ export default function AdminPage() {
   const [adminDisplay, setAdminDisplay] = useState(false);
   const [defaultDisplay, setDefaultDisplay] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
+  const [id, setId] = useState(0);
   const session = useSession();
   const router = useRouter();
   const checkRole = async () => {
@@ -94,13 +98,26 @@ export default function AdminPage() {
       alert("Failed to ban user");
     }
   };
+  const refresh = async () => {
+    const request = await fetch("/api/admin/users", {
+      method: "GET",
+    });
+    if (request.ok) {
+      const data: User[] = await request.json();
+      setUsers(data);
+      alert("Refreshed User Table");
+    } else {
+      alert("Failed to refresh users");
+      console.error("Failed to fetch users");
+    }
+  };
   const tableStyles: React.CSSProperties = {
-    fontFamily: "'Caveat', system-ui",
+    fontFamily: "'Merienda', cursive",
     fontWeight: 300,
     fontStyle: "normal",
   };
   const headStyles: React.CSSProperties = {
-    fontFamily: "'Nerko One', system-ui",
+    fontFamily: "'Black Ops One', system-ui",
     fontWeight: 400,
     fontStyle: "normal",
   };
@@ -162,6 +179,17 @@ export default function AdminPage() {
           <Typography variant="h3">Hi {session.data?.user.role}</Typography>
           <br />
           <Typography>Users</Typography>
+          <IconButton
+            sx={{
+              display: "flex",
+              position: "relative",
+              width: "fit-content",
+              height: "fit-content",
+            }}
+            onClick={() => refresh()}
+          >
+            <span className="material-symbols-outlined">refresh</span>
+          </IconButton>
           <Table sx={{ minWidth: 500 }}>
             <TableHead>
               <TableRow>

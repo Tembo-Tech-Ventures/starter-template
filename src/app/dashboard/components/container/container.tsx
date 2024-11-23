@@ -277,7 +277,7 @@ export default function Container() {
       track_pageview: true,
     });
     mixpanel.track("Sign Up");
-    mixpanel.register_once({
+    mixpanel.register({
       name: session.data?.user.name || "User",
       email:
         session.data?.user.email || `${session.data?.user.name}@aiculture.uk`,

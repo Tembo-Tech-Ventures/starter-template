@@ -1,5 +1,4 @@
 import { RootProvider } from "@/providers/root-provider/root-provider";
-import mixpanel from "mixpanel-browser";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,6 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          property="og:image"
+          content="https://aiculture-uk.vercel.app/Agri-drone.jpg"
+        />
+      </head>
       <body>
         <RootProvider>{children}</RootProvider>
       </body>

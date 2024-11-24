@@ -45,7 +45,7 @@ export function MenuBar() {
           <Avatar style={{ height: 100, width: 100 }}>
             <Typography variant="h1">
               {session.data?.user?.name?.substring(0, 1).toUpperCase() ||
-                session.data?.user.image}
+                session.data?.user.email?.substring(0, 1).toUpperCase()}
             </Typography>
           </Avatar>
         ) : (

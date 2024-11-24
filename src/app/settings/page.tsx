@@ -152,7 +152,8 @@ export default function Settings() {
                     <Typography variant="h1">
                       {session.data?.user?.name
                         ?.substring(0, 1)
-                        .toUpperCase() || session.data?.user.image}
+                        .toUpperCase() ||
+                        session.data?.user.email?.substring(0, 1).toUpperCase()}
                     </Typography>
                   </Avatar>
                 ) : (

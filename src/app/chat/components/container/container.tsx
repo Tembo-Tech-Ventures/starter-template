@@ -1,36 +1,14 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Pusher from "pusher-js";
-import {
-  Avatar,
-  Box,
-  Button,
-  Drawer,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Drawer, Stack, Typography } from "@mui/material";
 import "../../../globalicons.css";
 import { useRouter } from "next/navigation";
-import { NavBar } from "@/components/navbar/navbar";
 import { useSession } from "next-auth/react";
 import { useAllChatMessages } from "@/modules/chat/hooks/use-all-chat-messages/use-all-chat-messages";
-import { getAllChatMessages } from "@/modules/chat/lib/get-all-chat-messages/get-all-chat-messages";
-import { getServerSession } from "@/modules/auth/lib/get-server-session/get-server-session";
-import Link from "next/link";
-import Image from "next/image";
-import About from "../../../about/page";
-import Contact from "../../../contact/page";
-import Home from "../../../page";
-import { matchesMiddleware } from "next/dist/shared/lib/router/router";
-import { GetAllMessagesResponse } from "../../../api/messages/route";
 import { GetAllChatMessagesResponse } from "../../../api/chat/route";
-import { Mice } from "@/components/mice/mouse";
 import { MenuBar } from "@/components/menubar/menubar";
-import { rotarySwitch, rotaryUnit } from "@/components/rotary-unit/rotary-unit";
-import { faCloudShowersWater } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CldImage } from "next-cloudinary";
 import { registerServiceWorker } from "@/utils/register-service-worker";
 

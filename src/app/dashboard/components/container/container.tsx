@@ -31,6 +31,7 @@ import TabletDisplay from "../../components/tablet-display/tablet-display";
 import { CldImage } from "next-cloudinary";
 import mixpanel from "mixpanel-browser";
 import MixpanelComponent from "@/components/Mixpanel/Mixpanel";
+import NotificationHandler from "@/components/NotificationHandler/NotificationHandler";
 
 export const requestNotificationPermission = async () => {
   if ("Notification" in window && Notification.permission !== "granted") {
@@ -421,6 +422,7 @@ export default function Container() {
     <Box>
       <MobileDisplay />
       <TabletDisplay />
+      <NotificationHandler />
       <Stack
         sx={{
           display: {

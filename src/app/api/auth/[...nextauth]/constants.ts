@@ -40,10 +40,10 @@ export const authOptions: NextAuthOptions = {
             <div style="display: flex; align-items: center; padding: 20px; background-color: rgba(244,248,236,0.4); border-radius: 10px; border: 2px solid #d1e7d0; width: 100%; height: 150px;">
   <img src="https://aiculture-uk.vercel.app/Samp.png" height="120" width="120" style="border-radius: 50%; border: 2px solid #8bc34a;" />
   <h1 style="font-size: 36px; color: #4d7c0f; font-family: 'Poppins', sans-serif; margin-left: 20px;">
-    Welcome, ${identifier.split("@")[0]}
+    Hi, ${identifier.split("@")[0]}
   </h1>
 </div>
-<h3 style="font-size: 28px; font-family: 'Roboto', sans-serif; color: #3d550c; margin-top: 20px;">
+<h3 style="font-size: 28px; font-family: 'Roboto', sans-serif; color: #19e300; margin-top: 20px;">
   We received a request to sign you into your account. To proceed, click the button below:
 </h3>
 <div style="text-align: center; margin: 30px 0;">

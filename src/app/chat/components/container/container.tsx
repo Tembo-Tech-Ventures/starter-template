@@ -47,7 +47,6 @@ export default function Container() {
   const [username, setUsername] = useState("");
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState("left");
-  const generator = `${Math.floor(Math.random() * 10000)}`;
 
   const [input, setInput] = useState<string>("");
   const router = useRouter();
@@ -60,6 +59,15 @@ export default function Container() {
       (data) => data.ownerId,
     )}, real owner: ${session.data?.user.id}`,
   );
+  useEffect(() => {
+    if (Notification.permission === "default") {
+      Notification.requestPermission().then((permission) => {
+        if (permission !== "granted") {
+          console.warn("Notifications not granted by the user.");
+        }
+      });
+    }
+  }, []);
   useEffect(() => {
     if (!session.data?.user.image) {
       setImageLoaded(true);
@@ -87,8 +95,28 @@ export default function Container() {
     channel.bind(
       "message",
       (data: GetAllChatMessagesResponse["messages"][number]) => {
-        console.log("@@ message: ", data);
+        console.log("@@ New message received: ", data);
         setMessages((prevMessages) => [...prevMessages, data]);
+
+        if (data.ownerId !== session.data?.user.id) {
+          if (Notification.permission === "granted") {
+            const notification = new Notification(
+              "New Message from AICulture",
+              {
+                body: `${data.owner?.name || "Anonymous"}: ${data.message}`,
+                icon: "/chat-user.jpg",
+                image: "/ai-mail.png",
+                vibrate: [200, 100, 100],
+                badge: "/Samp.png",
+                requireInteraction: true,
+              },
+            );
+            notification.onclick = () => {
+              window.focus();
+              router.push("/chat");
+            };
+          }
+        }
       },
     );
 
@@ -96,7 +124,7 @@ export default function Container() {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, []);
+  }, [router, session.data?.user.id, session.data?.user.image]);
   useEffect(() => {
     async function Update() {
       if (!session.data?.user) {
@@ -356,12 +384,6 @@ export default function Container() {
                     var button = document.getElementById(
                       "text",
                     ) as HTMLSpanElement;
-                    var mouse = document.getElementById(
-                      "mouse",
-                    ) as HTMLImageElement;
-                    mouse.srcset = "/pointer.png";
-                    mouse.height = 30;
-                    mouse.width = 20;
                     button.style.backgroundColor = "aqua";
                     button.style.color = "white";
                     button.style.transition = "1s ease-in-out";

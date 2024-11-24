@@ -48,6 +48,7 @@ export const POST = async (req: Request) => {
     username: user?.username,
     createdAt: savedMessage.createdAt,
     owner: user,
+    ownerId: session.user.id,
     image: savedMessage.image,
   });
 

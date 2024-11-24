@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
 </p>
 <div style="text-align: center; margin: 30px 0;">
   <h4 style="font-size: 20px; font-family: 'Roboto', sans-serif; color: #19e300;">Follow us on social media:</h4>
-  <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+  <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 10px; width: 100%;">
     <a href="https://www.facebook.com" style="text-decoration: none;">
       <img src="https://aiculture-uk.vercel.app/facebook.png" alt="Facebook" style="width: 40px; height: 40px;" />
     </a>

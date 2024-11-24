@@ -32,6 +32,7 @@ import { rotarySwitch, rotaryUnit } from "@/components/rotary-unit/rotary-unit";
 import { faCloudShowersWater } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CldImage } from "next-cloudinary";
+import { registerServiceWorker } from "@/utils/register-service-worker";
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
   cluster: "mt1",
@@ -42,15 +43,8 @@ export default function Container() {
   const [messages, setMessages] = useState<
     GetAllChatMessagesResponse["messages"]
   >([]);
-  const [values, setValues] = useState({
-    name: "",
-    ownerId: "",
-    message: "",
-    createdAt: "",
-  });
   const [imageLoaded, setImageLoaded] = useState(false);
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState("");
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState("left");
 
@@ -65,6 +59,9 @@ export default function Container() {
       (data) => data.ownerId,
     )}, real owner: ${session.data?.user.id}`,
   );
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
   useEffect(() => {
     if (Notification.permission === "default") {
       Notification.requestPermission().then((permission) => {
@@ -105,22 +102,35 @@ export default function Container() {
         setMessages((prevMessages) => [...prevMessages, data]);
         if (data.ownerId !== session.data?.user.id) {
           if (Notification.permission === "granted") {
-            const notification = new Notification(
-              `${data.owner?.name} sent you a message`,
-              {
-                body: `${data.message}`,
-                icon: "/chat-user.jpg",
-                image: "/ai-mail.png",
-                vibrate: [200, 100, 100],
-                badge: "/Samp.png",
-                timestamp: new Date().getTime(),
-                requireInteraction: true,
-              },
-            );
-            notification.onclick = () => {
-              window.focus();
-              router.push("/chat");
-            };
+            if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+              navigator.serviceWorker.ready.then((registration) => {
+                registration.showNotification(
+                  `${data.owner?.name} sent you a message`,
+                  {
+                    body: `${data.message}`,
+                    icon: "/chat-user.jpg",
+                    data: { url: "/chat" },
+                    image: "/ai-mail.png",
+                    vibrate: [200, 100, 100],
+                    badge: "/Samp.png",
+                    timestamp: new Date().getTime(),
+                    requireInteraction: true,
+                    actions: [
+                      {
+                        action: "reply",
+                        title: "Reply",
+                        icon: "/reply.png",
+                      },
+                      {
+                        action: "dismiss",
+                        title: "Dismiss",
+                        icon: "/dismiss.png",
+                      },
+                    ],
+                  },
+                );
+              });
+            }
           }
         }
       },

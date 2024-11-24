@@ -1,20 +1,16 @@
+// public/service-worker.js
 self.addEventListener("push", (event) => {
-  const data = event.data.json();
-  console.log("Push event received:", data);
+  const data = event.data?.json() || {};
 
-  self.registration.showNotification(data.title, {
+  self.registration.showNotification(data.title || "New Notification", {
     body: data.body,
-    icon: data.icon || "/default-icon.png",
-    badge: data.badge || "/default-badge.png",
-    data: data.url,
+    icon: data.icon || "/chat-user.jpg",
+    data: data.url || "/",
   });
 });
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const urlToOpen = event.notification.data;
-  if (urlToOpen) {
-    event.waitUntil(clients.openWindow(urlToOpen));
-  }
+  const url = event.notification.data || "/";
+  event.waitUntil(clients.openWindow(url));
 });
-F;

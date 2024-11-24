@@ -26,12 +26,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MenuBar } from "@/components/menubar/menubar";
 import MobileDisplay from "../../components/mobile-display/mobile-display";
+import usePusher from "@/modules/hooks/pusher/pusher";
 import TabletDisplay from "../../components/tablet-display/tablet-display";
 import { CldImage } from "next-cloudinary";
 import mixpanel from "mixpanel-browser";
 import MixpanelComponent from "@/components/Mixpanel/Mixpanel";
 
+export const requestNotificationPermission = async () => {
+  if ("Notification" in window && Notification.permission !== "granted") {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      console.log("Notification permission granted");
+    } else {
+      console.warn("Notification permission denied");
+    }
+  }
+};
+
 export default function Container() {
+  usePusher();
   const [loaded, setLoaded] = useState(false);
   const [icon, setIcon] = useState("");
   const [warningMessage, setWarningMessage] = useState(false);
@@ -66,6 +79,18 @@ export default function Container() {
   const incrementSpeed = 50;
   const perspeed = 50;
   const step = 1;
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("Service Worker registered:", registration.scope);
+        })
+        .catch((err) => {
+          console.error("Service Worker registration failed:", err);
+        });
+    }
+  }, []);
   useEffect(() => {
     if (user) {
       const interval = setInterval(() => {

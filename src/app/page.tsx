@@ -29,10 +29,24 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 import mixpanel from "mixpanel-browser";
+import usePusher from "@/modules/hooks/pusher/pusher";
 
 export default function Home() {
+  usePusher();
   const router = useRouter();
   const [update, setUpdate] = useState(false);
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("Service Worker registered:", registration.scope);
+        })
+        .catch((err) => {
+          console.error("Service Worker registration failed:", err);
+        });
+    }
+  }, []);
   useEffect(() => {
     mixpanel.init(`${process.env.MIXPANEL_TOKEN}`, {
       debug: true,

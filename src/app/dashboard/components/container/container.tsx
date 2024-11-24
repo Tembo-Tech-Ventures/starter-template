@@ -584,7 +584,7 @@ export default function Container() {
               >
                 <Typography variant="h6">
                   {session.data?.user?.name?.substring(0, 1).toUpperCase() ||
-                    session.data?.user.image}
+                    session.data?.user.email?.substring(0, 1).toUpperCase()}
                 </Typography>
               </Avatar>
             ) : (

@@ -42,6 +42,12 @@ export default function Container() {
   const [messages, setMessages] = useState<
     GetAllChatMessagesResponse["messages"]
   >([]);
+  const [values, setValues] = useState({
+    name: "",
+    ownerId: "",
+    message: "",
+    createdAt: "",
+  });
   const [imageLoaded, setImageLoaded] = useState(false);
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
@@ -97,17 +103,17 @@ export default function Container() {
       (data: GetAllChatMessagesResponse["messages"][number]) => {
         console.log("@@ New message received: ", data);
         setMessages((prevMessages) => [...prevMessages, data]);
-
         if (data.ownerId !== session.data?.user.id) {
           if (Notification.permission === "granted") {
             const notification = new Notification(
-              "New Message from AICulture",
+              `${data.owner?.name} sent you a message`,
               {
-                body: `${data.owner?.name || "Anonymous"}: ${data.message}`,
+                body: `${data.message}`,
                 icon: "/chat-user.jpg",
                 image: "/ai-mail.png",
                 vibrate: [200, 100, 100],
                 badge: "/Samp.png",
+                timestamp: new Date().getTime(),
                 requireInteraction: true,
               },
             );

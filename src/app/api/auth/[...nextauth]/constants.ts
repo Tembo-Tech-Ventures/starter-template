@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
         const message = {
           from,
           to: identifier,
-          subject: "Your Custom Sign-In Link",
+          subject: "Email verification request",
           text: `Hello,\n\nYou requested to sign in. Click the link below to proceed:\n\n${url}\n\nThis link will expire in 10 minutes.\n\nThank you!`,
           html: `
           <html>

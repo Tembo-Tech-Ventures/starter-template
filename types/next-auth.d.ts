@@ -10,6 +10,8 @@ declare module "next-auth" {
       email?: string;
       name?: string;
       image: string;
+      /** If the user has messages he/she has not received but not read */
+      receivedMessage: boolean;
       /** The user's status (either true or false) */
       isBanned: boolean;
       /** The user's plan (free, premium, etc.) */

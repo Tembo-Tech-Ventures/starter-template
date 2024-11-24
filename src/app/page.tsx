@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import "./globalicons.css";
 import Holder from "@/components/big-component/big-component";
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import { LatestNews } from "@/components/big-component/country-news";
 import { useSession } from "next-auth/react";
 import { gsap } from "gsap";
@@ -28,7 +28,6 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
-import MixpanelComponent from "@/components/Mixpanel/Mixpanel";
 import mixpanel from "mixpanel-browser";
 
 export default function Home() {

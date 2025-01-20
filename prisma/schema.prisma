@@ -84,11 +84,17 @@ model ChatMessage {
 }
 
 model MessageSent {
-    id        Int   @id @default(autoincrement())
+    id        Int      @id @default(autoincrement())
     message   String
     image     String?
     sent      Boolean  @default(false)
     createdAt DateTime @default(now())
     ownerId   String?
     owner     User?    @relation(fields: [ownerId], references: [id])
+}
+
+model RegisteredUsers {
+    id       String  @id @default(cuid())
+    email    String? @unique
+    password String?
 }

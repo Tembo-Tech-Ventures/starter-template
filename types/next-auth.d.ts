@@ -8,6 +8,8 @@ declare module "next-auth" {
       /** The user's role (admin or user) */
       role?: string;
       email?: string;
+      /**The user's password which he/she created along with the account */
+      password?: string;
       name?: string;
       image: string;
       /** If the user has messages he/she has not received but not read */

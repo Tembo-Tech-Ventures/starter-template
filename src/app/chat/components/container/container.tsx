@@ -88,7 +88,6 @@ export default function Container() {
                     body: `${data.message}`,
                     icon: "/chat-user.jpg",
                     data: { url: "/chat" },
-                    image: "/ai-mail.png",
                     vibrate: [200, 100, 100],
                     badge: "/Samp.png",
                     timestamp: new Date().getTime(),

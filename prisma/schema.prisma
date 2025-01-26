@@ -94,7 +94,6 @@ model MessageSent {
 }
 
 model RegisteredUsers {
-    id       String  @id @default(cuid())
-    email    String? @unique
+    email    String @id @unique @default("test@example.com")
     password String?
 }

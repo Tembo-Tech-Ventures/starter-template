@@ -15,13 +15,13 @@ type register = {
   id: string;
   email: string;
   password: string;
-}
+};
 
 export function LoginForm() {
   const session = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [registeredPassword, setRegisteredPassword] = useState<register[]>([]);
+  const [userList, setUserList] = useState<register[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [register, setRegister] = useState<register[]>([]);
   const router = useRouter();
@@ -35,22 +35,20 @@ export function LoginForm() {
     fontFamily: "'Indie Flower', cursive",
   };
   useEffect(() => {
-    const id = session.data?.user.password;
-    const APIfetch = () => {
-      const fetcher = await fetch("/api/register/retrieve", {
+    const APIfetch = async () => {
+      const fetcher = await fetch("/api/register", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id})
-      })
+      });
       if (fetcher.ok) {
-        const data:register[] = await fetcher.json();
-        setRegisteredPassword(data)
+        const data: register[] = await fetcher.json();
+        setUserList(data);
       }
-    }
-    APIfetch()
-  }, [])
+    };
+    APIfetch();
+  }, []);
   return (
     <Box
       sx={{
@@ -76,8 +74,17 @@ export function LoginForm() {
           action="#"
           onSubmit={(e) => {
             e.preventDefault();
-
-            if password == 
+            const request = async () => {
+              const pair = userList.find((user) => user.email === email);
+              if (pair) {
+                if (pair.password === password) {
+                  signIn("email", { email: (e.target as any).email.value });
+                } else {
+                  alert("Incorrect Password");
+                }
+              }
+            };
+            request();
           }}
         >
           <Stack

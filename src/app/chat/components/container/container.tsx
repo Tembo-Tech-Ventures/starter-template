@@ -1,8 +1,15 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Pusher from "pusher-js";
-import { Avatar, Box, Drawer, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Drawer,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import "../../../globalicons.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -11,6 +18,8 @@ import { GetAllChatMessagesResponse } from "../../../api/chat/route";
 import { MenuBar } from "@/components/menubar/menubar";
 import { CldImage } from "next-cloudinary";
 import { registerServiceWorker } from "@/utils/register-service-worker";
+import { DeleteOutline } from "@mui/icons-material";
+import { deleteMessageAction } from "./delete-message-action";
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
   cluster: "mt1",
@@ -29,7 +38,8 @@ export default function Container() {
   const [input, setInput] = useState<string>("");
   const router = useRouter();
 
-  const { data: databaseChatMessages } = useAllChatMessages();
+  const { data: databaseChatMessages, mutate: refetchDbMessages } =
+    useAllChatMessages();
 
   console.log("@@ databaseChatMessages", databaseChatMessages);
   console.log(
@@ -141,6 +151,17 @@ export default function Container() {
       console.log("These are your messages");
     }
   }, [databaseChatMessages, session.data?.user.id]);
+
+  const deleteMessage = useCallback(
+    async (id: number) => {
+      console.log("@@ id: ", id);
+      const response = await deleteMessageAction(id);
+      console.log("@@ response: ", response);
+      setMessages([]);
+      await refetchDbMessages();
+    },
+    [refetchDbMessages],
+  );
 
   return (
     <Box>
@@ -257,6 +278,8 @@ export default function Container() {
                         display: "flex",
                         position: "relative",
                         flexDirection: "row",
+                        alignItems: "center",
+                        gap: 10,
                       }}
                     >
                       <Typography
@@ -281,6 +304,12 @@ export default function Container() {
                       >
                         {new Date(message.createdAt).toLocaleString()}
                       </Typography>
+                      <IconButton
+                        color="error"
+                        onClick={() => deleteMessage(message.id)}
+                      >
+                        <DeleteOutline />
+                      </IconButton>
                     </div>
                     <h4
                       style={{

@@ -54,3 +54,8 @@ model VerificationToken {
 
 // Application models
 
+model Task {
+    id               String             @id @default(cuid())
+    name             String
+    updatedAt        DateTime           @updatedAt
+}

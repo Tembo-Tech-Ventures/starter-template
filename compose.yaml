@@ -1,0 +1,26 @@
+# Production-ready compose file
+services:
+  app:
+    build: .
+    env_file: .env
+    environment:
+      POSTGRES_PRISMA_URL: ${POSTGRES_PRISMA_URL}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 5s
+      retries: 5
+volumes:
+  db-data:

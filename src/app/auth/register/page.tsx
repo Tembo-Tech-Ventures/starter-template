@@ -1,7 +1,11 @@
+/**
+ * Registration page that leverages a simple credential-based flow.
+ * Existing users are redirected to the dashboard.
+ */
 import Link from "next/link";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/constants";
-import { EmailLoginForm } from "@/modules/auth/components/email-login-form/email-login-form";
+import { RegisterForm } from "@/modules/auth/components/register-form/register-form";
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -25,7 +29,7 @@ export default async function Register() {
         Already registered? <Link href="/auth/login">Sign in</Link> to your
         account.
       </Typography>
-      <EmailLoginForm />
+      <RegisterForm />
     </Stack>
   );
 }

@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Starter Template
 
-## Getting Started
+This project provides a minimal Next.js + Prisma starter with credential-based authentication and Docker support.
 
-First, run the development server:
+## Development
 
+1. Ensure Docker is installed.
+2. Start the stack with hot reloading:
+   ```bash
+   docker compose -f compose.local.yaml up --build
+   ```
+3. The app will be available at `http://localhost:3000`.
+
+## Production
+
+Build and run using the production compose file:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose -f compose.yaml up --build -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authentication
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Users register and sign in with an email and password. Passwords are stored as bcrypt hashes in the database. The legacy email code flow has been removed so no SMTP server is required.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Database Migrations
 
-## Learn More
+Prisma migrations are stored in the `prisma/migrations` folder. After changing the schema run:
+```bash
+npx prisma migrate dev --name <description>
+```
+A database must be reachable for this command to succeed.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` – run development server and database migrations
+- `npm run build` – create production build and deploy migrations
+- `npm run start` – start the built application
+- `npm run lint` – run ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Checklist
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+See [CHECKLIST.md](./CHECKLIST.md) for the detailed update progress.

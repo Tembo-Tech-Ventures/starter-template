@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "prisma migrate dev && . ./scripts/dev.sh",
     "dev-server": "next dev",
-    "build": "next build && prisma migrate deploy",
+    "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
     "lint": "next lint",

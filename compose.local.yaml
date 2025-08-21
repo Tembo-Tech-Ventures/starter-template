@@ -1,12 +1,17 @@
-# Development compose file with hot reloading
+## Docker Compose for local development
+#
+# This setup starts a Node container for the app with the project directory
+# mounted, enabling hot reloading. A PostgreSQL container provides the database.
+#
+# Usage: docker compose -f compose.local.yaml up --build
 services:
   app:
     image: node:20-alpine
     working_dir: /app
-    command: sh -c "npm install && npm run dev"
+    command: sh -c "npm install && npm run dev" # install deps and run dev server
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/app # mount source code for live reload
+      - /app/node_modules # preserve node_modules in container
     env_file: .env
     ports:
       - "3000:3000"
@@ -20,7 +25,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: database
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data # persist database files
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U user"]
       interval: 5s

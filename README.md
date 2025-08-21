@@ -14,6 +14,7 @@ This project provides a minimal Next.js + Prisma starter with credential-based a
 ## Production
 
 Build and run using the production compose file:
+
 ```bash
 docker compose -f compose.yaml up --build -d
 ```
@@ -25,15 +26,23 @@ Users register and sign in with an email and password. Passwords are stored as b
 ## Database Migrations
 
 Prisma migrations are stored in the `prisma/migrations` folder. After changing the schema run:
+
 ```bash
 npx prisma migrate dev --name <description>
 ```
-A database must be reachable for this command to succeed.
+
+For production deployments apply migrations with:
+
+```bash
+npx prisma migrate deploy
+```
+
+A database must be reachable for these commands to succeed.
 
 ## Scripts
 
 - `npm run dev` – run development server and database migrations
-- `npm run build` – create production build and deploy migrations
+- `npm run build` – create production build
 - `npm run start` – start the built application
 - `npm run lint` – run ESLint
 

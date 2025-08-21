@@ -46,6 +46,13 @@ A database must be reachable for these commands to succeed.
 - `npm run start` – start the built application
 - `npm run lint` – run ESLint
 
+## Continuous Integration
+
+The repository uses a [GitHub Actions workflow](.github/workflows/ci.yml) that
+installs dependencies, runs ESLint, and builds the application on every push
+and pull request. The job provisions a temporary PostgreSQL service so the
+build step can interact with a database just like in production.
+
 ## Checklist
 
 See [CHECKLIST.md](./CHECKLIST.md) for the detailed update progress.

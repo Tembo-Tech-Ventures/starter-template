@@ -7,4 +7,5 @@
 - [x] Simplify Dockerfile and build script for beginners
 - [x] Document configuration and usage in README
 - [x] Run lint and build
+- [x] Add GitHub Actions workflow for lint and build checks
 - [x] Review final setup and document gaps

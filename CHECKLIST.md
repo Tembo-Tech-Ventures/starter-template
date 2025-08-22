@@ -8,4 +8,5 @@
 - [x] Document configuration and usage in README
 - [x] Run lint and build
 - [x] Add GitHub Actions workflow for lint and build checks
+- [x] Extend CI to build Docker images from Compose files
 - [x] Review final setup and document gaps

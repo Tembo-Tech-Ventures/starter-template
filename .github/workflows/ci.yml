@@ -7,6 +7,8 @@
 #   3. Install dependencies with `npm ci` to ensure a reproducible environment.
 #   4. Run ESLint to catch code-quality issues early.
 #   5. Build the Next.js application to verify that the project compiles.
+#   6. Build Docker images for both production and development Compose files to
+#      ensure container setups remain functional.
 #
 # A PostgreSQL service is started for Prisma during the build step so that any
 # database interactions succeed. This lightweight pipeline provides fast
@@ -48,3 +50,8 @@ jobs:
         run: npm run lint
       - name: Build application
         run: npm run build
+      # Ensure Docker Compose configurations stay buildable
+      - name: Build production Docker image
+        run: docker compose -f compose.yaml build
+      - name: Build development Docker image
+        run: docker compose -f compose.local.yaml build

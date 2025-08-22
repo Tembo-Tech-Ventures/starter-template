@@ -49,9 +49,10 @@ A database must be reachable for these commands to succeed.
 ## Continuous Integration
 
 The repository uses a [GitHub Actions workflow](.github/workflows/ci.yml) that
-installs dependencies, runs ESLint, and builds the application on every push
-and pull request. The job provisions a temporary PostgreSQL service so the
-build step can interact with a database just like in production.
+installs dependencies, runs ESLint, builds the application, and verifies the
+Docker Compose configurations on every push and pull request. The job
+provisions a temporary PostgreSQL service so the build step and Docker image
+creation can interact with a database just like in production.
 
 ## Checklist
 

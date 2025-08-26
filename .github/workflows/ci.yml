@@ -1,0 +1,57 @@
+# Continuous Integration Workflow for the Starter Template
+# --------------------------------------------------------
+# This GitHub Action keeps the project healthy by running common checks on
+# every push and pull request. The workflow performs the following steps:
+#   1. Checkout the repository code.
+#   2. Set up the Node.js runtime used by the project.
+#   3. Install dependencies with `npm ci` to ensure a reproducible environment.
+#   4. Run ESLint to catch code-quality issues early.
+#   5. Build the Next.js application to verify that the project compiles.
+#   6. Build Docker images for both production and development Compose files to
+#      ensure container setups remain functional.
+#
+# A PostgreSQL service is started for Prisma during the build step so that any
+# database interactions succeed. This lightweight pipeline provides fast
+# feedback for contributors and guards against broken commits landing in main.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: database
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U user" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      POSTGRES_PRISMA_URL: postgresql://user:password@localhost:5432/database
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Run ESLint
+        run: npm run lint
+      - name: Build application
+        run: npm run build
+      # Ensure Docker Compose configurations stay buildable
+      - name: Build production Docker image
+        run: docker compose -f compose.yaml build
+      - name: Build development Docker image
+        run: docker compose -f compose.local.yaml build

@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Task demo page showing basic CRUD with client-side fetches.
+ * Users can create tasks and view existing ones.
+ */
 import { Container, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -9,7 +13,7 @@ interface Task {
   updatedAt: string;
 }
 
-export function PostsPage() {
+export default function TasksPage() {
   const [name, setName] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -59,5 +63,3 @@ export function PostsPage() {
     </Container>
   );
 }
-
-export default PostsPage;

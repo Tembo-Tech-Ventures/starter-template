@@ -1,7 +1,11 @@
+/**
+ * Login page rendering the `LoginForm` component.  If a user already has a
+ * session, they are immediately redirected to the dashboard.
+ */
 import Link from "next/link";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/constants";
-import { EmailLoginForm } from "@/modules/auth/components/email-login-form/email-login-form";
+import { LoginForm } from "@/modules/auth/components/login-form/login-form";
 import { Stack, Typography } from "@mui/material";
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -31,7 +35,7 @@ export default async function Login() {
         </Link>{" "}
         for a free trial.
       </Typography>
-      <EmailLoginForm />
+      <LoginForm />
     </Stack>
   );
 }

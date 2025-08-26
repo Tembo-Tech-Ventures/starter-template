@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Starter Template
 
-## Getting Started
+This project is a minimal Next.js starter that provides username/password
+authentication backed by Prisma.  The default development experience uses
+SQLite while production deployments can target Postgres.
 
-First, run the development server:
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The `dev` script runs Prisma migrations against a local SQLite database at
+`./dev.db` and starts the Next.js development server.  Use `npm run dev:postgres`
+if you need to develop against a Postgres database instead.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+For production builds targeting Postgres, set the `POSTGRES_PRISMA_URL`
+environment variable and run:
 
-## Learn More
+```bash
+npm run build:postgres
+```
 
-To learn more about Next.js, take a look at the following resources:
+This executes migrations using the Postgres schema defined in
+`prisma/schema.postgres.prisma` before building the Next.js application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Authentication uses the NextAuth credentials provider.  Register via the
+`/auth/register` page and log in at `/auth/login`.  Passwords are hashed with
+SHA-256 before being stored in the database.

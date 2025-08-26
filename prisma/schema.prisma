@@ -59,3 +59,15 @@ model Task {
     name             String
     updatedAt        DateTime           @updatedAt
 }
+
+/// BlogPost stores markdown blog entries authored via the admin UI.
+/// Fields capture basic metadata and full content while tracking
+/// creation and update timestamps. This is intentionally minimal and
+/// can be extended with slugs or publication state if needed.
+model BlogPost {
+    id        String   @id @default(cuid())
+    title     String
+    content   String   @db.Text
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

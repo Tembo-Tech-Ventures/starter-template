@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Basic CRUD demo for tasks.  Tasks are fetched from the `/api/tasks` endpoint
+ * and a simple form allows new tasks to be created.
+ */
 import { Container, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -9,7 +13,7 @@ interface Task {
   updatedAt: string;
 }
 
-export function PostsPage() {
+function TasksPage() {
   const [name, setName] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -60,4 +64,4 @@ export function PostsPage() {
   );
 }
 
-export default PostsPage;
+export default TasksPage;

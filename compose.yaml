@@ -1,0 +1,32 @@
+## Docker Compose for production deployments
+#
+# This configuration builds the application image using the local Dockerfile,
+# runs a PostgreSQL database, and exposes the app on port 3000. It is intended
+# for simple server setups or cloud instances.
+#
+# Usage: docker compose -f compose.yaml up --build -d
+services:
+  app:
+    build: .
+    env_file: .env
+    environment:
+      POSTGRES_PRISMA_URL: ${POSTGRES_PRISMA_URL} # connection string for Prisma
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    volumes:
+      - db-data:/var/lib/postgresql/data # persist database files
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 5s
+      retries: 5
+volumes:
+  db-data:
